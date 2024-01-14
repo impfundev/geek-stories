@@ -1,4 +1,4 @@
-import { TableList } from "@/components/shared/table";
+import { TableList } from "@/components/shared/dashboard/table";
 import { posts } from "@/lib/dummy-data";
 
 export default function Posts() {
