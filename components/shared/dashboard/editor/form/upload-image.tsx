@@ -11,14 +11,10 @@ type UploadImage = {
 
 export function UploadImage({ onChange }: UploadImage) {
   return (
-    <Card
-      className={cn(
-        "flex items-center justify-center w-full hover:bg-secondary"
-      )}
-    >
+    <Card className={cn("flex items-center justify-center hover:bg-secondary")}>
       <label
         htmlFor="dropzone-file"
-        className="flex flex-col items-center justify-center w-full h-64 cursor-pointer"
+        className="flex flex-col items-center justify-center w-[800px] h-[400px] cursor-pointer"
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
           <Image size={100} absoluteStrokeWidth />
