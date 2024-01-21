@@ -1,4 +1,4 @@
-import { TableList } from "@/components/shared/table";
+import { TableList } from "@/components/shared/dashboard/table";
 import { pages } from "@/lib/dummy-data";
 
 export default function Pages() {

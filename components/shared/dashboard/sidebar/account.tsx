@@ -11,7 +11,7 @@ import { CircleUserRound, LogOut } from "lucide-react";
 export function Account() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="p-2 border rounded-lg flex items-center gap-2 justify-center">
+      <DropdownMenuTrigger className="p-2 border rounded-lg flex items-center gap-2 justify-center hover:text-background hover:bg-primary">
         <CircleUserRound size={20} strokeWidth={1} /> Account
       </DropdownMenuTrigger>
       <DropdownMenuContent>

@@ -1,4 +1,4 @@
-import { TableList } from "@/components/shared/table";
+import { TableList } from "@/components/shared/dashboard/table";
 import { tags } from "@/lib/dummy-data";
 
 export default function Tags() {
