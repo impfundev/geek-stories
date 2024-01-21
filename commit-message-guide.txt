@@ -1,0 +1,7 @@
+feat: New Feature
+fix: Fix something
+*/frontend: New feature or fix something in frontend
+*/backend: New feature or fix something in backend
+*/*(additional message): New feature or fix something wiht additional message eg:
+    - feat (build): Setup Next.js
+    - fix/frontend (ui): Button actions
