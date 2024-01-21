@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${lexend.className} hide-scrollbar`}>
+      <body className={`${lexend.className} hide-scrollbar bg-slate-100`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
