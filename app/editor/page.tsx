@@ -1,5 +1,11 @@
-import { Editor } from "@/components/shared/dashboard/editor/editor";
+import { Editor } from "@/components/shared/dashboard/editor";
+import { prisma } from "@/lib/models";
 
-export default function EditorPage() {
-  return <Editor />;
+export default async function EditorPage() {
+  const tags = await prisma.tags.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
+  return <Editor tags={tags} />;
 }
