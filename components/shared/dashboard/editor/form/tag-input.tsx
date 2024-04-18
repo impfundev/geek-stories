@@ -93,7 +93,7 @@ export function SelectTag({ tags }: { tags: Tags }) {
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      tagsValue.includes({ name: tag.name })
+                      tagsValue.some((tagValue) => tagValue.name === tag.name)
                         ? "opacity-100"
                         : "opacity-0"
                     )}

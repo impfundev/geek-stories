@@ -1,15 +1,16 @@
 "use client";
 
-import { createPost } from "@/lib/action";
-import { NavEditor } from "./nav-editor";
 import { useState } from "react";
+import { Media, Tags } from "@/lib/schema";
+import { createPost } from "@/lib/action";
+
+import { NavEditor } from "./nav-editor";
 import { AddFeatured } from "./form/media/add-featured-image";
 import { FormEditor } from "./form/form-editor";
 import { useRouter } from "next/navigation";
-import { NovelEditor } from "./novel";
 import { UpdateInput } from "./form/update-input";
 import { TitleInput } from "./form/title-input";
-import { Media, Tags } from "@/lib/schema";
+import { NovelEditor } from "./novel";
 
 type EditorType = {
   tags: Tags;
