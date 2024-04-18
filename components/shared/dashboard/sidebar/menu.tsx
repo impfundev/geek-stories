@@ -19,7 +19,7 @@ export function MainMenu() {
       <Link
         href="/dashboard"
         className={cn(
-          "p-2 flex gap-2 items-center rounded-lg hover:text-background hover:bg-primary",
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
           path === "/dashboard" && "text-background bg-primary"
         )}
       >
@@ -28,8 +28,9 @@ export function MainMenu() {
       <Link
         href="/dashboard/posts"
         className={cn(
-          "p-2 flex gap-2 items-center rounded-lg hover:text-background hover:bg-primary",
-          path === "/dashboard/posts" && "text-background bg-primary"
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
+          path === "/dashboard/posts" &&
+            "animate-in fade-in-30 text-background bg-primary"
         )}
       >
         <PenSquare size={20} strokeWidth={1} absoluteStrokeWidth /> Posts
@@ -37,7 +38,7 @@ export function MainMenu() {
       <Link
         href="/dashboard/pages"
         className={cn(
-          "p-2 flex gap-2 items-center rounded-lg hover:text-background hover:bg-primary",
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
           path === "/dashboard/pages" && "text-background bg-primary"
         )}
       >
@@ -46,7 +47,7 @@ export function MainMenu() {
       <Link
         href="/dashboard/tags"
         className={cn(
-          "p-2 flex gap-2 items-center rounded-lg hover:text-background hover:bg-primary",
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
           path === "/dashboard/tags" && "text-background bg-primary"
         )}
       >
@@ -63,7 +64,7 @@ export function SecondMenu() {
       <Link
         href="/dashboard/settings"
         className={cn(
-          "p-2 flex gap-2 items-center rounded-lg hover:text-background hover:bg-primary",
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
           path === "/dashboard/settings" && "text-background bg-primary"
         )}
       >
@@ -72,7 +73,7 @@ export function SecondMenu() {
       <Link
         href="#"
         className={cn(
-          "p-2 flex gap-2 items-center rounded-lg hover:text-background hover:bg-primary",
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
           path === "#" && "text-background bg-primary"
         )}
       >

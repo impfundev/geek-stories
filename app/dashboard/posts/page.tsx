@@ -1,7 +1,8 @@
 import { TableList } from "@/components/shared/dashboard/table";
-import { posts } from "@/lib/dummy-data";
+import { getPosts } from "@/lib/action";
 
-export default function Posts() {
+export default async function Posts() {
+  const { posts } = await getPosts();
   return (
     <>
       <h1>Posts</h1>

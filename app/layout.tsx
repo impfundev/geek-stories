@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import { Lexend } from "next/font/google";
-import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-
-const lexend = Lexend({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "GeekStories",
@@ -12,6 +7,17 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
+import { ModeToggle } from "@/components/ui/toggle-dark-mode";
+
+import { Montserrat } from "next/font/google";
+
+const montserrat = Montserrat({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
@@ -19,20 +25,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${lexend.className} hide-scrollbar bg-slate-100`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Toaster />
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body
+        className={`bg-background text-foreground ${montserrat.className}`}
+        suppressHydrationWarning={true}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster />
+          <ModeToggle />
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

@@ -1,5 +1,12 @@
-import { Editor, EditorContextValue } from "@tiptap/react";
 import { Dispatch, SetStateAction } from "react";
+
+export type User = {
+  username: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  role: "ADMIN" | "USER";
+};
 
 export type AuthForm = {
   handleForm?: () => void;
@@ -23,16 +30,45 @@ export type UserTypes = {
   lastname?: string;
 };
 
-export type TagsTypes = {
-  tags: { id: number; name: string | null }[];
-};
-
-export type Toolbar = {
-  editor: Editor;
+export type Tag = {
+  id: number;
+  name: string | null;
 };
 
 export type NavEditor = {
   handleForm?: () => void;
   handleBack?: () => void;
-  setStatus: Dispatch<SetStateAction<string>>;
+  setStatus: Dispatch<SetStateAction<"save" | "upload">>;
+};
+
+export type Media = {
+  asset_id: string;
+  public_id: string;
+  format: string;
+  version: number;
+  resource_type: string;
+  type: string;
+  created_at: string;
+  bytes: number;
+  width: number;
+  height: number;
+  folder: string;
+  access_mode: string;
+  url: string;
+  secure_url: string;
+};
+
+export type MediaData = {
+  media: {
+    resources: Media[];
+  };
+};
+
+export type DialogMediaType = {
+  media: {
+    resources: Media[];
+  };
+  action: Dispatch<
+    SetStateAction<{ src: string; width: string; height: string; alt: string }>
+  >;
 };

@@ -1,7 +1,12 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { type NextRequest } from "next/server";
+import { updateSession } from "@/lib/auth/supabase/middleware";
 
-export default authMiddleware({});
+export async function middleware(request: NextRequest) {
+  return await updateSession(request);
+}
 
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };

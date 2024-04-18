@@ -32,8 +32,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { usePathname, useRouter } from "next/navigation";
-import { Data } from "@/lib/dummy-data";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,8 +43,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Post, AllPostType } from "@/lib/schema";
 
-export const columns: ColumnDef<Data>[] = [
+export const columns: ColumnDef<Post>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -70,10 +69,10 @@ export const columns: ColumnDef<Data>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
+    accessorKey: "published",
     header: "Status",
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <div className="capitalize">{row.getValue("published")}</div>
     ),
   },
   {
@@ -84,27 +83,42 @@ export const columns: ColumnDef<Data>[] = [
     ),
   },
   {
-    accessorKey: "author",
-    header: "Author",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("author")}</div>
-    ),
-  },
-  {
-    accessorKey: "date",
+    accessorKey: "createAt",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Date
+          Create At
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const date = new Date(row.getValue("date"));
+      const date = new Date(row.getValue("createAt"));
+      return (
+        <time dateTime={date.toTimeString()} suppressHydrationWarning>
+          {date.toDateString()}
+        </time>
+      );
+    },
+  },
+  {
+    accessorKey: "updateAt",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Update At
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const date = new Date(row.getValue("updateAt"));
       return (
         <time dateTime={date.toTimeString()} suppressHydrationWarning>
           {date.toDateString()}
@@ -126,15 +140,12 @@ export const columns: ColumnDef<Data>[] = [
   },
 ];
 
-export function TableList({ posts }: { posts: Data[] }) {
+export function TableList({ posts }: { posts: AllPostType }) {
   const data = posts;
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-
-  const router = useRouter();
-  const pathname = usePathname();
 
   const table = useReactTable({
     data,
@@ -167,7 +178,7 @@ export function TableList({ posts }: { posts: Data[] }) {
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)
           }
-          className="w-full min-w-sm"
+          className="w-full min-w-sm rounded-full"
         />
         <Button onClick={table.getToggleAllRowsSelectedHandler()}>
           {allRowSelected ? "Deselect All" : "Select All"}
@@ -246,9 +257,6 @@ export function TableList({ posts }: { posts: Data[] }) {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  onClick={() => {
-                    router.replace("#");
-                  }}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (

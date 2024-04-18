@@ -6,23 +6,37 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  excerpt   String?
-  published Boolean @default(false)
-  author    String @unique
-  tags      Tags[]
+model Posts {
+  id                String       @id @unique @default(uuid())
+  title             String
+  createAt          DateTime  @default(now())   
+  updateAt          DateTime  @default(now())   
+  content           String?
+  excerpt           String?
+  published         Published
+  tags              Tags[]
+  featured          Boolean   @default(false)
+  thumbnail_url     String?
+  thumbnail_alt     String?
+  thumbnail_width   String?
+  thumbnail_height  String?
+
+  @@map("posts")
 }
 
 model Tags {
-  id        Int     @id @default(autoincrement())
+  id       String   @id @unique @default(uuid())
   name     String?
-  posts    Post[]
+  posts    Posts[]
+
+  @@map("tags")
+}
+
+enum Published {
+  save
+  upload
 }

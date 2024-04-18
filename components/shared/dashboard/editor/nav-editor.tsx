@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeftCircle, Save, Settings, Upload } from "lucide-react";
-import { NavEditor } from "@/lib/type";
+import type { NavEditor } from "@/lib/type";
 
 export function NavEditor({ handleForm, handleBack, setStatus }: NavEditor) {
   return (

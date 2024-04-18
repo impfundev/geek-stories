@@ -1,10 +1,10 @@
 "use client";
 
 import { createTag } from "@/lib/action";
-import { TagsTypes } from "@/lib/type";
+import { Tags } from "@/lib/schema";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+
 import { Check, ChevronsUpDown } from "lucide-react";
 import {
   Popover,
@@ -19,80 +19,73 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
-export function SelectTag({ tags }: TagsTypes) {
+export function SelectTag({ tags }: { tags: Tags }) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [addedTag, setAddedTag] = useState<string[]>([]);
+  const [tagsValue, setTagsValue] = useState<{ name: string }[]>([]);
 
   return (
     <div className="flex flex-col gap-4">
+      <label htmlFor="tags">Tags:</label>
       <input
-        readOnly
-        name="tags"
         id="tags"
-        className="hidden"
-        value={addedTag}
+        name="tags"
+        value={JSON.stringify(tagsValue)}
+        readOnly
+        hidden
       />
-      <div className="flex flex-col gap-2">
-        <span>Tags:</span>
-        <div className="flex flex-wrap gap-2">
-          {addedTag.map((tag, i) => {
-            return <Badge key={i}>{tag}</Badge>;
-          })}
-        </div>
+      <div className="flex flex-wrap gap-2">
+        {tagsValue.map((tag, i) => (
+          <Badge key={`${i}-${tag.name}`}>{tag.name}</Badge>
+        ))}
       </div>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger className="w-full" asChild>
+        <PopoverTrigger asChild>
           <Button
-            type="button"
             variant="outline"
             role="combobox"
             aria-expanded={open}
             className="w-[200px] justify-between"
           >
-            Select tag...
+            "Select tags..."
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
             <CommandInput
-              value={searchValue}
+              placeholder="Search tags..."
               onValueChange={setSearchValue}
-              placeholder="Search tag..."
             />
-            <CommandEmpty className="p-4 flex flex-col gap-4 items-center">
-              <span className="text-sm">No tag found.</span>
+            <CommandEmpty className="flex flex-col items-center justify-center py-4">
+              <span className="pb-2">No tags found.</span>
               <form action={createTag}>
                 <input
-                  id="searchTagValue"
-                  name="searchTagValue"
-                  className="hidden"
+                  id="create_tag_name"
+                  name="create_tag_name"
                   value={searchValue}
+                  readOnly
+                  hidden
                 />
-                <Button
-                  onClick={() => {
-                    addedTag.push(searchValue);
-                    setOpen(false);
-                  }}
-                  size="sm"
-                  type="submit"
-                >
-                  Create "{searchValue}" ?
+                <Button type="submit" size={"sm"}>
+                  Create {searchValue}
                 </Button>
               </form>
             </CommandEmpty>
-            <CommandGroup className="max-h-36 overflow-y-auto">
+            <CommandGroup>
               {tags.map((tag) => (
                 <CommandItem
                   key={tag.id}
-                  onSelect={() => {
-                    if (!addedTag.includes(tag.name!)) {
-                      addedTag.push(tag.name!);
+                  value={tag.name}
+                  onSelect={(value) => {
+                    if (!tagsValue.find((tag) => tag.name === value)) {
+                      setTagsValue([...tagsValue, { name: value }]);
                     } else {
-                      const index = addedTag.indexOf(tag.name!);
-                      addedTag.splice(index, 1);
+                      setTagsValue([
+                        ...tagsValue.filter((tag) => tag.name !== value),
+                      ]);
                     }
                     setOpen(false);
                   }}
@@ -100,7 +93,9 @@ export function SelectTag({ tags }: TagsTypes) {
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      addedTag.includes(tag.name!) ? "opacity-100" : "opacity-0"
+                      tagsValue.includes({ name: tag.name })
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   />
                   {tag.name}
