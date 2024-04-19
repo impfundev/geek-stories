@@ -7,7 +7,7 @@ export default async function Posts() {
     <>
       <h1>Posts</h1>
       <div className="py-6">
-        <TableList posts={posts} />{" "}
+        <TableList data={posts} />{" "}
       </div>
     </>
   );

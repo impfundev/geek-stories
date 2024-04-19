@@ -3,8 +3,8 @@ import { z } from "zod";
 
 export const PostSchema = z.object({
   title: z.string(),
-  createAt: z.date(),
-  updateAt: z.date(),
+  createAt: z.date().nullable().default(new Date()),
+  updateAt: z.date().nullable().default(new Date()),
   content: z.string(),
   excerpt: z.string(),
   published: z.enum(["save", "upload"]),
@@ -19,7 +19,6 @@ export const PostSchema = z.object({
   thumbnail_width: z.string(),
   thumbnail_height: z.string(),
 });
-
 export type Post = z.infer<typeof PostSchema>;
 
 export const AllPost = z.array(PostSchema);
@@ -29,7 +28,6 @@ export const LoginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
-
 export type Login = z.infer<typeof LoginSchema>;
 
 export const TagsSchema = z.array(
@@ -38,7 +36,6 @@ export const TagsSchema = z.array(
     name: z.string(),
   })
 );
-
 export type Tags = z.infer<typeof TagsSchema>;
 
 export const MediaSchema = z.array(
@@ -59,5 +56,13 @@ export const MediaSchema = z.array(
     secure_url: z.string(),
   })
 );
-
 export type Media = z.infer<typeof MediaSchema>;
+
+export const TableSchema = z.object({
+  title: z.string(),
+  createAt: z.date().nullable().default(new Date()),
+  updateAt: z.date().nullable().default(new Date()),
+  published: z.enum(["save", "upload"]),
+  featured: z.preprocess((value) => value === "on", z.boolean()),
+});
+export type TableData = z.infer<typeof TableSchema>;

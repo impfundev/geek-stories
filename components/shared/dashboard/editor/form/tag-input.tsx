@@ -5,7 +5,7 @@ import { Tags } from "@/lib/schema";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { X, ChevronsUpDown } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -18,7 +18,6 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 export function SelectTag({ tags }: { tags: Tags }) {
@@ -38,7 +37,16 @@ export function SelectTag({ tags }: { tags: Tags }) {
       />
       <div className="flex flex-wrap gap-2">
         {tagsValue.map((tag, i) => (
-          <Badge key={`${i}-${tag.name}`}>{tag.name}</Badge>
+          <Badge
+            key={`${i}-${tag.name}`}
+            className="flex gap-2"
+            onClick={() =>
+              setTagsValue([...tagsValue.filter((t) => t.name !== tag.name)])
+            }
+          >
+            <span>{tag.name}</span>
+            <X size={16} />
+          </Badge>
         ))}
       </div>
       <Popover open={open} onOpenChange={setOpen}>
@@ -90,14 +98,6 @@ export function SelectTag({ tags }: { tags: Tags }) {
                     setOpen(false);
                   }}
                 >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      tagsValue.some((tagValue) => tagValue.name === tag.name)
-                        ? "opacity-100"
-                        : "opacity-0"
-                    )}
-                  />
                   {tag.name}
                 </CommandItem>
               ))}

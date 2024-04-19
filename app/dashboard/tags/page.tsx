@@ -1,5 +1,5 @@
-import { TableList } from "@/components/shared/dashboard/table";
-import { tags } from "@/lib/dummy-data";
+// import { TableList } from "@/components/shared/dashboard";
+// import { tags } from "@/lib/dummy-data";
 
 export default function Tags() {
   return (

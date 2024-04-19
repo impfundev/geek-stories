@@ -20,7 +20,7 @@ export async function createPost(formData: FormData) {
   } = PostSchema.parse({
     title: formData.get("title"),
     excerpt: formData.get("excerpt"),
-    content: JSON.parse(formData.get("content") as string),
+    content: formData.get("content"),
     published: formData.get("status"),
     featured: formData.get("featured"),
     thumbnail_url: formData.get("thumbnail-src"),

@@ -10,15 +10,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { login } from "@/lib/action";
 import Link from "next/link";
 
 export function LoginForm() {
   return (
-    <form
-      action={login}
-      className="relative w-full max-w-md mx-auto flex flex-col justify-center"
-    >
+    <form className="relative w-full max-w-md mx-auto flex flex-col justify-center">
       <Card className="rounded-2xl bg-background/75 backdrop-blur-md">
         <CardHeader>
           <CardTitle>Log In</CardTitle>
