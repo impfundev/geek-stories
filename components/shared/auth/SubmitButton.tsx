@@ -14,12 +14,7 @@ export function SubmitButton({
   const { pending } = useFormStatus();
 
   return (
-    <Button
-      className={className}
-      variant="outline"
-      disabled={pending}
-      type="submit"
-    >
+    <Button className={className} disabled={pending} type="submit">
       {pending ? "Submitting..." : children || "Submit"}
     </Button>
   );
