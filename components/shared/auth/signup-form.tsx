@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useFormState } from "react-dom";
-import { login } from "@/lib/action";
+import { signUp } from "@/lib/action";
 
 import {
   Card,
@@ -13,12 +13,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { SubmitButton } from "./submit-button";
 
-export function LoginForm() {
-  const [state, action] = useFormState(login, undefined);
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+export function SignUpForm() {
+  const [state, action] = useFormState(signUp, undefined);
 
   return (
     <form
@@ -27,10 +28,28 @@ export function LoginForm() {
     >
       <Card className="rounded-2xl bg-background/75 backdrop-blur-md">
         <CardHeader>
-          <CardTitle>Log In</CardTitle>
+          <CardTitle>Sign Up</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid w-full items-center gap-4">
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="userName">Username</Label>
+              <Input
+                id="userName"
+                type="text"
+                name="userName"
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+            {state?.errors?.userName && (
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Warning</AlertTitle>
+                <AlertDescription>{state?.errors?.userName}</AlertDescription>
+              </Alert>
+            )}
+
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -38,8 +57,17 @@ export function LoginForm() {
                 type="email"
                 name="email"
                 placeholder="Enter your email"
+                required
               />
             </div>
+            {state?.errors?.email && (
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Warning</AlertTitle>
+                <AlertDescription>{state?.errors?.email}</AlertDescription>
+              </Alert>
+            )}
+
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
               <Input
@@ -47,12 +75,27 @@ export function LoginForm() {
                 type="password"
                 name="password"
                 placeholder="Enter your strong password"
+                required
               />
             </div>
+            {state?.errors?.password && (
+              <Alert>
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Warning</AlertTitle>
+                <AlertDescription>
+                  <p>Password must:</p>
+                  <ul>
+                    {state.errors.password.map((error) => (
+                      <li key={error}>- {error}</li>
+                    ))}
+                  </ul>
+                </AlertDescription>
+              </Alert>
+            )}
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
-          <SubmitButton className="w-full">Log in</SubmitButton>
+          <SubmitButton className="w-full">Sign Up</SubmitButton>
           {state?.message && (
             <Alert>
               <AlertCircle className="h-4 w-4" />
@@ -61,9 +104,9 @@ export function LoginForm() {
             </Alert>
           )}
           <p className="text-sm">
-            Don't have an account?{" "}
-            <Link href="/signUp" className="underline">
-              Sign Up
+            Already have an account?{" "}
+            <Link href="/login" className="underline">
+              Log In
             </Link>
           </p>
         </CardFooter>

@@ -10,7 +10,7 @@ import { FormEditor } from "./form/form-editor";
 import { useRouter } from "next/navigation";
 import { UpdateInput } from "./form/update-input";
 import { TitleInput } from "./form/title-input";
-import { NovelEditor } from "./novel";
+import { NovelEditor } from "./novel-editor";
 
 type EditorType = {
   tags: Tags;

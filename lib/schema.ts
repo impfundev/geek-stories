@@ -1,13 +1,53 @@
 import Tags from "@/app/dashboard/tags/page";
 import { z } from "zod";
 
+export const SignupFormSchema = z.object({
+  userName: z
+    .string()
+    .min(4, { message: "Name must be at least 4 characters long." })
+    .trim(),
+  email: z.string().email({ message: "Please enter a valid email." }).trim(),
+  password: z
+    .string()
+    .min(8, { message: "Be at least 8 characters long" })
+    .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
+    .regex(/[0-9]/, { message: "Contain at least one number." })
+    .regex(/[^a-zA-Z0-9]/, {
+      message: "Contain at least one special character.",
+    })
+    .trim(),
+});
+export type SignUpForm = z.infer<typeof SignupFormSchema>;
+
+export const LoginFormSchema = z.object({
+  email: z.string(),
+  password: z.string(),
+});
+
+export type FormState =
+  | {
+      errors?: {
+        userName?: string[];
+        email?: string[];
+        password?: string[];
+      };
+      message?: string;
+    }
+  | undefined;
+
+export const SessionPayloadSchema = z.object({
+  userId: z.string(),
+  expiresAt: z.date(),
+});
+export type SessionPayload = z.infer<typeof SessionPayloadSchema>;
+
 export const PostSchema = z.object({
   title: z.string(),
   createAt: z.date().nullable().default(new Date()),
   updateAt: z.date().nullable().default(new Date()),
   content: z.string(),
   excerpt: z.string(),
-  published: z.enum(["save", "upload"]),
+  published: z.enum(["draft", "upload"]),
   tags: z.array(
     z.object({
       name: z.string(),
@@ -62,7 +102,7 @@ export const TableSchema = z.object({
   title: z.string(),
   createAt: z.date().nullable().default(new Date()),
   updateAt: z.date().nullable().default(new Date()),
-  published: z.enum(["save", "upload"]),
+  published: z.enum(["draft", "upload"]),
   featured: z.preprocess((value) => value === "on", z.boolean()),
 });
 export type TableData = z.infer<typeof TableSchema>;

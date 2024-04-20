@@ -10,8 +10,22 @@ datasource db {
   url       = env("DATABASE_URL")
 }
 
+model User {
+  id          String @id @unique @default(uuid())
+  userName    String @unique
+  email       String @unique
+  password    String
+  firstName   String?
+  lastName    String?
+  bio         String?
+  role        Roles
+  posts       Posts[]
+}
+
 model Posts {
   id                String       @id @unique @default(uuid())
+  author            User @relation(fields: [authorId], references: [id])
+  authorId          String
   title             String
   createAt          DateTime  @default(now())   
   updateAt          DateTime  @default(now())   
@@ -37,6 +51,12 @@ model Tags {
 }
 
 enum Published {
-  save
+  draft
   upload
+}
+
+enum Roles {
+  admin
+  author
+  reader
 }

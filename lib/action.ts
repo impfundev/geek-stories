@@ -2,8 +2,129 @@
 
 import { revalidatePath } from "next/cache";
 import axios from "axios";
-import { PostSchema, TagsSchema, AllPost } from "./schema";
+import {
+  PostSchema,
+  TagsSchema,
+  AllPost,
+  SignupFormSchema,
+  LoginFormSchema,
+  FormState,
+} from "./schema";
 import { prisma } from "./models";
+import { redirect } from "next/navigation";
+import bcrypt from "bcrypt";
+import { createSession, deleteSession, verifySession } from "./session";
+
+export async function signUp(state: FormState, formData: FormData) {
+  const validatedFields = SignupFormSchema.safeParse({
+    userName: formData.get("userName"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    bio: formData.get("bio"),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const { userName, email, password } = validatedFields.data;
+
+  const isUserNameUsed = await prisma.user.findUnique({
+    where: { userName },
+  });
+  const isEmailUsed = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = await prisma.user.create({
+    data: {
+      userName,
+      email,
+      password: hashedPassword,
+      role: "admin",
+    },
+  });
+
+  if (isUserNameUsed) {
+    return {
+      message: "Username is already used.",
+    };
+  } else if (isEmailUsed) {
+    return {
+      message: "Email is already used.",
+    };
+  } else if (!user) {
+    console.error(state?.message, state?.errors);
+    return {
+      message: "Something error on the server.",
+    };
+  } else {
+    await createSession(user.id);
+
+    console.log(user);
+    redirect("/dashboard");
+  }
+}
+
+export async function login(state: FormState, formData: FormData) {
+  const validatedFields = LoginFormSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
+
+  if (!validatedFields.success) {
+    console.error(validatedFields.error.flatten().fieldErrors);
+    return { message: "Error: Something error on the server." };
+  }
+
+  const { email, password } = validatedFields.data;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) return { message: "Email invalid, please enter valid email." };
+
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordValid)
+    return {
+      message: "Password invalid, please enter valid password.",
+    };
+
+  await createSession(user.id);
+  console.log(user);
+  redirect("/dashboard");
+}
+
+export async function logout() {
+  deleteSession();
+  redirect("/login");
+}
+
+export async function getUser() {
+  const session = await verifySession();
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: session.userId as string,
+      },
+    });
+
+    return { user, error: null };
+  } catch (error) {
+    return { user: null, error: "Failed to fetch user" };
+  }
+}
 
 export async function createPost(formData: FormData) {
   const {
@@ -33,6 +154,7 @@ export async function createPost(formData: FormData) {
   const postData = await prisma.posts.create({
     data: {
       title,
+      authorId: "",
       excerpt,
       content,
       published,
