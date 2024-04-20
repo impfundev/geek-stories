@@ -16,6 +16,7 @@ import bcrypt from "bcrypt";
 import { createSession, deleteSession, verifySession } from "./session";
 
 export async function signUp(state: FormState, formData: FormData) {
+  // Form validation
   const validatedFields = SignupFormSchema.safeParse({
     userName: formData.get("userName"),
     email: formData.get("email"),
@@ -33,15 +34,32 @@ export async function signUp(state: FormState, formData: FormData) {
 
   const { userName, email, password } = validatedFields.data;
 
+  // Hasing password
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Check is username already used
   const isUserNameUsed = await prisma.user.findUnique({
     where: { userName },
   });
+
+  if (isUserNameUsed) {
+    return {
+      message: "Username is already used. Please enter another username.",
+    };
+  }
+
+  // Check is email already used
   const isEmailUsed = await prisma.user.findUnique({
     where: { email },
   });
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  if (isEmailUsed) {
+    return {
+      message: "Email is already used. Please go to the login page.",
+    };
+  }
 
+  // Create user
   const user = await prisma.user.create({
     data: {
       userName,
@@ -51,25 +69,18 @@ export async function signUp(state: FormState, formData: FormData) {
     },
   });
 
-  if (isUserNameUsed) {
-    return {
-      message: "Username is already used.",
-    };
-  } else if (isEmailUsed) {
-    return {
-      message: "Email is already used.",
-    };
-  } else if (!user) {
+  if (!user) {
     console.error(state?.message, state?.errors);
     return {
       message: "Something error on the server.",
     };
-  } else {
-    await createSession(user.id);
-
-    console.log(user);
-    redirect("/dashboard");
   }
+
+  // Create session
+  await createSession(user.id);
+
+  console.log(user);
+  redirect("/dashboard");
 }
 
 export async function login(state: FormState, formData: FormData) {
