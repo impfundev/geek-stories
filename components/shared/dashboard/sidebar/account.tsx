@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export async function Account() {
   const { error, user } = await getUser();
@@ -34,9 +35,13 @@ export async function Account() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="gap-2">
-            <img
+            <Image
+              alt={user.userName}
               src={pictureUrl}
+              width={24}
+              height={24}
               className="w-6 h-6 rounded-full object-cover"
+              loading="lazy"
             />
             <span className="truncate">{user.userName}</span>
           </Button>

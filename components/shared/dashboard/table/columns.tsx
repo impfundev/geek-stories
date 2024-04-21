@@ -1,5 +1,5 @@
 import { ArrowUpDown, Trash } from "lucide-react";
-import { TableData } from "@/lib/schema";
+import { TableData } from "@/lib/models/schema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";

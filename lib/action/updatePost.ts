@@ -4,8 +4,9 @@ import { PostSchema } from "../models/schema";
 import { prisma } from "../models/prisma";
 import { verifySession } from "../session";
 
-export async function createPost(formData: FormData) {
+export async function updatePost(formData: FormData) {
   const {
+    id,
     title,
     content,
     excerpt,
@@ -17,10 +18,11 @@ export async function createPost(formData: FormData) {
     thumbnail_height,
     tags,
   } = PostSchema.parse({
+    id: formData.get("postId"),
     title: formData.get("title"),
     excerpt: formData.get("excerpt"),
     content: formData.get("content"),
-    published: formData.get("published"),
+    published: formData.get("status"),
     featured: formData.get("featured"),
     thumbnail_url: formData.get("thumbnail-src"),
     thumbnail_alt: formData.get("thumbnail-alt"),
@@ -33,7 +35,8 @@ export async function createPost(formData: FormData) {
   const { userId } = await verifySession();
   const authorId = userId as string;
 
-  const postData = await prisma.posts.create({
+  const postData = await prisma.posts.update({
+    where: { id },
     data: {
       title,
       authorId,

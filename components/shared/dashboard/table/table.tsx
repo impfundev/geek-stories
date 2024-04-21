@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TableData } from "@/lib/schema";
+import { TableData } from "@/lib/models/schema";
 
 import { flexRender, type Table as TableType } from "@tanstack/react-table";
 import { columns } from "./columns";

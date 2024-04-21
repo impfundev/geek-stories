@@ -57,7 +57,7 @@ export function SelectTag({ tags }: { tags: Tags }) {
             aria-expanded={open}
             className="w-[200px] justify-between"
           >
-            "Select tags..."
+            Select tags...
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>

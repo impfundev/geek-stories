@@ -17,13 +17,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { TableData } from "@/lib/schema";
+import { TableData } from "@/lib/models/schema";
 import { Table } from "@tanstack/react-table";
+import { v4 as uuidv4 } from "uuid";
 import { ChevronDown, Plus } from "lucide-react";
 import Link from "next/link";
 
 export function TableNavigation({ table }: { table: Table<TableData> }) {
   let allRowSelected = table.getIsAllRowsSelected();
+  const genId = uuidv4();
 
   return (
     <div className="flex gap-4 items-center py-4">
@@ -36,8 +38,8 @@ export function TableNavigation({ table }: { table: Table<TableData> }) {
         className="w-full min-w-sm rounded-full"
       />
       <Button asChild variant="outline" className="ml-auto">
-        <Link href="/editor">
-          Create Post <Plus className="ml-2 h-4 w-4" />
+        <Link href={`/editor/${genId}`}>
+          Create New Post <Plus className="ml-2 h-4 w-4" />
         </Link>
       </Button>
       <Button onClick={table.getToggleAllRowsSelectedHandler()}>

@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 export type NavEditor = {
   handleForm?: () => void;
   handleBack?: () => void;
-  setStatus: Dispatch<SetStateAction<"save" | "upload">>;
+  setStatus: Dispatch<SetStateAction<"draft" | "upload">>;
 };
 
 export type Media = {

@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { TableData } from "@/lib/schema";
+import { TableData } from "@/lib/models/schema";
 import { columns } from "./columns";
 import { TablePagination } from "./pagination";
 import { TableNavigation } from "./navigation";

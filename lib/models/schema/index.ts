@@ -37,6 +37,7 @@ export type FormState =
   | undefined;
 
 export {
+  PostSchema,
   UserSchema,
   SignupFormSchema,
   LoginFormSchema,

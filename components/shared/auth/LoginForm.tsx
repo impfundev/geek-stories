@@ -61,7 +61,7 @@ export function LoginForm() {
             </Alert>
           )}
           <p className="text-sm">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/signUp" className="underline">
               Sign Up
             </Link>

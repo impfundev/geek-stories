@@ -1,7 +1,9 @@
 import { z } from "zod";
-import { UserSchema } from ".";
+import { UserSchema } from "@/lib/models/schema/UserSchema";
+import { v4 as uuidv4 } from "uuid";
 
 export const PostSchema = z.object({
+  id: z.string().default(uuidv4()),
   title: z.string(),
   createAt: z.date().default(new Date()),
   updateAt: z.date().default(new Date()),

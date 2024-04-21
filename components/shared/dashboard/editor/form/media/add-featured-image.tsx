@@ -6,6 +6,7 @@ import { TrashIcon } from "lucide-react";
 import { MediaData } from "@/lib/type";
 import { DialogMedia } from "./dialog-media";
 import { InputFeatured } from "./featured-image-input";
+import Image from "next/image";
 
 export function AddFeatured({ media }: MediaData) {
   const [featured, setFeatured] = useState({
@@ -20,11 +21,11 @@ export function AddFeatured({ media }: MediaData) {
       <InputFeatured value={featured} />
       {featured.src ? (
         <>
-          <img
+          <Image
             className="w-full max-h-96 object-cover rounded-lg"
             src={featured.src}
-            width={featured.width}
-            height={featured.height}
+            width={Number(featured.width)}
+            height={Number(featured.height)}
             alt={featured.alt}
             loading="lazy"
           />

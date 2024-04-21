@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { TableData } from "@/lib/schema";
+import { TableData } from "@/lib/models/schema";
 import type { Table } from "@tanstack/react-table";
 
 export function TablePagination({ table }: { table: Table<TableData> }) {

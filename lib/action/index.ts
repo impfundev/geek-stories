@@ -1,4 +1,5 @@
 export { createPost } from "./createPost";
+export { updatePost } from "./updatePost";
 export { createTag } from "./createTag";
 export { getPosts } from "./getPosts";
 export { getTag } from "./getTag";
