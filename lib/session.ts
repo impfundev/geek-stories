@@ -1,10 +1,9 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-import { SignJWT, jwtVerify, JWTPayload } from "jose";
+import { SignJWT, jwtVerify } from "jose";
 
-import { SessionPayload } from "./schema";
-import { redirect } from "next/navigation";
+import { SessionPayload } from "./models/schema";
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
@@ -18,13 +17,18 @@ export async function encrypt(payload: SessionPayload) {
 }
 
 export async function decrypt(session: string | undefined = "") {
-  try {
-    const { payload } = await jwtVerify(session, encodedKey, {
-      algorithms: ["HS256"],
-    });
-    return payload;
-  } catch (error) {
-    console.log("Failed to verify session");
+  if (session) {
+    try {
+      const { payload } = await jwtVerify(session, encodedKey, {
+        algorithms: ["HS256"],
+      });
+      return payload;
+    } catch (error) {
+      console.log("Failed to verify session");
+    }
+  } else {
+    console.log("User not login");
+    return null;
   }
 }
 

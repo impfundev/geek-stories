@@ -6,11 +6,12 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { posts, Posts } from "@/lib/dummy-data";
+import { getPosts } from "@/lib/action";
+import { GravatarOptions, getGravatarUrl } from "react-awesome-gravatar";
 
-const data: Posts[] = posts;
+export async function RecentPosts() {
+  const { posts } = await getPosts();
 
-export function RecentPosts() {
   return (
     <Card>
       <CardHeader>
@@ -19,19 +20,20 @@ export function RecentPosts() {
       </CardHeader>
       <CardContent>
         <div className="space-y-8">
-          {data.map((post, i) => {
-            const date = new Date(post.date);
-            const options = {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
+          {posts.map((post, i) => {
+            const pictureOptions: GravatarOptions = {
+              size: 24,
             };
+            const pictureUrl = getGravatarUrl(
+              post.author.email,
+              pictureOptions
+            );
+
             return (
               <div key={i} className="flex items-center gap-20">
                 <div className="flex items-center gap-4">
                   <Avatar className="h-9 w-9">
-                    <AvatarImage src={post.authorAvatar} alt="Avatar" />
+                    <AvatarImage src={pictureUrl} alt="Avatar" />
                     <AvatarFallback>
                       <AvatarImage src="/avatars/01.png" alt="Avatar" />
                     </AvatarFallback>
@@ -41,15 +43,15 @@ export function RecentPosts() {
                       {post.title}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {post.author}
+                      {post.author.userName}
                     </p>
                   </div>
                 </div>
                 <time
                   className="text-sm text-muted-foreground"
-                  dateTime={post.date}
+                  dateTime={post.updateAt.toISOString()}
                 >
-                  {date.toDateString()}
+                  {post.updateAt.toDateString()}
                 </time>
               </div>
             );

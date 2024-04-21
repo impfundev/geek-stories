@@ -1,7 +1,7 @@
 "use client";
 
 import { createTag } from "@/lib/action";
-import { Tags } from "@/lib/schema";
+import { Tags } from "@/lib/models/schema";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 

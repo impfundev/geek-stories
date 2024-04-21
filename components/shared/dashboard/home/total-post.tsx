@@ -1,14 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardTitle, CardContent } from "@/components/ui/card";
-import { posts, Posts } from "@/lib/dummy-data";
+import { getPosts } from "@/lib/action";
 import Link from "next/link";
 
-const data: Posts[] = posts;
-const totalPost = data.length;
-const publishedPost = data.filter((post) => post.status === "publish").length;
-const draftedPost = data.filter((post) => post.status === "draft").length;
+export async function TotalPost() {
+  const { posts } = await getPosts();
+  const totalPost = posts.length;
+  const publishedPost = posts.filter(
+    (post) => post.published === "upload"
+  ).length;
+  const draftedPost = posts.filter((post) => post.published === "draft").length;
 
-export function TotalPost() {
   return (
     <div className="flex flex-col gap-4">
       <Card className="drop-shadow-lg">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Media, Tags } from "@/lib/schema";
+import { Media, Tags } from "@/lib/models/schema";
 import { createPost } from "@/lib/action";
 
 import { NavEditor } from "./nav-editor";

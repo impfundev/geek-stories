@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { uploadImage } from "@/lib/action";
+import { uploadImage } from "@/lib/action/uploadImage";
 import { Image as ImageIcon } from "lucide-react";
 import { SubmitButton } from "./submit-button";
 
