@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Media, Tags } from "@/lib/models/schema";
 import { createPost } from "@/lib/action";
 
-import { NavEditor } from "./nav-editor";
+import { NavEditor } from "./NavEditor";
 import { AddFeatured } from "./form/media/add-featured-image";
 import { FormEditor } from "./form/form-editor";
 import { useRouter } from "next/navigation";

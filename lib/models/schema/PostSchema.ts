@@ -5,7 +5,7 @@ export const PostSchema = z.object({
   title: z.string(),
   createAt: z.date().default(new Date()),
   updateAt: z.date().default(new Date()),
-  content: z.string(),
+  content: z.string().nullable(),
   excerpt: z.string(),
   published: z.enum(["draft", "upload"]),
   featured: z.preprocess((value) => value === "on", z.boolean()),

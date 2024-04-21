@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { PostSchema } from "../models/schema/PostSchema";
 import { prisma } from "../models/prisma";
+import { verifySession } from "../session";
 
 export async function createPost(formData: FormData) {
   const {
@@ -28,12 +29,17 @@ export async function createPost(formData: FormData) {
     tags: JSON.parse(formData.get("tags") as string),
   });
 
+  const jsonContent = JSON.parse(formData.get("jsonContent") as string);
+  const { userId } = await verifySession();
+  const authorId = userId as string;
+
   const postData = await prisma.posts.create({
     data: {
       title,
-      authorId: "",
+      authorId,
       excerpt,
       content,
+      jsonContent,
       published,
       featured,
       thumbnail_url,
