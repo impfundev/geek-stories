@@ -37,3 +37,6 @@ next-env.d.ts
 
 # tinyMCE Rich Editor
 /public/tinymce/
+
+#bun
+bun.lockb
