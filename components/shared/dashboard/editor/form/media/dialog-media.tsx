@@ -9,7 +9,6 @@ import {
 import { Image as ImageIcon } from "lucide-react";
 import { Media, DialogMediaType } from "@/lib/type";
 import { UploadImage } from "./upload-image";
-import Image from "next/image";
 
 export function DialogMedia({ media, action }: DialogMediaType) {
   return (
@@ -42,7 +41,7 @@ export function DialogMedia({ media, action }: DialogMediaType) {
                     })
                   }
                 >
-                  <Image
+                  <img
                     className="max-w-full object-cover"
                     width={media.width}
                     height={media.height}

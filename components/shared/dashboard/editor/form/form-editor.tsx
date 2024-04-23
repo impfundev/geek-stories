@@ -3,18 +3,31 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { SelectTag } from "./tag-input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Tags } from "@/lib/schema";
+import type { Tags } from "@prisma/client";
 
-export function FormEditor({ tags }: { tags: Tags }) {
+export function FormEditor({
+  allTag,
+  postTag,
+  excerpt,
+}: {
+  allTag: Tags[];
+  postTag: Tags[];
+  excerpt: string;
+}) {
   return (
     <Card className={cn("w-full max-w-[20vw] h-full")}>
       <CardContent className="py-4 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <label htmlFor="excerpt">Excerpt</label>
-          <Textarea id="excerpt" name="excerpt" placeholder="Enter excerpt" />
+          <Textarea
+            id="excerpt"
+            name="excerpt"
+            defaultValue={excerpt}
+            placeholder="Enter excerpt"
+          />
         </div>
         <div className="flex flex-col gap-2">
-          <SelectTag tags={tags} />
+          <SelectTag allTag={allTag} postTag={postTag} />
         </div>
         <div className="flex items-center space-x-2">
           <Checkbox id="featured" name="featured" />

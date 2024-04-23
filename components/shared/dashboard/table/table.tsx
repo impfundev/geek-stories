@@ -39,6 +39,9 @@ export function TableView({ table }: { table: TableType<TableData> }) {
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                onClick={() =>
+                  window.location.replace(`/editor/${row.getValue("id")}`)
+                }
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

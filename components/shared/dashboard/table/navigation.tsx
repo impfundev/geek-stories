@@ -19,13 +19,41 @@ import {
 import { Input } from "@/components/ui/input";
 import { TableData } from "@/lib/models/schema";
 import { Table } from "@tanstack/react-table";
-import { v4 as uuidv4 } from "uuid";
-import { ChevronDown, Plus } from "lucide-react";
-import Link from "next/link";
+import { ChevronDown, Loader2, Plus } from "lucide-react";
+import { createPost } from "@/lib/action";
+import { useFormState, useFormStatus } from "react-dom";
+
+const CreatePost = () => {
+  const [state, action] = useFormState(createPost, undefined);
+  return (
+    <form action={action}>
+      <ButtonCreatePost />
+    </form>
+  );
+};
+
+const ButtonCreatePost = () => {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      disabled={pending}
+      type="submit"
+      variant="outline"
+      className="ml-auto"
+    >
+      {pending ? (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        <>
+          Create New Post <Plus className="ml-2 h-4 w-4" />
+        </>
+      )}
+    </Button>
+  );
+};
 
 export function TableNavigation({ table }: { table: Table<TableData> }) {
-  let allRowSelected = table.getIsAllRowsSelected();
-  const genId = uuidv4();
+  let isAllRowsSelected = table.getIsAllRowsSelected();
 
   return (
     <div className="flex gap-4 items-center py-4">
@@ -37,15 +65,11 @@ export function TableNavigation({ table }: { table: Table<TableData> }) {
         }
         className="w-full min-w-sm rounded-full"
       />
-      <Button asChild variant="outline" className="ml-auto">
-        <Link href={`/editor/${genId}`}>
-          Create New Post <Plus className="ml-2 h-4 w-4" />
-        </Link>
-      </Button>
+      <CreatePost />
       <Button onClick={table.getToggleAllRowsSelectedHandler()}>
-        {allRowSelected ? "Deselect All" : "Select All"}
+        {isAllRowsSelected ? "Deselect All" : "Select All"}
       </Button>
-      {allRowSelected && (
+      {isAllRowsSelected && (
         <AlertDialog>
           <Button asChild>
             <AlertDialogTrigger>Delete All</AlertDialogTrigger>

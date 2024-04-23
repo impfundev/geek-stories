@@ -10,15 +10,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { ModeToggle } from "@/components/ui/toggle-dark-mode";
 
-import { Montserrat } from "next/font/google";
-
-const montserrat = Montserrat({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export default function RootLayout({
   children,
 }: {
@@ -27,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`bg-background text-foreground ${montserrat.className}`}
+        className="bg-background text-foreground"
         suppressHydrationWarning={true}
       >
         <ThemeProvider

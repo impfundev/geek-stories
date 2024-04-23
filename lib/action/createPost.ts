@@ -1,54 +1,20 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { PostSchema } from "../models/schema";
 import { prisma } from "../models/prisma";
 import { verifySession } from "../session";
 
-export async function createPost(formData: FormData) {
-  const {
-    title,
-    content,
-    excerpt,
-    published,
-    featured,
-    thumbnail_url,
-    thumbnail_alt,
-    thumbnail_width,
-    thumbnail_height,
-    tags,
-  } = PostSchema.parse({
-    title: formData.get("title"),
-    excerpt: formData.get("excerpt"),
-    content: formData.get("content"),
-    published: formData.get("published"),
-    featured: formData.get("featured"),
-    thumbnail_url: formData.get("thumbnail-src"),
-    thumbnail_alt: formData.get("thumbnail-alt"),
-    thumbnail_height: formData.get("thumbnail-height"),
-    thumbnail_width: formData.get("thumbnail-width"),
-    tags: JSON.parse(formData.get("tags") as string),
-  });
-
-  const jsonContent = JSON.parse(formData.get("jsonContent") as string);
+export async function createPost() {
   const { userId } = await verifySession();
   const authorId = userId as string;
 
   const postData = await prisma.posts.create({
     data: {
-      title,
+      title: "New Post",
       authorId,
-      excerpt,
-      content,
-      jsonContent,
-      published,
-      featured,
-      thumbnail_url,
-      thumbnail_alt,
-      thumbnail_width,
-      thumbnail_height,
-      tags: {
-        create: tags,
-      },
+      excerpt: "Write the description of your post here.",
+      content: "<p>Start write your content</p>",
+      published: "draft",
+      featured: false,
     },
   });
 

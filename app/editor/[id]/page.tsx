@@ -2,30 +2,27 @@ import { Editor } from "@/components/shared/dashboard/editor";
 import { getPosts, getTag } from "@/lib/action";
 import { cloudinary } from "@/lib/cloudinary /cloudinary";
 import { prisma } from "@/lib/models/prisma";
+import { redirect } from "next/navigation";
 
 export default async function EditorPage({
   params,
 }: {
   params: { id: string };
 }) {
-  const { tags } = await getTag();
   const media = await cloudinary.v2.api.resources().then((result) => result);
+  const { tags } = await getTag();
   const post = await prisma.posts.findUnique({
     where: {
       id: params.id,
     },
+    include: {
+      tags: true,
+    },
   });
 
-  if (!post) return <Editor tags={tags} media={media} />;
+  if (!post) redirect("/dashboard");
 
-  return (
-    <Editor
-      id={post.id}
-      tags={tags}
-      media={media}
-      initialContent={post.jsonContent}
-    />
-  );
+  return <Editor allTag={tags} postTag={post.tags} media={media} post={post} />;
 }
 
 export async function generateStaticParams() {

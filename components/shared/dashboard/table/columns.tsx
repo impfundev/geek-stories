@@ -1,8 +1,10 @@
-import { ArrowUpDown, Trash } from "lucide-react";
+import { ArrowUpDown, Trash, Loader2 } from "lucide-react";
 import { TableData } from "@/lib/models/schema";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, Row } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
+import { deletePost } from "@/lib/action/deletePost";
+import { useFormState, useFormStatus } from "react-dom";
 
 export const columns: ColumnDef<TableData>[] = [
   {
@@ -86,15 +88,42 @@ export const columns: ColumnDef<TableData>[] = [
     },
   },
   {
-    id: "actions",
-    enableHiding: false,
-    cell: () => {
-      return (
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Delete</span>
-          <Trash className="h-4 w-4" />
-        </Button>
-      );
+    id: "id",
+    accessorKey: "id",
+    header: "",
+    cell: ({ row }) => {
+      return <DeletePost row={row} />;
     },
   },
 ];
+
+const DeletePost = ({ row }: { row: Row<TableData> }) => {
+  const [state, action] = useFormState(deletePost, undefined);
+
+  return (
+    <form action={action}>
+      <input
+        id="postId"
+        name="postId"
+        value={row.getValue("id")}
+        readOnly
+        hidden
+      />
+      <DeleteButton />
+    </form>
+  );
+};
+
+const DeleteButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button disabled={pending} variant="ghost" className="h-8 w-8 p-0">
+      {pending ? (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        <Trash className="h-4 w-4" />
+      )}
+    </Button>
+  );
+};

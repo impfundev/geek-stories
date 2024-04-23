@@ -1,11 +1,12 @@
 "use client";
 
-import { createTag } from "@/lib/action";
-import { Tags } from "@/lib/models/schema";
 import { useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
+import { createTag } from "@/lib/action";
+import type { Tags } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 
-import { X, ChevronsUpDown } from "lucide-react";
+import { X, ChevronsUpDown, Loader2 } from "lucide-react";
 import {
   Popover,
   PopoverContent,
@@ -20,10 +21,16 @@ import {
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 
-export function SelectTag({ tags }: { tags: Tags }) {
+export function SelectTag({
+  allTag,
+  postTag,
+}: {
+  allTag: Tags[];
+  postTag: Tags[];
+}) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [tagsValue, setTagsValue] = useState<{ name: string }[]>([]);
+  const [tagsValue, setTagsValue] = useState<Tags[]>(postTag);
 
   return (
     <div className="flex flex-col gap-4">
@@ -36,9 +43,9 @@ export function SelectTag({ tags }: { tags: Tags }) {
         hidden
       />
       <div className="flex flex-wrap gap-2">
-        {tagsValue.map((tag, i) => (
+        {tagsValue.map((tag) => (
           <Badge
-            key={`${i}-${tag.name}`}
+            key={tag.id}
             className="flex gap-2"
             onClick={() =>
               setTagsValue([...tagsValue.filter((t) => t.name !== tag.name)])
@@ -69,27 +76,16 @@ export function SelectTag({ tags }: { tags: Tags }) {
             />
             <CommandEmpty className="flex flex-col items-center justify-center py-4">
               <span className="pb-2">No tags found.</span>
-              <form action={createTag}>
-                <input
-                  id="create_tag_name"
-                  name="create_tag_name"
-                  value={searchValue}
-                  readOnly
-                  hidden
-                />
-                <Button type="submit" size={"sm"}>
-                  Create {searchValue}
-                </Button>
-              </form>
+              <CreateTag value={searchValue} />
             </CommandEmpty>
-            <CommandGroup>
-              {tags.map((tag) => (
+            <CommandGroup className="grid gap-2">
+              {allTag.map((tag) => (
                 <CommandItem
                   key={tag.id}
-                  value={tag.name}
+                  value={tag.name!}
                   onSelect={(value) => {
                     if (!tagsValue.find((tag) => tag.name === value)) {
-                      setTagsValue([...tagsValue, { name: value }]);
+                      setTagsValue([...tagsValue, { id: tag.id, name: value }]);
                     } else {
                       setTagsValue([
                         ...tagsValue.filter((tag) => tag.name !== value),
@@ -108,3 +104,34 @@ export function SelectTag({ tags }: { tags: Tags }) {
     </div>
   );
 }
+
+const CreateTag = ({ value }: { value: string }) => {
+  const [state, action] = useFormState(createTag, undefined);
+
+  return (
+    <form action={action}>
+      <input
+        id="create_tag_name"
+        name="create_tag_name"
+        value={value}
+        readOnly
+        hidden
+      />
+      <ButtonCreateTag label={value} />
+    </form>
+  );
+};
+
+const ButtonCreateTag = ({ label }: { label: string }) => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button disabled={pending} type="submit" size={"sm"}>
+      {pending ? (
+        <Loader2 className="w-5 h-5 animate-spin" />
+      ) : (
+        <>Create {label}</>
+      )}
+    </Button>
+  );
+};
