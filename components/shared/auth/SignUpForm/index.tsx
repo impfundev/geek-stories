@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { signUp } from "@/lib/action";

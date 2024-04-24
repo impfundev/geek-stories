@@ -1,3 +1,6 @@
+import { UseFormRegister } from "react-hook-form";
+import type { Posts } from "@prisma/client";
+
 type FeaturedInput = {
   value: {
     src: string;
@@ -5,36 +8,33 @@ type FeaturedInput = {
     height: string;
     alt: string;
   };
+  register: UseFormRegister<Posts>;
 };
 
-export function InputFeatured({ value }: FeaturedInput) {
+export function InputFeatured({ register, value }: FeaturedInput) {
   return (
     <>
       <input
-        id="thumbnail-src"
-        name="thumbnail-src"
         value={value.src}
         className="hidden"
+        {...register("thumbnail_url")}
         readOnly
       />
       <input
-        id="thumbnail-alt"
-        name="thumbnail-alt"
         value={value.alt}
+        {...register("thumbnail_alt")}
         className="hidden"
         readOnly
       />
       <input
-        id="thumbnail-width"
-        name="thumbnail-width"
         value={value.width}
+        {...register("thumbnail_width")}
         className="hidden"
         readOnly
       />
       <input
-        id="thumbnail-height"
-        name="thumbnail-height"
         value={value.height}
+        {...register("thumbnail_height")}
         className="hidden"
         readOnly
       />

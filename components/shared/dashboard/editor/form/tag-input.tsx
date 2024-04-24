@@ -20,14 +20,9 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
+import type { SelectTag } from "@/lib/type";
 
-export function SelectTag({
-  allTag,
-  postTag,
-}: {
-  allTag: Tags[];
-  postTag: Tags[];
-}) {
+export function SelectTag({ allTag, postTag, register }: SelectTag) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [tagsValue, setTagsValue] = useState<Tags[]>(postTag);
@@ -36,8 +31,7 @@ export function SelectTag({
     <div className="flex flex-col gap-4">
       <label htmlFor="tags">Tags:</label>
       <input
-        id="tags"
-        name="tags"
+        {...register("tags")}
         value={JSON.stringify(tagsValue)}
         readOnly
         hidden

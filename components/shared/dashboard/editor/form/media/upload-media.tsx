@@ -1,13 +1,13 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { uploadImage } from "@/lib/action/uploadImage";
+import { uploadMedia } from "@/lib/action/uploadMedia";
 import { Image as ImageIcon } from "lucide-react";
 import { SubmitButton } from "./submit-button";
 
-export function UploadImage() {
+export function UploadMedia() {
   return (
     <form
-      action={uploadImage}
+      action={uploadMedia}
       className="p-6 w-full max-w-sm flex flex-col gap-4 items-center justify-center my-2 rounded-lg border"
     >
       <ImageIcon size={100} absoluteStrokeWidth />

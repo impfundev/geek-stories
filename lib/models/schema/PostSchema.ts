@@ -1,13 +1,14 @@
 import { z } from "zod";
 import { UserSchema } from "@/lib/models/schema/UserSchema";
+import { TagsSchema } from "./TagsSchema";
 
 export const PostSchema = z.object({
   id: z.string(),
   author: UserSchema.nullable(),
-  authorId: z.string().nullable(),
+  authorId: z.string(),
   title: z.string(),
-  createAt: z.date().nullable(),
-  updateAt: z.date().nullable(),
+  createAt: z.date(),
+  updateAt: z.date(),
   content: z.string().nullable(),
   jsonContent: z.any(),
   excerpt: z.string().nullable(),
@@ -17,13 +18,5 @@ export const PostSchema = z.object({
   thumbnail_alt: z.string().nullable(),
   thumbnail_width: z.string().nullable(),
   thumbnail_height: z.string().nullable(),
-  tags: z
-    .array(
-      z
-        .object({
-          name: z.string(),
-        })
-        .nullable()
-    )
-    .nullable(),
+  tags: z.array(TagsSchema),
 });

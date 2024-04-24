@@ -6,10 +6,17 @@ import { verifySession } from "../session";
 import { redirect } from "next/navigation";
 
 export async function updatePost(formData: FormData) {
+  const { userId } = await verifySession();
+
   const {
     id,
+    authorId,
     title,
+    createAt,
+    updateAt,
+    tags,
     content,
+    jsonContent,
     excerpt,
     published,
     featured,
@@ -22,6 +29,7 @@ export async function updatePost(formData: FormData) {
     title: formData.get("title"),
     excerpt: formData.get("excerpt"),
     content: formData.get("content"),
+    jsonContent: JSON.parse(formData.get("jsonContent") as string),
     published: formData.get("published"),
     featured: formData.get("featured"),
     thumbnail_url: formData.get("thumbnail-src"),
@@ -29,18 +37,11 @@ export async function updatePost(formData: FormData) {
     thumbnail_height: formData.get("thumbnail-height"),
     thumbnail_width: formData.get("thumbnail-width"),
     author: null,
-    authorId: null,
-    createAt: null,
-    updateAt: null,
-    tags: null,
+    authorId: userId as string,
+    createAt: JSON.parse(formData.get("createAt") as string),
+    updateAt: JSON.parse(formData.get("updateAt") as string),
+    tags: JSON.parse(formData.get("tags") as string),
   });
-
-  const jsonContent = JSON.parse(formData.get("jsonContent") as string);
-  const { userId } = await verifySession();
-  const authorId = userId as string;
-  const tags = JSON.parse(formData.get("tags") as string);
-  const createAt = JSON.parse(formData.get("createAt") as string);
-  const updateAt = JSON.parse(formData.get("updateAt") as string);
 
   const postData = await prisma.posts.update({
     where: { id },
@@ -58,7 +59,9 @@ export async function updatePost(formData: FormData) {
       thumbnail_alt,
       thumbnail_width,
       thumbnail_height,
-      tags: tags,
+      tags: {
+        set: tags,
+      },
     },
   });
 

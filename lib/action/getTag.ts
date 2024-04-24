@@ -1,5 +1,4 @@
 "use server";
-import { TagsSchema } from "../models/schema/TagsSchema";
 import { prisma } from "../models/prisma";
 
 export async function getTag() {

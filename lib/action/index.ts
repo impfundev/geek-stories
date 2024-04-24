@@ -7,4 +7,5 @@ export { getUser } from "./getUser";
 export { login } from "./login";
 export { logout } from "./logout";
 export { signUp } from "./signUp";
-export { uploadImage } from "./uploadImage";
+export { uploadImage } from "./uploadMedia";
+export { getMedia } from "./getMedia";

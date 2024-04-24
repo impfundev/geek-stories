@@ -1,4 +1,8 @@
+import type { Posts, Tags } from "@prisma/client";
+import { ISizeCalculationResult } from "image-size/dist/types/interface";
+import { JSONContent } from "novel";
 import { Dispatch, SetStateAction } from "react";
+import { UseFormRegister } from "react-hook-form";
 
 export type NavEditor = {
   handleForm?: () => void;
@@ -6,33 +10,42 @@ export type NavEditor = {
   onStatusChange: Dispatch<SetStateAction<"draft" | "upload">>;
 };
 
+export type TitleInput = {
+  title: string;
+  register: UseFormRegister<Posts & { tags: Tags }>;
+};
+
+export type Editor = {
+  initialContent?: JSONContent;
+  register: UseFormRegister<Posts & { tags: Tags }>;
+};
+
+export type FormEditor = {
+  allTag: Tags[];
+  postTag: Tags[];
+  excerpt: string;
+  register: UseFormRegister<Posts & { tags: Tags }>;
+};
+
+export type SelectTag = {
+  allTag: Tags[];
+  postTag: Tags[];
+  register: UseFormRegister<Posts & { tags: Tags }>;
+};
+
 export type Media = {
-  asset_id: string;
-  public_id: string;
-  format: string;
-  version: number;
-  resource_type: string;
-  type: string;
-  created_at: string;
-  bytes: number;
-  width: number;
-  height: number;
-  folder: string;
-  access_mode: string;
   url: string;
-  secure_url: string;
+  metadata: ISizeCalculationResult;
 };
 
 export type MediaData = {
-  media: {
-    resources: Media[];
-  };
+  media: Media[];
+  thumbnail?: string | null;
+  register: UseFormRegister<Posts & { tags: Tags }>;
 };
 
 export type DialogMediaType = {
-  media: {
-    resources: Media[];
-  };
+  media: Media[];
   action: Dispatch<
     SetStateAction<{ src: string; width: string; height: string; alt: string }>
   >;

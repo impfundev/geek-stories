@@ -1,8 +1,6 @@
 import { z } from "zod";
 
-export const TagsSchema = z.array(
-  z.object({
-    id: z.string().nullable(),
-    name: z.string(),
-  })
-);
+export const TagsSchema = z.object({
+  id: z.string(),
+  name: z.string().nullable(),
+});

@@ -7,9 +7,9 @@ import { MediaData } from "@/lib/type";
 import { DialogMedia } from "./dialog-media";
 import { InputFeatured } from "./featured-image-input";
 
-export function AddFeatured({ media }: MediaData) {
+export function AddFeatured({ media, thumbnail, register }: MediaData) {
   const [featured, setFeatured] = useState({
-    src: "",
+    src: thumbnail || "",
     width: "",
     height: "",
     alt: "",
@@ -17,7 +17,7 @@ export function AddFeatured({ media }: MediaData) {
 
   return (
     <>
-      <InputFeatured value={featured} />
+      <InputFeatured register={register} value={featured} />
       {featured.src ? (
         <>
           <img

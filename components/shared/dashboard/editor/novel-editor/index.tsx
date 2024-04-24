@@ -19,11 +19,9 @@ import {
   TextButtons,
 } from "./extensions/bubble-menu";
 
-export function NovelEditor({
-  initialContent,
-}: {
-  initialContent?: JSONContent;
-}) {
+import type { Editor } from "@/lib/type";
+
+export function NovelEditor({ initialContent, register }: Editor) {
   const [content, setContent] = useState<string>("");
   const [jsonContent, setJsonContent] = useState<JSONContent | undefined>(
     undefined
@@ -51,13 +49,12 @@ export function NovelEditor({
           },
         }}
       >
-        <input hidden id="content" name="content" value={content} readOnly />
+        <input {...register("content")} value={content} readOnly hidden />
         <input
-          hidden
-          id="jsonContent"
-          name="jsonContent"
+          {...register("jsonContent")}
           value={JSON.stringify(jsonContent)}
           readOnly
+          hidden
         />
         <EditorBubble className="flex w-fit max-w-[90vw] overflow-hidden rounded border border-muted bg-background shadow-xl">
           <NodeSelector open={openNode} onOpenChange={setOpenNode} />

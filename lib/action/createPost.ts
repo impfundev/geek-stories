@@ -12,7 +12,22 @@ export async function createPost() {
       title: "New Post",
       authorId,
       excerpt: "Write the description of your post here.",
-      content: "<p>Start write your content</p>",
+      content:
+        "<p>Start write your content here. Press '/' to browse text editor tool</p>",
+      jsonContent: {
+        type: "doc",
+        content: [
+          {
+            type: "paragraph",
+            content: [
+              {
+                text: "Start write your content here. Press '/' to browse text editor tool",
+                type: "text",
+              },
+            ],
+          },
+        ],
+      },
       published: "draft",
       featured: false,
     },
