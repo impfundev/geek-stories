@@ -25,7 +25,7 @@ export async function RecentPosts() {
               size: 24,
             };
             const pictureUrl = getGravatarUrl(
-              post.author.email,
+              post!.author!.email,
               pictureOptions
             );
 
@@ -43,7 +43,7 @@ export async function RecentPosts() {
                       {post.title}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {post.author.userName}
+                      {post!.author!.userName}
                     </p>
                   </div>
                 </div>

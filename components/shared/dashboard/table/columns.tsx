@@ -5,6 +5,9 @@ import { ColumnDef, Row } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { deletePost } from "@/lib/action/deletePost";
 import { useFormState, useFormStatus } from "react-dom";
+import type { Tags } from "@prisma/client";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export const columns: ColumnDef<TableData>[] = [
   {
@@ -30,6 +33,18 @@ export const columns: ColumnDef<TableData>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: "title",
+    header: "Title",
+    cell: ({ row }) => (
+      <Link
+        href={`/editor/${row.getValue("id")}`}
+        className="text-blue-600 font-bold text-lg"
+      >
+        {row.getValue("title")}
+      </Link>
+    ),
+  },
+  {
     accessorKey: "published",
     header: "Status",
     cell: ({ row }) => (
@@ -37,31 +52,27 @@ export const columns: ColumnDef<TableData>[] = [
     ),
   },
   {
-    accessorKey: "title",
-    header: "Title",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("title")}</div>
-    ),
+    accessorKey: "author",
+    header: "Author",
+    cell: ({ row }) => {
+      const author: any = row.getValue("author");
+      return <p>{author.userName}</p>;
+    },
   },
   {
-    accessorKey: "createAt",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Create At
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "tags",
+    header: "Tags",
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createAt"));
+      const tags: Tags[] = row.getValue("tags");
+
+      if (tags.length < 1) return <span>—</span>;
+
       return (
-        <time dateTime={date.toTimeString()} suppressHydrationWarning>
-          {date.toDateString()}
-        </time>
+        <div className="flex gap-2 flex-wrap items-center">
+          {tags.map((tag) => (
+            <Badge key={tag.id}>{tag.name}</Badge>
+          ))}
+        </div>
       );
     },
   },
@@ -73,7 +84,7 @@ export const columns: ColumnDef<TableData>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Update At
+          Last Modified
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );

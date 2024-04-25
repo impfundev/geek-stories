@@ -45,17 +45,20 @@ export type Media = {
   metadata: ISizeCalculationResult;
 };
 
+export type Thumbnail = {
+  url?: string | null;
+  width?: string | null;
+  height?: string | null;
+};
+
 export type MediaData = {
   media: Media[];
-  thumbnail: {
-    url: string | null;
-    width: string | null;
-    height: string | null;
-  };
+  thumbnail?: Thumbnail;
   onValueChange: UseFormSetValue<Posts & { tags: Tags[] }>;
 };
 
 export type DialogMediaType = {
   media: Media[];
   action: UseFormSetValue<Posts & { tags: Tags[] }>;
+  onThumbnailChange: Dispatch<SetStateAction<Thumbnail | null>>;
 };

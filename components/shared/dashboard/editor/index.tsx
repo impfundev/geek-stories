@@ -13,6 +13,7 @@ import { TitleInput } from "./form/title-input";
 import { NovelEditor } from "./novel-editor";
 import type { Posts, Tags } from "@prisma/client";
 import { Media } from "@/lib/type";
+import { Card } from "@/components/ui/card";
 
 type EditorType = {
   allTag: Tags[];
@@ -24,13 +25,13 @@ export function Editor({ post, allTag, media }: EditorType) {
   const [isFormVisible, setFormVisible] = useState(true);
   const router = useRouter();
 
+  if (!post) redirect("/dashboard/posts");
+
   const thumbnail = {
     url: post.thumbnail_url,
     width: post.thumbnail_width,
     height: post.thumbnail_height,
   };
-
-  if (!post) redirect("/dashboard/posts");
 
   const {
     register,
@@ -41,33 +42,39 @@ export function Editor({ post, allTag, media }: EditorType) {
   } = useForm<Posts & { tags: Tags[] }>({
     defaultValues: post,
   });
+
   const onSubmit: SubmitHandler<Posts & { tags: Tags[] }> = (data) => {
     updatePost(data).then((res) => console.log(res));
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <NavEditor
-        handleForm={() => setFormVisible(!isFormVisible)}
-        handleBack={() => router.back()}
-        onStatusChange={setValue}
-        isLoading={isLoading}
-      />
-
-      <div className="w-full flex gap-4 justify-between pb-10">
-        <div className="w-full flex flex-col gap-4">
-          <AddFeatured
-            onValueChange={setValue}
-            media={media}
-            thumbnail={thumbnail}
-          />
+    <div className="w-full justify-between pb-10 flex gap-6">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <NavEditor
+          handleForm={() => setFormVisible(!isFormVisible)}
+          handleBack={() => router.back()}
+          onStatusChange={setValue}
+          isLoading={isLoading}
+        />
+        <div
+          className={`pt-20 ${
+            isFormVisible ? "max-w-[75vw]" : ""
+          } flex flex-col gap-4`}
+        >
           <TitleInput register={register} title={post.title} />
           <NovelEditor
             onUpdateAction={setValue}
             initialContent={post.jsonContent as JSONContent}
           />
         </div>
-        {isFormVisible && (
+      </form>
+      {isFormVisible && (
+        <Card className="fixed top-20 right-16 max-w-[20vw] h-[80vh] overflow-y-auto flex flex-col gap-4 p-2">
+          <AddFeatured
+            onValueChange={setValue}
+            media={media}
+            thumbnail={thumbnail}
+          />
           <FormEditor
             excerpt={post.excerpt!}
             allTag={allTag}
@@ -75,8 +82,8 @@ export function Editor({ post, allTag, media }: EditorType) {
             register={register}
             onValueChange={setValue}
           />
-        )}
-      </div>
-    </form>
+        </Card>
+      )}
+    </div>
   );
 }

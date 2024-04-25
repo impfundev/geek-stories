@@ -32,19 +32,19 @@ export function SelectTag({ allTag, postTag, action }: SelectTag) {
       <label htmlFor="tags">Tags:</label>
       <div className="flex flex-wrap gap-2">
         {tagInput.map((tag) => (
-          <Badge
-            key={tag.id}
-            className="flex gap-2"
-            onClick={() => {
-              action(
-                "tags",
-                tagInput.filter((t) => t.id !== tag.id)
-              );
-              setTagInput(tagInput.filter((t) => t.id !== tag.id));
-            }}
-          >
+          <Badge key={tag.id} className="flex gap-2">
             <span>{tag.name}</span>
-            <X size={16} />
+            <button
+              onClick={() => {
+                action(
+                  "tags",
+                  tagInput.filter((t) => t.id !== tag.id)
+                );
+                setTagInput(tagInput.filter((t) => t.id !== tag.id));
+              }}
+            >
+              <X size={16} />
+            </button>
           </Badge>
         ))}
       </div>

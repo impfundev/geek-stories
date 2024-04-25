@@ -10,7 +10,11 @@ import { Image as ImageIcon } from "lucide-react";
 import { DialogMediaType } from "@/lib/type";
 import { UploadMedia } from "./upload-media";
 
-export function DialogMedia({ media, action }: DialogMediaType) {
+export function DialogMedia({
+  media,
+  action,
+  onThumbnailChange,
+}: DialogMediaType) {
   return (
     <Dialog>
       <DialogTrigger className="gap-4" asChild>
@@ -36,6 +40,11 @@ export function DialogMedia({ media, action }: DialogMediaType) {
                     action("thumbnail_url", m.url);
                     action("thumbnail_width", String(m.metadata.width));
                     action("thumbnail_height", String(m.metadata.height));
+                    onThumbnailChange({
+                      url: m.url,
+                      width: String(m.metadata.width),
+                      height: String(m.metadata.height),
+                    });
                   }}
                 >
                   <img

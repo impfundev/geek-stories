@@ -12,7 +12,7 @@ export function FormEditor({
   onValueChange,
 }: FormEditor) {
   return (
-    <Card className={cn("w-full max-w-[20vw] h-full")}>
+    <Card className={cn("w-full h-full")}>
       <CardContent className="py-4 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <label htmlFor="excerpt" className="flex flex-col gap-2">

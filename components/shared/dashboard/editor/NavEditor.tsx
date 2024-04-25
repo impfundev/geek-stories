@@ -2,13 +2,7 @@
 
 import type { NavEditor, UpdateButton } from "@/lib/type";
 
-import {
-  ChevronLeftCircle,
-  Loader2,
-  Save,
-  PanelRight,
-  Upload,
-} from "lucide-react";
+import { ChevronLeftCircle, Loader2, PanelRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function NavEditor({
@@ -18,11 +12,11 @@ export function NavEditor({
   isLoading,
 }: NavEditor) {
   return (
-    <div className="sticky top-0 flex justify-between items-center py-4 z-50">
+    <div className="fixed inset-x-0 w-full px-16 flex justify-between items-center py-4 z-50">
       <Button type="button" onClick={handleBack} className="gap-2">
         <ChevronLeftCircle size={20} absoluteStrokeWidth /> Back
       </Button>
-      <div className="flex gap-1 items-center px-2 rounded-full bg-background border">
+      <div className="flex gap-1 items-center rounded-full bg-background border">
         <SaveButton action={onStatusChange} pending={isLoading} />
         <UploadButton action={onStatusChange} pending={isLoading} />
         <Button
@@ -45,7 +39,6 @@ const SaveButton = ({ action, pending }: UpdateButton) => {
       value="draft"
       variant="ghost"
       type="submit"
-      size="icon"
       disabled={pending}
       onClick={() => action("published", "draft")}
     >
@@ -64,7 +57,6 @@ const UploadButton = ({ action, pending }: UpdateButton) => {
       value="upload"
       variant="ghost"
       type="submit"
-      size="icon"
       disabled={pending}
       onClick={() => action("published", "upload")}
     >
