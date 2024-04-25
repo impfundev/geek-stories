@@ -37,6 +37,7 @@ export function LoginForm() {
                 id="email"
                 type="email"
                 name="email"
+                maxLength={50}
                 placeholder="Enter your email"
               />
             </div>

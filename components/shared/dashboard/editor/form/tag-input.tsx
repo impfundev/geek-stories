@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { createTag } from "@/lib/action";
-import type { Tags } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 
 import { X, ChevronsUpDown, Loader2 } from "lucide-react";
@@ -21,29 +20,28 @@ import {
 } from "@/components/ui/command";
 import { Button } from "@/components/ui/button";
 import type { SelectTag } from "@/lib/type";
+import type { Tags } from "@prisma/client";
 
-export function SelectTag({ allTag, postTag, register }: SelectTag) {
+export function SelectTag({ allTag, postTag, action }: SelectTag) {
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [tagsValue, setTagsValue] = useState<Tags[]>(postTag);
+  const [tagInput, setTagInput] = useState<Tags[]>(postTag);
 
   return (
     <div className="flex flex-col gap-4">
       <label htmlFor="tags">Tags:</label>
-      <input
-        {...register("tags")}
-        value={JSON.stringify(tagsValue)}
-        readOnly
-        hidden
-      />
       <div className="flex flex-wrap gap-2">
-        {tagsValue.map((tag) => (
+        {tagInput.map((tag) => (
           <Badge
             key={tag.id}
             className="flex gap-2"
-            onClick={() =>
-              setTagsValue([...tagsValue.filter((t) => t.name !== tag.name)])
-            }
+            onClick={() => {
+              action(
+                "tags",
+                tagInput.filter((t) => t.id !== tag.id)
+              );
+              setTagInput(tagInput.filter((t) => t.id !== tag.id));
+            }}
           >
             <span>{tag.name}</span>
             <X size={16} />
@@ -67,6 +65,7 @@ export function SelectTag({ allTag, postTag, register }: SelectTag) {
             <CommandInput
               placeholder="Search tags..."
               onValueChange={setSearchValue}
+              maxLength={25}
             />
             <CommandEmpty className="flex flex-col items-center justify-center py-4">
               <span className="pb-2">No tags found.</span>
@@ -78,12 +77,18 @@ export function SelectTag({ allTag, postTag, register }: SelectTag) {
                   key={tag.id}
                   value={tag.name!}
                   onSelect={(value) => {
-                    if (!tagsValue.find((tag) => tag.name === value)) {
-                      setTagsValue([...tagsValue, { id: tag.id, name: value }]);
-                    } else {
-                      setTagsValue([
-                        ...tagsValue.filter((tag) => tag.name !== value),
+                    if (!tagInput.find((tag) => tag.name === value)) {
+                      action("tags", [
+                        ...tagInput,
+                        { id: tag.id, name: value },
                       ]);
+                      setTagInput([...tagInput, { id: tag.id, name: value }]);
+                    } else {
+                      action(
+                        "tags",
+                        tagInput.filter((t) => t.id !== tag.id)
+                      );
+                      setTagInput(tagInput.filter((t) => t.id !== tag.id));
                     }
                     setOpen(false);
                   }}

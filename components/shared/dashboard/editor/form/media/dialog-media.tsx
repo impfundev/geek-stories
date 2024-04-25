@@ -32,22 +32,17 @@ export function DialogMedia({ media, action }: DialogMediaType) {
                 <button
                   type="button"
                   className="max-w-sm max-h-72 rounded-lg overflow-hidden border hover:border-2 hover:border-foreground hover:shadow-sm hover:shadow-foreground transition-all"
-                  onClick={() =>
-                    action({
-                      src: m.url,
-                      alt: m.url,
-                      width: m.metadata.width!.toString(),
-                      height: m.metadata.height!.toString(),
-                    })
-                  }
+                  onClick={() => {
+                    action("thumbnail_url", m.url);
+                    action("thumbnail_width", String(m.metadata.width));
+                    action("thumbnail_height", String(m.metadata.height));
+                  }}
                 >
                   <img
                     className="max-w-full object-cover"
                     width={m.metadata.width}
                     height={m.metadata.height}
                     src={m.url}
-                    alt={m.url}
-                    sizes="(max-width: 240px) 100vw, 33vw"
                     loading="lazy"
                   />
                 </button>

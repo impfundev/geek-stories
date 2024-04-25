@@ -7,7 +7,6 @@ import {
   EditorCommandItem,
   EditorContent,
   EditorRoot,
-  JSONContent,
 } from "novel";
 import { useState } from "react";
 import { defaultExtensions } from "./extensions";
@@ -21,12 +20,7 @@ import {
 
 import type { Editor } from "@/lib/type";
 
-export function NovelEditor({ initialContent, register }: Editor) {
-  const [content, setContent] = useState<string>("");
-  const [jsonContent, setJsonContent] = useState<JSONContent | undefined>(
-    undefined
-  );
-
+export function NovelEditor({ initialContent, onUpdateAction }: Editor) {
   const [openNode, setOpenNode] = useState<boolean>(false);
   const [openLink, setOpenLink] = useState<boolean>(false);
   const [openColor, setOpenColor] = useState<boolean>(false);
@@ -40,8 +34,8 @@ export function NovelEditor({ initialContent, register }: Editor) {
         onUpdate={({ editor }) => {
           const html = editor.getHTML();
           const json = editor.getJSON();
-          setContent(html);
-          setJsonContent(json);
+          onUpdateAction("content", html);
+          onUpdateAction("jsonContent", json);
         }}
         editorProps={{
           attributes: {
@@ -49,13 +43,6 @@ export function NovelEditor({ initialContent, register }: Editor) {
           },
         }}
       >
-        <input {...register("content")} value={content} readOnly hidden />
-        <input
-          {...register("jsonContent")}
-          value={JSON.stringify(jsonContent)}
-          readOnly
-          hidden
-        />
         <EditorBubble className="flex w-fit max-w-[90vw] overflow-hidden rounded border border-muted bg-background shadow-xl">
           <NodeSelector open={openNode} onOpenChange={setOpenNode} />
           <LinkSelector open={openLink} onOpenChange={setOpenLink} />

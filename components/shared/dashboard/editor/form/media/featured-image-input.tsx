@@ -1,5 +1,5 @@
 import { UseFormRegister } from "react-hook-form";
-import type { Posts } from "@prisma/client";
+import type { Posts, Tags } from "@prisma/client";
 
 type FeaturedInput = {
   value: {
@@ -8,7 +8,7 @@ type FeaturedInput = {
     height: string;
     alt: string;
   };
-  register: UseFormRegister<Posts>;
+  register: UseFormRegister<Posts & { tags: Tags }>;
 };
 
 export function InputFeatured({ register, value }: FeaturedInput) {

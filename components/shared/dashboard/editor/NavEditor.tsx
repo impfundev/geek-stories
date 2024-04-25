@@ -1,23 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import { useFormStatus } from "react-dom";
-import type { NavEditor } from "@/lib/type";
+import type { NavEditor, UpdateButton } from "@/lib/type";
 
 import {
   ChevronLeftCircle,
   Loader2,
   Save,
-  Settings,
+  PanelRight,
   Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ButtonProps } from "@/components/ui/Button";
 
 export function NavEditor({
   handleForm,
   handleBack,
   onStatusChange,
+  isLoading,
 }: NavEditor) {
   return (
     <div className="sticky top-0 flex justify-between items-center py-4 z-50">
@@ -25,6 +23,8 @@ export function NavEditor({
         <ChevronLeftCircle size={20} absoluteStrokeWidth /> Back
       </Button>
       <div className="flex gap-1 items-center px-2 rounded-full bg-background border">
+        <SaveButton action={onStatusChange} pending={isLoading} />
+        <UploadButton action={onStatusChange} pending={isLoading} />
         <Button
           value="setting"
           variant="ghost"
@@ -32,17 +32,14 @@ export function NavEditor({
           size="icon"
           onClick={handleForm}
         >
-          <Settings size={20} strokeWidth={1.5} absoluteStrokeWidth />
+          <PanelRight size={20} strokeWidth={1.5} absoluteStrokeWidth />
         </Button>
-        <SaveButton onClick={() => onStatusChange("upload")} />
-        <UploadButton onClick={() => onStatusChange("upload")} />
       </div>
     </div>
   );
 }
 
-const SaveButton = (props: ButtonProps) => {
-  const { pending } = useFormStatus();
+const SaveButton = ({ action, pending }: UpdateButton) => {
   return (
     <Button
       value="draft"
@@ -50,19 +47,18 @@ const SaveButton = (props: ButtonProps) => {
       type="submit"
       size="icon"
       disabled={pending}
-      onClick={props.onClick}
+      onClick={() => action("published", "draft")}
     >
       {pending ? (
         <Loader2 size={20} strokeWidth={1.5} absoluteStrokeWidth />
       ) : (
-        <Save size={20} strokeWidth={1.5} absoluteStrokeWidth />
+        "Save draft"
       )}
     </Button>
   );
 };
 
-const UploadButton = (props: ButtonProps) => {
-  const { pending } = useFormStatus();
+const UploadButton = ({ action, pending }: UpdateButton) => {
   return (
     <Button
       value="upload"
@@ -70,13 +66,13 @@ const UploadButton = (props: ButtonProps) => {
       type="submit"
       size="icon"
       disabled={pending}
-      onClick={props.onClick}
+      onClick={() => action("published", "upload")}
     >
       <input name="published" id="published" hidden value="upload" readOnly />
       {pending ? (
         <Loader2 size={20} strokeWidth={1.5} absoluteStrokeWidth />
       ) : (
-        <Upload size={20} strokeWidth={1.5} absoluteStrokeWidth />
+        "Publish"
       )}
     </Button>
   );

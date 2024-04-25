@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { FormState } from "@/lib/schema";
+import { FormState } from "@/lib/models/schema";
 
 export function InputPassword({ state }: { state: FormState }) {
   return (

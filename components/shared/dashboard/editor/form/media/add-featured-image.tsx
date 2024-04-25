@@ -7,45 +7,31 @@ import { MediaData } from "@/lib/type";
 import { DialogMedia } from "./dialog-media";
 import { InputFeatured } from "./featured-image-input";
 
-export function AddFeatured({ media, thumbnail, register }: MediaData) {
-  const [featured, setFeatured] = useState({
-    src: thumbnail || "",
-    width: "",
-    height: "",
-    alt: "",
-  });
+export function AddFeatured({ media, thumbnail, onValueChange }: MediaData) {
+  const [isHasThumbnail, setIsHasThumbnail] = useState(true);
 
   return (
     <>
-      <InputFeatured register={register} value={featured} />
-      {featured.src ? (
+      {thumbnail && isHasThumbnail ? (
         <>
           <img
             className="w-full max-h-96 object-cover rounded-lg"
-            src={featured.src}
-            width={Number(featured.width)}
-            height={Number(featured.height)}
-            alt={featured.alt}
+            src={thumbnail.url!}
+            width={thumbnail.width!}
+            height={thumbnail.height!}
             loading="lazy"
           />
           <Button
             type="button"
             variant="outline"
-            onClick={() =>
-              setFeatured({
-                src: "",
-                width: "",
-                height: "",
-                alt: "",
-              })
-            }
+            onClick={() => setIsHasThumbnail(!isHasThumbnail)}
             className="gap-2 hover:bg-destructive hover:text-foreground"
           >
             <TrashIcon size={20} strokeWidth={1.5} /> Remove Featured Image
           </Button>
         </>
       ) : (
-        <DialogMedia action={setFeatured} media={media} />
+        <DialogMedia action={onValueChange} media={media} />
       )}
     </>
   );

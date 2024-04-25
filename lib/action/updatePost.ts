@@ -1,19 +1,15 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { PostSchema } from "../models/schema";
 import { prisma } from "../models/prisma";
-import { verifySession } from "../session";
 import { redirect } from "next/navigation";
+import type { Posts, Tags } from "@prisma/client";
 
-export async function updatePost(formData: FormData) {
-  const { userId } = await verifySession();
-
+export async function updatePost(data: Posts & { tags: Tags[] }) {
   const {
     id,
     authorId,
     title,
     createAt,
-    updateAt,
     tags,
     content,
     jsonContent,
@@ -24,24 +20,9 @@ export async function updatePost(formData: FormData) {
     thumbnail_alt,
     thumbnail_width,
     thumbnail_height,
-  } = PostSchema.parse({
-    id: formData.get("postId"),
-    title: formData.get("title"),
-    excerpt: formData.get("excerpt"),
-    content: formData.get("content"),
-    jsonContent: JSON.parse(formData.get("jsonContent") as string),
-    published: formData.get("published"),
-    featured: formData.get("featured"),
-    thumbnail_url: formData.get("thumbnail-src"),
-    thumbnail_alt: formData.get("thumbnail-alt"),
-    thumbnail_height: formData.get("thumbnail-height"),
-    thumbnail_width: formData.get("thumbnail-width"),
-    author: null,
-    authorId: userId as string,
-    createAt: JSON.parse(formData.get("createAt") as string),
-    updateAt: JSON.parse(formData.get("updateAt") as string),
-    tags: JSON.parse(formData.get("tags") as string),
-  });
+  } = data;
+
+  const updateAt = new Date();
 
   const postData = await prisma.posts.update({
     where: { id },
@@ -52,7 +33,7 @@ export async function updatePost(formData: FormData) {
       authorId,
       excerpt,
       content,
-      jsonContent,
+      jsonContent: jsonContent!,
       published,
       featured,
       thumbnail_url,

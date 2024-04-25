@@ -11,13 +11,13 @@ datasource db {
 }
 
 model User {
-  id          String @id @unique @default(uuid())
-  userName    String @unique
-  email       String @unique
-  password    String
-  firstName   String?
-  lastName    String?
-  bio         String?
+  id          String    @id @unique @default(uuid())
+  userName    String    @unique @db.VarChar(50)
+  email       String    @unique @db.VarChar(50)
+  password    String    @db.LongText
+  firstName   String?   @db.VarChar(50)
+  lastName    String?   @db.VarChar(50)
+  bio         String?   @db.VarChar(150)
   role        Roles
   posts       Posts[]
 }
@@ -26,12 +26,12 @@ model Posts {
   id                String       @id @unique @default(uuid())
   author            User @relation(fields: [authorId], references: [id])
   authorId          String
-  title             String
+  title             String    @db.VarChar(85)
   createAt          DateTime  @default(now())   
   updateAt          DateTime  @default(now())   
-  content           String?
-  jsonContent       Json?
-  excerpt           String?
+  content           String?   @db.LongText
+  jsonContent       Json?     @db.Json
+  excerpt           String?   @db.VarChar(150)
   published         Published
   tags              Tags[]
   featured          Boolean   @default(false)
@@ -45,7 +45,7 @@ model Posts {
 
 model Tags {
   id       String   @id @unique @default(uuid())
-  name     String?
+  name     String?  @db.VarChar(25)
   posts    Posts[]
 
   @@map("tags")

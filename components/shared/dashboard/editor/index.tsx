@@ -9,7 +9,6 @@ import { NavEditor } from "./NavEditor";
 import { AddFeatured } from "./form/media/add-featured-image";
 import { FormEditor } from "./form/form-editor";
 import { redirect, useRouter } from "next/navigation";
-import { DateInput } from "./form/DateInput";
 import { TitleInput } from "./form/title-input";
 import { NovelEditor } from "./novel-editor";
 import type { Posts, Tags } from "@prisma/client";
@@ -17,53 +16,54 @@ import { Media } from "@/lib/type";
 
 type EditorType = {
   allTag: Tags[];
-  postTag: Tags[];
   media: Media[];
   post: Posts;
 };
 
-export function Editor({ post, allTag, postTag, media }: EditorType) {
+export function Editor({ post, allTag, media }: EditorType) {
   const [isFormVisible, setFormVisible] = useState(true);
-  const [status, setStatus] = useState<"draft" | "upload">("draft");
   const router = useRouter();
+
+  const thumbnail = {
+    url: post.thumbnail_url,
+    width: post.thumbnail_width,
+    height: post.thumbnail_height,
+  };
 
   if (!post) redirect("/dashboard/posts");
 
   const {
     register,
-    setValue,
     handleSubmit,
-    formState: { errors },
-  } = useForm<Posts & { tags: Tags }>();
-  const onSubmit: SubmitHandler<Posts> = (data) => console.log(data);
+    setValue,
+    getValues,
+    formState: { isLoading },
+  } = useForm<Posts & { tags: Tags[] }>({
+    defaultValues: post,
+  });
+  const onSubmit: SubmitHandler<Posts & { tags: Tags[] }> = (data) => {
+    updatePost(data).then((res) => console.log(res));
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <NavEditor
         handleForm={() => setFormVisible(!isFormVisible)}
         handleBack={() => router.back()}
-        onStatusChange={setStatus}
+        onStatusChange={setValue}
+        isLoading={isLoading}
       />
-
-      <input
-        value={JSON.stringify(new Date())}
-        {...register("updateAt")}
-        readOnly
-        hidden
-      />
-      <input value={post.id} {...register("id")} hidden readOnly />
-      <input value={status} {...register("published")} hidden readOnly />
 
       <div className="w-full flex gap-4 justify-between pb-10">
         <div className="w-full flex flex-col gap-4">
           <AddFeatured
-            register={register}
+            onValueChange={setValue}
             media={media}
-            thumbnail={post.thumbnail_url}
+            thumbnail={thumbnail}
           />
           <TitleInput register={register} title={post.title} />
           <NovelEditor
-            register={register}
+            onUpdateAction={setValue}
             initialContent={post.jsonContent as JSONContent}
           />
         </div>
@@ -71,8 +71,9 @@ export function Editor({ post, allTag, postTag, media }: EditorType) {
           <FormEditor
             excerpt={post.excerpt!}
             allTag={allTag}
-            postTag={postTag}
+            postTag={getValues("tags")}
             register={register}
+            onValueChange={setValue}
           />
         )}
       </div>

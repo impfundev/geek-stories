@@ -21,9 +21,7 @@ export default async function EditorPage({
 
   if (!post) redirect("/dashboard");
 
-  return (
-    <Editor allTag={tags} postTag={post.tags} media={media!} post={post} />
-  );
+  return <Editor allTag={tags} media={media!} post={post} />;
 }
 
 export async function generateStaticParams() {

@@ -2,35 +2,42 @@ import type { Posts, Tags } from "@prisma/client";
 import { ISizeCalculationResult } from "image-size/dist/types/interface";
 import { JSONContent } from "novel";
 import { Dispatch, SetStateAction } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 export type NavEditor = {
   handleForm?: () => void;
   handleBack?: () => void;
-  onStatusChange: Dispatch<SetStateAction<"draft" | "upload">>;
+  onStatusChange: UseFormSetValue<Posts & { tags: Tags[] }>;
+  isLoading?: boolean;
+};
+
+export type UpdateButton = {
+  action: UseFormSetValue<Posts & { tags: Tags[] }>;
+  pending?: boolean;
 };
 
 export type TitleInput = {
   title: string;
-  register: UseFormRegister<Posts & { tags: Tags }>;
+  register: UseFormRegister<Posts & { tags: Tags[] }>;
 };
 
 export type Editor = {
   initialContent?: JSONContent;
-  register: UseFormRegister<Posts & { tags: Tags }>;
+  onUpdateAction: UseFormSetValue<Posts & { tags: Tags[] }>;
 };
 
 export type FormEditor = {
   allTag: Tags[];
   postTag: Tags[];
   excerpt: string;
-  register: UseFormRegister<Posts & { tags: Tags }>;
+  register: UseFormRegister<Posts & { tags: Tags[] }>;
+  onValueChange: UseFormSetValue<Posts & { tags: Tags[] }>;
 };
 
 export type SelectTag = {
   allTag: Tags[];
   postTag: Tags[];
-  register: UseFormRegister<Posts & { tags: Tags }>;
+  action: UseFormSetValue<Posts & { tags: Tags[] }>;
 };
 
 export type Media = {
@@ -40,13 +47,15 @@ export type Media = {
 
 export type MediaData = {
   media: Media[];
-  thumbnail?: string | null;
-  register: UseFormRegister<Posts & { tags: Tags }>;
+  thumbnail: {
+    url: string | null;
+    width: string | null;
+    height: string | null;
+  };
+  onValueChange: UseFormSetValue<Posts & { tags: Tags[] }>;
 };
 
 export type DialogMediaType = {
   media: Media[];
-  action: Dispatch<
-    SetStateAction<{ src: string; width: string; height: string; alt: string }>
-  >;
+  action: UseFormSetValue<Posts & { tags: Tags[] }>;
 };
