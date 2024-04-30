@@ -1,5 +1,5 @@
 import { getGravatarUrl, GravatarOptions } from "react-awesome-gravatar";
-import { LifeBuoy, LogOut, Settings, User } from "lucide-react";
+import { LogOut, Settings, User } from "lucide-react";
 import { getUser, logout } from "@/lib/action";
 
 import {
@@ -61,10 +61,6 @@ export async function Account() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <LifeBuoy className="mr-2 h-4 w-4" />
-            <span>Support</span>
-          </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <form action={logout}>
               <button type="submit" className="w-full flex">

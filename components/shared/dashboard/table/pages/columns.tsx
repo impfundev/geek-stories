@@ -35,7 +35,7 @@ export const columns: ColumnDef<TableData>[] = [
     header: "Title",
     cell: ({ row }) => (
       <Link
-        href={`/dashboard/pages/editor/${row.getValue("id")}`}
+        href={`/editor/pages/${row.getValue("id")}`}
         className="text-blue-600 font-bold text-lg"
       >
         {row.getValue("title")}
