@@ -15,9 +15,9 @@ import { TableData } from "@/lib/models/schema";
 import { columns } from "./columns";
 import { TablePagination } from "./pagination";
 import { TableNavigation } from "./navigation";
-import { TableView } from "./table";
+import { TableView } from "./view";
 
-export function TableList({ data }: { data: TableData[] }) {
+export function TablePages({ data }: { data: TableData[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});

@@ -11,7 +11,7 @@ import { FormEditor } from "./form/form-editor";
 import { redirect, useRouter } from "next/navigation";
 import { TitleInput } from "./form/title-input";
 import { NovelEditor } from "./novel-editor";
-import type { Posts, Tags } from "@prisma/client";
+import type { Pages, Posts, Tags } from "@prisma/client";
 import { Media } from "@/lib/type";
 import { Card } from "@/components/ui/card";
 
@@ -21,7 +21,7 @@ type EditorType = {
   post: Posts;
 };
 
-export function Editor({ post, allTag, media }: EditorType) {
+export function EditorPosts({ post, allTag, media }: EditorType) {
   const [isFormVisible, setFormVisible] = useState(true);
   const router = useRouter();
 
@@ -63,7 +63,7 @@ export function Editor({ post, allTag, media }: EditorType) {
         >
           <TitleInput register={register} title={post.title} />
           <NovelEditor
-            onUpdateAction={setValue}
+            onPostsUpdate={setValue}
             initialContent={post.jsonContent as JSONContent}
           />
         </div>

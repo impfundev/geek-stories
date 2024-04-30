@@ -1,4 +1,4 @@
-import { TableList } from "@/components/shared/dashboard/table";
+import { TablePosts } from "@/components/shared/dashboard/table/posts";
 import { getPosts } from "@/lib/action";
 
 export default async function Posts() {
@@ -7,7 +7,7 @@ export default async function Posts() {
     <>
       <h1>Posts</h1>
       <div className="py-6">
-        <TableList data={posts} />{" "}
+        <TablePosts data={posts} />
       </div>
     </>
   );

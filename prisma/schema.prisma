@@ -20,6 +20,8 @@ model User {
   bio         String?   @db.VarChar(150)
   role        Roles
   posts       Posts[]
+  pages       Pages[]
+  comments    Comments[]
 }
 
 model Posts {
@@ -41,6 +43,27 @@ model Posts {
   thumbnail_height  String?
 
   @@map("posts")
+}
+
+model Pages {
+  id                String       @id @unique @default(uuid())
+  author            User @relation(fields: [authorId], references: [id])
+  authorId          String
+  title             String    @db.VarChar(85)
+  createAt          DateTime  @default(now())   
+  updateAt          DateTime  @default(now())   
+  content           String?   @db.LongText
+  jsonContent       Json?     @db.Json
+  published         Published
+
+  @@map("pages")
+}
+
+model Comments {
+  id            String  @id @unique @default(uuid())
+  user          User    @relation(fields: [authorId], references: [id])
+  authorId      String
+  comment       String  @db.Text
 }
 
 model Tags {

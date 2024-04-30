@@ -1,9 +1,11 @@
-import { Editor } from "@/components/shared/dashboard/editor";
-import { getPosts, getTag, getMedia } from "@/lib/action";
-import { prisma } from "@/lib/models/prisma";
 import { redirect } from "next/navigation";
 
-export default async function EditorPage({
+import { EditorPosts } from "@/components/shared/dashboard/editor/EditorPosts";
+
+import { getPosts, getTag, getMedia } from "@/lib/action";
+import { prisma } from "@/lib/models/prisma";
+
+export default async function EditorPostsPage({
   params,
 }: {
   params: { id: string };
@@ -21,7 +23,7 @@ export default async function EditorPage({
 
   if (!post) redirect("/dashboard");
 
-  return <Editor allTag={tags} media={media!} post={post} />;
+  return <EditorPosts allTag={tags} media={media!} post={post} />;
 }
 
 export async function generateStaticParams() {

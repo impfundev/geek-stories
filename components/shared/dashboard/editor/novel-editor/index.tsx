@@ -20,7 +20,11 @@ import {
 
 import type { Editor } from "@/lib/type";
 
-export function NovelEditor({ initialContent, onUpdateAction }: Editor) {
+export function NovelEditor({
+  initialContent,
+  onPostsUpdate,
+  onPagesUpdate,
+}: Editor) {
   const [openNode, setOpenNode] = useState<boolean>(false);
   const [openLink, setOpenLink] = useState<boolean>(false);
   const [openColor, setOpenColor] = useState<boolean>(false);
@@ -34,8 +38,15 @@ export function NovelEditor({ initialContent, onUpdateAction }: Editor) {
         onUpdate={({ editor }) => {
           const html = editor.getHTML();
           const json = editor.getJSON();
-          onUpdateAction("content", html);
-          onUpdateAction("jsonContent", json);
+          if (onPostsUpdate) {
+            onPostsUpdate("content", html);
+            onPostsUpdate("jsonContent", json);
+          }
+
+          if (onPagesUpdate) {
+            onPagesUpdate("content", html);
+            onPagesUpdate("jsonContent", json);
+          }
         }}
         editorProps={{
           attributes: {

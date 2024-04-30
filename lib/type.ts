@@ -1,4 +1,4 @@
-import type { Posts, Tags } from "@prisma/client";
+import type { Pages, Posts, Tags } from "@prisma/client";
 import { ISizeCalculationResult } from "image-size/dist/types/interface";
 import { JSONContent } from "novel";
 import { Dispatch, SetStateAction } from "react";
@@ -23,7 +23,8 @@ export type TitleInput = {
 
 export type Editor = {
   initialContent?: JSONContent;
-  onUpdateAction: UseFormSetValue<Posts & { tags: Tags[] }>;
+  onPostsUpdate?: UseFormSetValue<Posts & { tags: Tags[] }>;
+  onPagesUpdate?: UseFormSetValue<Pages>;
 };
 
 export type FormEditor = {
