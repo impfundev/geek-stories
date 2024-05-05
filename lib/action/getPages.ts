@@ -1,5 +1,5 @@
 "use server";
-import { AllPages } from "../models/schema";
+import { Pages } from "../models/schema";
 import { prisma } from "../models/prisma";
 
 export async function getPages() {
@@ -8,6 +8,6 @@ export async function getPages() {
       author: true,
     },
   });
-  const pages = AllPages.parse(data);
+  const pages = Pages.parse(data);
   return { pages };
 }

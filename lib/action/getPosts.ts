@@ -1,5 +1,5 @@
 "use server";
-import { AllPost } from "../models/schema";
+import { Posts } from "../models/schema";
 import { prisma } from "../models/prisma";
 
 export async function getPosts() {
@@ -9,6 +9,6 @@ export async function getPosts() {
       author: true,
     },
   });
-  const posts = AllPost.parse(data);
+  const posts = Posts.parse(data);
   return { posts };
 }
