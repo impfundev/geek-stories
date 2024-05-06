@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { deletePages } from "@/lib/action/deletePages";
 import { useFormState, useFormStatus } from "react-dom";
 import Link from "next/link";
+import moment from "moment";
 
 export const columns: ColumnDef<TableData>[] = [
   {
@@ -74,7 +75,7 @@ export const columns: ColumnDef<TableData>[] = [
       const date = new Date(row.getValue("updateAt"));
       return (
         <time dateTime={date.toTimeString()} suppressHydrationWarning>
-          {date.toDateString()}
+          {moment(date.getTime()).fromNow()}
         </time>
       );
     },

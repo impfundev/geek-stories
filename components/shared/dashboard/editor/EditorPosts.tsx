@@ -11,7 +11,7 @@ import { FormEditor } from "./form/form-editor";
 import { redirect, useRouter } from "next/navigation";
 import { TitleInput } from "./form/title-input";
 import { NovelEditor } from "./novel-editor";
-import type { Pages, Posts, Tags } from "@prisma/client";
+import type { Posts, Tags } from "@prisma/client";
 import { Media } from "@/lib/type";
 import { Card } from "@/components/ui/card";
 

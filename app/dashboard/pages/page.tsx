@@ -7,7 +7,14 @@ export default async function Pages() {
     <>
       <h1>Pages</h1>
       <div className="py-6">
-        <TablePages data={pages} />
+        <TablePages
+          data={pages.sort((a, b) => {
+            let dateA = a.updateAt.getTime();
+            let dateB = b.updateAt.getTime();
+
+            return dateB - dateA;
+          })}
+        />
       </div>
     </>
   );

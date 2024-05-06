@@ -7,7 +7,14 @@ export default async function Posts() {
     <>
       <h1>Posts</h1>
       <div className="py-6">
-        <TablePosts data={posts} />
+        <TablePosts
+          data={posts.sort((a, b) => {
+            let dateA = a.updateAt.getTime();
+            let dateB = b.updateAt.getTime();
+
+            return dateB - dateA;
+          })}
+        />
       </div>
     </>
   );

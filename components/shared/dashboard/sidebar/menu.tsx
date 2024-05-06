@@ -23,7 +23,7 @@ export function MainMenu() {
           path === "/dashboard" && "text-background bg-primary"
         )}
       >
-        <Home size={20} strokeWidth={1} absoluteStrokeWidth /> Home
+        <Home size={20} strokeWidth={1} absoluteStrokeWidth /> Dashboards
       </Link>
       <Link
         href="/dashboard/posts"

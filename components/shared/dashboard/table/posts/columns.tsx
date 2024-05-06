@@ -1,3 +1,4 @@
+import moment from "moment";
 import { ArrowUpDown, Trash, Loader2 } from "lucide-react";
 import { TableData } from "@/lib/models/schema";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -93,7 +94,7 @@ export const columns: ColumnDef<TableData>[] = [
       const date = new Date(row.getValue("updateAt"));
       return (
         <time dateTime={date.toTimeString()} suppressHydrationWarning>
-          {date.toDateString()}
+          {moment(date.getTime()).fromNow()}
         </time>
       );
     },
