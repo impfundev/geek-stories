@@ -12,3 +12,4 @@ export { logout } from "./logout";
 export { signUp } from "./signUp";
 export { uploadMedia } from "./uploadMedia";
 export { getMedia } from "./getMedia";
+export { updateUsers } from "./updateUsers";
