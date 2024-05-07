@@ -43,6 +43,7 @@ export type SelectTag = {
 
 export type Media = {
   url: string;
+  path: string;
   metadata: ISizeCalculationResult;
 };
 

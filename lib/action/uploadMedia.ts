@@ -20,7 +20,7 @@ export async function uploadMedia(formData: FormData) {
     }
   );
 
-  revalidatePath("/editor");
+  revalidatePath("/dashboard", "layout");
   console.log(featured);
   return;
 }

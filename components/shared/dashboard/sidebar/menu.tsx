@@ -8,6 +8,7 @@ import {
   Tags,
   Settings,
   ExternalLink,
+  Image as ImageIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -52,6 +53,15 @@ export function MainMenu() {
         )}
       >
         <Tags size={20} strokeWidth={1} absoluteStrokeWidth /> Tags
+      </Link>
+      <Link
+        href="/dashboard/media"
+        className={cn(
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
+          path === "/dashboard/media" && "text-background bg-primary"
+        )}
+      >
+        <ImageIcon size={20} strokeWidth={1} absoluteStrokeWidth /> Media
       </Link>
     </nav>
   );

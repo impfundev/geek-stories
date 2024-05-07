@@ -11,9 +11,16 @@ export function AddFeatured({ media, thumbnail, onValueChange }: MediaData) {
     ...thumbnail,
   });
 
+  const handleRemoveFeatured = () => {
+    setThumbnailState(null);
+    onValueChange("thumbnail_url", null);
+    onValueChange("thumbnail_width", null);
+    onValueChange("thumbnail_height", null);
+  };
+
   return (
     <>
-      {thumbnail?.url ? (
+      {thumbnailState?.url ? (
         <>
           <img
             className="w-full h-auto rounded-lg"
@@ -25,7 +32,7 @@ export function AddFeatured({ media, thumbnail, onValueChange }: MediaData) {
           <Button
             type="button"
             variant="outline"
-            onClick={() => setThumbnailState(null)}
+            onClick={handleRemoveFeatured}
             className="gap-2 hover:bg-destructive hover:text-foreground"
           >
             <TrashIcon size={20} strokeWidth={1.5} /> Remove Featured Image

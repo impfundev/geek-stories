@@ -11,6 +11,7 @@ export async function getMedia() {
   const media = readDir.map((m) => {
     return {
       url: baseUrl + "/media/" + m,
+      path: dir + m,
       metadata: sizeOf(dir + m),
     };
   });

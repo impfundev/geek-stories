@@ -9,6 +9,7 @@ import {
 import { Image as ImageIcon } from "lucide-react";
 import { DialogMediaType } from "@/lib/type";
 import { UploadMedia } from "./upload-media";
+import { MediaView } from "../../../media/MediaView";
 
 export function DialogMedia({
   media,
@@ -30,32 +31,27 @@ export function DialogMedia({
         <DialogHeader>Select Media</DialogHeader>
         <div className="p-6 grid gap-6 grid-cols-2 md:grid-cols-3">
           <UploadMedia />
-          {media.map((m, i) => {
+          {media.map((media, i) => {
             return (
-              <DialogClose asChild key={i}>
-                <button
-                  type="button"
-                  className="max-w-sm max-h-72 rounded-lg overflow-hidden border hover:border-2 hover:border-foreground hover:shadow-sm hover:shadow-foreground transition-all"
-                  onClick={() => {
-                    action("thumbnail_url", m.url);
-                    action("thumbnail_width", String(m.metadata.width));
-                    action("thumbnail_height", String(m.metadata.height));
-                    onThumbnailChange({
-                      url: m.url,
-                      width: String(m.metadata.width),
-                      height: String(m.metadata.height),
-                    });
-                  }}
-                >
-                  <img
-                    className="max-w-full object-cover"
-                    width={m.metadata.width}
-                    height={m.metadata.height}
-                    src={m.url}
-                    loading="lazy"
-                  />
-                </button>
-              </DialogClose>
+              <div className="flex flex-col" key={i}>
+                <MediaView media={media} />
+                <DialogClose asChild>
+                  <Button
+                    onClick={() => {
+                      action("thumbnail_url", media.url);
+                      action("thumbnail_width", String(media.metadata.width));
+                      action("thumbnail_height", String(media.metadata.height));
+                      onThumbnailChange({
+                        url: media.url,
+                        width: String(media.metadata.width),
+                        height: String(media.metadata.height),
+                      });
+                    }}
+                  >
+                    Select
+                  </Button>
+                </DialogClose>
+              </div>
             );
           })}
         </div>
