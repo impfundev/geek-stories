@@ -51,19 +51,28 @@ export async function QuickDraft({ posts }: { posts: PostType }) {
       <CardFooter className="flex-col items-start gap-2">
         <h3 className="text-xl font-bold pt-6">Your Recent Drafts</h3>
         <ul>
-          {draftedPosts.map((post) => (
-            <li key={post.id} className="flex gap-4">
-              <Link className="text-blue-500" href={`/editor/posts/${post.id}`}>
-                {post.title}
-              </Link>
-              <time
-                className="text-muted-foreground"
-                dateTime={post.updateAt.toTimeString()}
-              >
-                {moment(post.updateAt.getTime()).fromNow()}
-              </time>
-            </li>
-          ))}
+          {draftedPosts.length > 0 ? (
+            draftedPosts.map((post) => (
+              <li key={post.id} className="flex gap-4">
+                <Link
+                  className="text-blue-500"
+                  href={`/editor/posts/${post.id}`}
+                >
+                  {post.title}
+                </Link>
+                <time
+                  className="text-muted-foreground"
+                  dateTime={post.updateAt.toTimeString()}
+                >
+                  {moment(post.updateAt.getTime()).fromNow()}
+                </time>
+              </li>
+            ))
+          ) : (
+            <p className="text-muted-foreground">
+              There are no new drafts at this time.
+            </p>
+          )}
         </ul>
       </CardFooter>
     </Card>
