@@ -67,6 +67,8 @@ model Comments {
   content       String  @db.Text
   post          Posts   @relation(fields: [postId], references: [id])
   postId        String  @unique
+  createAt      DateTime  @default(now())   
+  updateAt      DateTime  @default(now())  
 }
 
 model Tags {

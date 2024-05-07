@@ -8,6 +8,7 @@ import {
   Tags,
   Settings,
   ExternalLink,
+  MessageSquareMore,
   Image as ImageIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -62,6 +63,16 @@ export function MainMenu() {
         )}
       >
         <ImageIcon size={20} strokeWidth={1} absoluteStrokeWidth /> Media
+      </Link>
+      <Link
+        href="/dashboard/comments"
+        className={cn(
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
+          path === "/dashboard/comments" && "text-background bg-primary"
+        )}
+      >
+        <MessageSquareMore size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
+        Comments
       </Link>
     </nav>
   );
