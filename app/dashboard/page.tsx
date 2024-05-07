@@ -1,3 +1,4 @@
+import { Analytics } from "@/components/shared/chart/Analytics";
 import { Glance } from "@/components/shared/dashboard/home/Glance";
 import { QuickDraft } from "@/components/shared/dashboard/home/QuickDraft";
 import { RecentActivity } from "@/components/shared/dashboard/home/RecentActivity";
@@ -12,6 +13,7 @@ export default async function Dashboard() {
     <>
       <h1>Home</h1>
       <div className="w-full py-6">
+        <Analytics />
         <div className="flex gap-4">
           <div className="grid grid-cols-1 gap-4">
             <Glance posts={posts} pages={pages} tags={tags} />
