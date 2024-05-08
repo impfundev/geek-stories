@@ -8,17 +8,19 @@ import { revalidatePath } from "next/cache";
 
 export async function updateUsers(state: FormState, formData: FormData) {
   const currentUser = await getUser();
-  const newPassword = formData.get("password");
 
   if (!currentUser.user) {
     redirect("/login");
   }
 
+  const newPassword = formData.get("password");
+  const currentPassword = currentUser.user.password;
+
   // Form validation
   const validatedFields = SignupFormSchema.safeParse({
     userName: formData.get("userName"),
     email: formData.get("email"),
-    password: newPassword ? newPassword : currentUser.user.password,
+    password: newPassword ? newPassword : currentPassword,
   });
 
   if (!validatedFields.success) {
@@ -34,7 +36,9 @@ export async function updateUsers(state: FormState, formData: FormData) {
   const bio = formData.get("bio") as string;
 
   // Hasing password
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = newPassword
+    ? await bcrypt.hash(password, 10)
+    : currentPassword;
 
   // Check is username already used
   const isNewUserName = userName !== currentUser.user.userName;
