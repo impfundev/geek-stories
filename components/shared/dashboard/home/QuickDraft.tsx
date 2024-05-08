@@ -1,5 +1,6 @@
+"use client";
+
 import moment from "moment";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,8 +14,14 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { PostType } from "@/lib/models/schema";
+import { SubmitButton } from "../../auth/SubmitButton";
+import { quickDraft } from "@/lib/action/quickDraft";
+import { useFormState } from "react-dom";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { CheckCircle } from "lucide-react";
 
-export async function QuickDraft({ posts }: { posts: PostType }) {
+export function QuickDraft({ posts }: { posts: PostType }) {
+  const [state, action] = useFormState(quickDraft, undefined);
   const draftedPosts = posts.filter((post) => post.published === "draft");
 
   return (
@@ -24,10 +31,10 @@ export async function QuickDraft({ posts }: { posts: PostType }) {
       </CardHeader>
       <Separator />
       <CardContent className="p-6">
-        <form className="w-full flex flex-col gap-6">
+        <form action={action} className="w-full flex flex-col gap-6">
           <fieldset className="flex flex-col gap-2">
             <Label htmlFor="title">Title</Label>
-            <Input id="title" name="title" />
+            <Input id="title" name="title" required />
             <span className="text-muted-foreground">
               The title is how it appears on your site.
             </span>
@@ -38,13 +45,21 @@ export async function QuickDraft({ posts }: { posts: PostType }) {
               id="content"
               name="content"
               placeholder="What's on your mind?"
+              required
             />
             <span className="text-muted-foreground">
               The description is not prominent by default; however, some themes
               may show it.
             </span>
           </fieldset>
-          <Button type="submit">Save Draft</Button>
+          <SubmitButton>Save Draft</SubmitButton>
+          {state?.message && (
+            <Alert>
+              <CheckCircle className="h-4 w-4" />
+              <AlertTitle>Success</AlertTitle>
+              <AlertDescription>{state?.message}</AlertDescription>
+            </Alert>
+          )}
         </form>
       </CardContent>
       <Separator />

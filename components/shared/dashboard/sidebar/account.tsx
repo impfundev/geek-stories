@@ -1,5 +1,5 @@
 import { getGravatarUrl, GravatarOptions } from "react-awesome-gravatar";
-import { LogOut, Settings, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { getUser, logout } from "@/lib/action";
 
 import {
