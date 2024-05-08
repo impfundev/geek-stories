@@ -64,3 +64,10 @@ export type DialogMediaType = {
   action: UseFormSetValue<Posts & { tags: Tags[] }>;
   onThumbnailChange: Dispatch<SetStateAction<Thumbnail | null>>;
 };
+
+export type Plans = {
+  type: string;
+  price: string;
+  description: string;
+  benefit: string[];
+};

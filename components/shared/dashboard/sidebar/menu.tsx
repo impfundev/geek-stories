@@ -8,6 +8,7 @@ import {
   Tags,
   Settings,
   ExternalLink,
+  CalendarCheck2,
   MessageSquareMore,
   Image as ImageIcon,
 } from "lucide-react";
@@ -73,6 +74,16 @@ export function MainMenu() {
       >
         <MessageSquareMore size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
         Comments
+      </Link>
+      <Link
+        href="/dashboard/subscriptions"
+        className={cn(
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
+          path === "/dashboard/subscriptions" && "text-background bg-primary"
+        )}
+      >
+        <CalendarCheck2 size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
+        Subscriptions
       </Link>
     </nav>
   );

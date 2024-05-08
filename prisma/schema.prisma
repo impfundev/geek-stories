@@ -11,17 +11,32 @@ datasource db {
 }
 
 model User {
-  id          String    @id @unique @default(uuid())
-  userName    String    @unique @db.VarChar(50)
-  email       String    @unique @db.VarChar(50)
-  password    String    @db.LongText
-  firstName   String?   @db.VarChar(50)
-  lastName    String?   @db.VarChar(50)
-  bio         String?   @db.VarChar(150)
-  role        Roles
-  posts       Posts[]
-  pages       Pages[]
-  comments    Comments[]
+  id            String    @id @unique @default(uuid())
+  userName      String    @unique @db.VarChar(50)
+  email         String    @unique @db.VarChar(50)
+  password      String    @db.LongText
+  firstName     String?   @db.VarChar(50)
+  lastName      String?   @db.VarChar(50)
+  bio           String?   @db.VarChar(150)
+  role          Roles
+  posts         Posts[]
+  pages         Pages[]
+  comments      Comments[]
+
+  subscription  Subscription?
+}
+
+model Subscription {
+  id            Int       @id @unique @default(autoincrement())
+  type          String
+  price         String
+  description   String
+  benefit       String
+
+  user          User      @relation(fields: [user_id], references: [id])
+  user_id       String @unique
+
+  @@map("subscription")
 }
 
 model Posts {
