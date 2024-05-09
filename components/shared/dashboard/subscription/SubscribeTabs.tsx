@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plans } from "./Plans";
-import type { Plans as PlansType } from "@/lib/type";
+import type { Subscription } from "@prisma/client";
 
-export function SubscribeTabs({ plans }: { plans: PlansType[] }) {
+export function SubscribeTabs({ plans }: { plans: Subscription[] }) {
   return (
     <Tabs defaultValue="subscription" className="w-full py-4">
       <TabsList>

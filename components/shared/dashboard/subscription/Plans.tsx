@@ -7,12 +7,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import type { Plans } from "@/lib/type";
+import type { Subscription } from "@prisma/client";
+import type { Benefit } from "@/lib/type";
 
-export function Plans({ plans }: { plans: Plans[] }) {
+export function Plans({ plans }: { plans: Subscription[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {plans.map((plan, i) => {
+        const benefit = plan.benefit as Benefit;
         return (
           <Card
             key={i}
@@ -37,13 +39,13 @@ export function Plans({ plans }: { plans: Plans[] }) {
               </CardHeader>
               <CardContent className="grid gap-4">
                 <ul>
-                  {plan.benefit.map((benefit, i) => (
+                  {benefit.data.map((benefit, i) => (
                     <li
                       key={i}
                       className="mb-4 grid grid-cols-[25px_1fr] items-center pb-4 last:mb-0 last:pb-0"
                     >
                       <span className="flex h-2 w-2 rounded-full bg-sky-500" />
-                      <span>{benefit}</span>
+                      <span>{benefit.label}</span>
                     </li>
                   ))}
                 </ul>

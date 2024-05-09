@@ -15,3 +15,4 @@ export { getMedia } from "./getMedia";
 export { updateUsers } from "./updateUsers";
 export { getComments } from "./getComments";
 export { deleteComments } from "./deleteComments";
+export { getSubscriptionPlans } from "./getSubscriptionPlans";

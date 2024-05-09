@@ -23,7 +23,8 @@ model User {
   pages         Pages[]
   comments      Comments[]
 
-  subscription  Subscription?
+  subscription     Subscription @relation(fields: [subscription_id], references: [id])
+  subscription_id  Int
 }
 
 model Subscription {
@@ -31,10 +32,9 @@ model Subscription {
   type          String
   price         String
   description   String
-  benefit       String
+  benefit       Json
 
-  user          User      @relation(fields: [user_id], references: [id])
-  user_id       String @unique
+  user          User[]
 
   @@map("subscription")
 }

@@ -65,9 +65,8 @@ export type DialogMediaType = {
   onThumbnailChange: Dispatch<SetStateAction<Thumbnail | null>>;
 };
 
-export type Plans = {
-  type: string;
-  price: string;
-  description: string;
-  benefit: string[];
+export type Benefit = {
+  data: {
+    label: string;
+  }[];
 };
