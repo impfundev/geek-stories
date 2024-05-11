@@ -34,7 +34,7 @@ export async function login(state: FormState, formData: FormData) {
       message: "Password invalid, please enter valid password.",
     };
 
-  await createSession(user.id);
+  await createSession(user.id, user.isSubscribed);
   console.log(user);
   redirect("/dashboard");
 }

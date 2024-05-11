@@ -2,7 +2,7 @@
 import { SignupFormSchema, FormState } from "../models/schema";
 import { prisma } from "../models/prisma";
 import { redirect } from "next/navigation";
-import bcrypt from "bcrypt";
+import { hash } from "bcrypt";
 import { createSession } from "../session";
 
 export async function signUp(state: FormState, formData: FormData) {
@@ -25,7 +25,7 @@ export async function signUp(state: FormState, formData: FormData) {
   const { userName, email, password } = validatedFields.data;
 
   // Hasing password
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await hash(password, 10);
 
   // Check is username already used
   const isUserNameUsed = await prisma.user.findUnique({
@@ -56,6 +56,7 @@ export async function signUp(state: FormState, formData: FormData) {
       email,
       password: hashedPassword,
       role: "admin",
+      subscription_id: 3,
     },
   });
 
@@ -67,7 +68,7 @@ export async function signUp(state: FormState, formData: FormData) {
   }
 
   // Create session
-  await createSession(user.id);
+  await createSession(user.id, user.isSubscribed);
 
   console.log(user);
   redirect("/dashboard");

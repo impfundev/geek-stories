@@ -23,8 +23,12 @@ model User {
   pages         Pages[]
   comments      Comments[]
 
-  subscription     Subscription @relation(fields: [subscription_id], references: [id])
-  subscription_id  Int
+  subscription     Subscription? @relation(fields: [subscription_id], references: [id])
+  subscription_id  Int?
+
+  isSubscribed           Boolean   @default(false)
+  subscribeStartAt       DateTime?
+  subscribeEndAt         DateTime?
 }
 
 model Subscription {

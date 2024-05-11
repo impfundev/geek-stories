@@ -29,6 +29,31 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
   }
 
+  // 7. Redirect to /dashboard/subscriptions if the user subscription is expired
+
+  if (
+    isPublicRoute &&
+    session?.userId &&
+    !req.nextUrl.pathname.startsWith("/dashboard") &&
+    !session.isSubscribed
+  ) {
+    return NextResponse.redirect(
+      new URL("/dashboard/subscriptions", req.nextUrl)
+    );
+  }
+
+  // 8. Update the session expiration time if session 1 day before expired
+  if (session?.userId && session.expiresAt) {
+    const now = new Date();
+    const expiresAt = new Date(session.expiresAt as Date);
+
+    if (expiresAt.getTime() - now.getTime() < 24 * 60 * 60 * 1000) {
+      await updateSession();
+    }
+  }
+
+  // 9. Continue to the next middleware or the requested page
+
   return NextResponse.next();
 }
 
