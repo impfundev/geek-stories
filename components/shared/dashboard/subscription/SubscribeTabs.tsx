@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plans } from "./Plans";
 import type { Subscription, User } from "@prisma/client";
 import { ActivePlan } from "./ActivePlan";
+import { PaymentHistory } from "./PaymentHistory";
 
 interface SubscribeTabsProps {
   plans: Subscription[];
@@ -35,7 +36,7 @@ export function SubscribeTabs({ plans, state, user }: SubscribeTabsProps) {
         )}
       </TabsContent>
       <TabsContent value="payment">
-        See your payment status and history here.
+        <PaymentHistory />
       </TabsContent>
     </Tabs>
   );
