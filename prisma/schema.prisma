@@ -29,6 +29,7 @@ model User {
   isSubscribed           Boolean   @default(false)
   subscribeStartAt       DateTime?
   subscribeEndAt         DateTime?
+  payment_history        Payment_History[]
 }
 
 model Subscription {
@@ -38,9 +39,24 @@ model Subscription {
   description   String
   benefit       Json
 
-  user          User[]
+  user              User[]
+  payment_history   Payment_History[]
 
   @@map("subscription")
+}
+
+model Payment_History {
+  id                String    @id @unique
+  date              DateTime  @default(now())
+  status            String
+
+  subscription      Subscription @relation(fields: [subscription_id], references: [id])
+  subscription_id   Int
+
+  user              User @relation(fields: [user_id], references: [id])
+  user_id           String
+
+  @@map("payment_history")
 }
 
 model Posts {

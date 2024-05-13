@@ -3,34 +3,49 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "../models/prisma";
 import moment from "moment";
+import { cookies } from "next/headers";
 
-export async function subscribePlan(formData: FormData) {
-  const userId = formData.get("userId") as string;
-  const planId = formData.get("planId") as string;
+type SubscribePlan = {
+  userId: string;
+  planId: number;
+  paymentId: string;
+  paymentStatus: string;
+};
+
+export async function subscribePlan({
+  userId,
+  planId,
+  paymentId,
+  paymentStatus,
+}: SubscribePlan) {
   const inOneMonth = new Date();
   inOneMonth.setMonth(inOneMonth.getMonth() + 1);
 
-  try {
-    const updateUser = await prisma.user.update({
-      where: {
-        id: userId,
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      subscription_id: planId,
+      isSubscribed: true,
+      subscribeStartAt: new Date(),
+      subscribeEndAt: inOneMonth,
+      payment_history: {
+        create: {
+          id: paymentId,
+          subscription_id: planId,
+          status: paymentStatus,
+        },
       },
-      data: {
-        subscription_id: Number(planId),
-        isSubscribed: true,
-        subscribeStartAt: new Date(),
-        subscribeEndAt: inOneMonth,
-      },
-      include: {
-        subscription: true,
-      },
-    });
+    },
+    include: {
+      subscription: true,
+    },
+  });
 
-    revalidatePath("/dashboard", "layout");
-    return updateUser;
-  } catch (error) {
-    throw new Error("Failed to subscribe");
-  }
+  cookies().delete("plan_id");
+  revalidatePath("/dashboard", "layout");
+  return;
 }
 
 // Create checkSubsription to check is user subscription is expired or not
