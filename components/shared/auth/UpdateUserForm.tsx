@@ -24,7 +24,7 @@ export function UpdateUserForm({ user }: { user: User }) {
         <div className="flex justify-between items-center">
           <div className="flex flex-col gap-4">
             <h1 className="text-2xl">Profile</h1>
-            <p className="text-gray-400">
+            <p className="text-muted-foreground">
               This is how others will see you on the site.
             </p>
           </div>
@@ -63,10 +63,10 @@ export function UpdateUserForm({ user }: { user: User }) {
             </Alert>
           ) : (
             <ul className="list-inside list-disc">
-              <li className="text-sm text-gray-400">
+              <li className="text-sm text-muted-foreground">
                 Username must be at least 8 characters long.
               </li>
-              <li className="text-sm text-gray-400">
+              <li className="text-sm text-muted-foreground">
                 This is your public display name. It can be your real name or a
                 pseudonym.
               </li>
@@ -91,7 +91,7 @@ export function UpdateUserForm({ user }: { user: User }) {
             </Alert>
           )}
           <ul className="list-inside list-disc">
-            <li className="text-sm text-gray-400">
+            <li className="text-sm text-muted-foreground">
               This is your public email address. It can be your work or a
               personal email.
             </li>
@@ -124,13 +124,13 @@ export function UpdateUserForm({ user }: { user: User }) {
               <li className="text-sm">
                 If you dont want to change the password, leave it empty.
               </li>
-              <li className="text-sm text-gray-400">
+              <li className="text-sm text-muted-foreground">
                 Must be at least 8 characters long.
               </li>
-              <li className="text-sm text-gray-400">
+              <li className="text-sm text-muted-foreground">
                 Must contain at least one letter.
               </li>
-              <li className="text-sm text-gray-400">
+              <li className="text-sm text-muted-foreground">
                 Must contain at least one special character.
               </li>
             </ul>
@@ -150,7 +150,7 @@ export function UpdateUserForm({ user }: { user: User }) {
             defaultValue={user.firstName || ""}
           />
           <ul className="list-inside list-disc">
-            <li className="text-sm text-gray-400">
+            <li className="text-sm text-muted-foreground">
               This is your government first name. It is recommended to fill it
               in, because this has an effect on your credentials and SEO.
             </li>
@@ -167,7 +167,7 @@ export function UpdateUserForm({ user }: { user: User }) {
             defaultValue={user.lastName || ""}
           />
           <ul className="list-inside list-disc">
-            <li className="text-sm text-gray-400">
+            <li className="text-sm text-muted-foreground">
               This is your government last name. It is recommended to fill it
               in, because this has an effect on your credentials and SEO.
             </li>
@@ -183,12 +183,14 @@ export function UpdateUserForm({ user }: { user: User }) {
             defaultValue={user.bio || ""}
           />
           <ul className="list-inside list-disc">
-            <li className="text-sm text-gray-400">Maximum 150 character</li>
-            <li className="text-sm text-gray-400">
+            <li className="text-sm text-muted-foreground">
+              Maximum 150 character
+            </li>
+            <li className="text-sm text-muted-foreground">
               This is your short biography, it can be include your
               specialization or profession.
             </li>
-            <li className="text-sm text-gray-400">
+            <li className="text-sm text-muted-foreground">
               It is recommended to fill it in, because this has an effect on
               your credentials and SEO.
             </li>

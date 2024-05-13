@@ -4,7 +4,7 @@ import { promises as fs } from "fs";
 import sizeOf from "image-size";
 
 export async function getMedia() {
-  const baseUrl = process.env.baseUrl!;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
   const dir = process.cwd() + "/public/media/";
   const readDir = await fs.readdir(dir);
 

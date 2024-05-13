@@ -30,6 +30,17 @@ model User {
   subscribeStartAt       DateTime?
   subscribeEndAt         DateTime?
   payment_history        Payment_History[]
+  site_info              Site_Info?
+}
+
+model Site_Info {
+  id            Int       @id @unique @default(autoincrement())
+  name          String
+  description   String
+  logo          String    @default("https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png")
+
+  user          User?      @relation(fields: [user_id], references: [id])
+  user_id       String?    @unique
 }
 
 model Subscription {
