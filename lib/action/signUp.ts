@@ -4,6 +4,7 @@ import { prisma } from "../models/prisma";
 import { redirect } from "next/navigation";
 import { hash } from "bcrypt";
 import { createSession } from "../session";
+import { randomUUID } from "crypto";
 
 export async function signUp(state: FormState, formData: FormData) {
   // Form validation
@@ -56,7 +57,17 @@ export async function signUp(state: FormState, formData: FormData) {
       email,
       password: hashedPassword,
       role: "admin",
-      subscription_id: 3,
+      api_key: {
+        create: {
+          value: randomUUID(),
+        },
+      },
+      site_info: {
+        create: {
+          name: "My Site",
+          description: "My site description",
+        },
+      },
     },
   });
 
@@ -68,7 +79,10 @@ export async function signUp(state: FormState, formData: FormData) {
   }
 
   // Create session
-  await createSession(user.id, user.isSubscribed);
+  const now = new Date();
+  const isSubscribed = now > user.subscribeEndAt!;
+
+  await createSession(user.id, isSubscribed);
 
   console.log(user);
   redirect("/dashboard");

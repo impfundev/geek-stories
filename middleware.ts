@@ -1,49 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
-import { updateSession, verifySession } from "@/lib/session";
+import { updateSession, verifySession } from "./lib/session";
+import { isAuthorized } from "./lib/auth";
 
-// 1. Specify protected and public routes
-const protectedRoutes = ["/dashboard"];
-const publicRoutes = ["/login", "/signup", "/"];
+export const config = {
+  matcher: ["/api/:function*", "/dashboard/:function*", "/editor/:function*"],
+};
 
-export default async function middleware(req: NextRequest) {
-  // 2. Check if the current route is protected or public
-  const path = req.nextUrl.pathname;
-  const isProtectedRoute = protectedRoutes.includes(path);
-  const isPublicRoute = publicRoutes.includes(path);
+export async function middleware(req: NextRequest) {
+  // Authorization API handler
+  const isApiRoute = req.nextUrl.pathname.startsWith("/api");
 
-  // 3. Get the session from the cookie
+  if (!isAuthorized(req) && isApiRoute) {
+    return Response.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  // Protected Route handler
   const session = await verifySession();
+  const isProtectedRoute =
+    req.nextUrl.pathname.startsWith("/dashboard") &&
+    req.nextUrl.pathname.startsWith("/editor");
 
-  // 4. Redirect to /login if the user is not authenticated
-
+  // Redirect to login page if the user is not authenticated
   if (isProtectedRoute && !session.userId) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  // 6. Redirect to /dashboard if the user is authenticated
-  if (
-    isPublicRoute &&
-    session?.userId &&
-    !req.nextUrl.pathname.startsWith("/dashboard")
-  ) {
-    return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
-  }
-
-  // 7. Redirect to /dashboard/subscriptions if the user subscription is expired
-
-  if (
-    isPublicRoute &&
-    session?.userId &&
-    !req.nextUrl.pathname.startsWith("/dashboard") &&
-    !session.isSubscribed
-  ) {
-    return NextResponse.redirect(
-      new URL("/dashboard/subscriptions", req.nextUrl)
-    );
-  }
-
-  // 8. Update the session expiration time if session 1 day before expired
-  if (session?.userId && session.expiresAt) {
+  // Update the session expiration time if session 1 day before expired
+  if (isProtectedRoute && session?.userId && session.expiresAt) {
     const now = new Date();
     const expiresAt = new Date(session.expiresAt as Date);
 
@@ -52,12 +35,12 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
-  // 9. Continue to the next middleware or the requested page
+  // Redirect to subscriptions page if the user subscription is expired
+  if (isProtectedRoute && session?.userId && session.isSubscribed) {
+    return NextResponse.redirect(
+      new URL("/dashboard/subscriptions", req.nextUrl)
+    );
+  }
 
   return NextResponse.next();
 }
-
-// Routes Middleware should not run on
-export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|.*\\.png$).*)"],
-};

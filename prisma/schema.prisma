@@ -31,6 +31,17 @@ model User {
   subscribeEndAt         DateTime?
   payment_history        Payment_History[]
   site_info              Site_Info?
+  api_key                Api_Key?
+
+  @@map("user")
+}
+
+model Api_Key {
+  id        Int     @id @default(autoincrement())
+  value     String  @unique @default(uuid())
+
+  user      User    @relation(fields: [user_id], references: [id])
+  user_id   String  @unique
 }
 
 model Site_Info {
@@ -41,6 +52,8 @@ model Site_Info {
 
   user          User?      @relation(fields: [user_id], references: [id])
   user_id       String?    @unique
+
+  @@map("site_info")
 }
 
 model Subscription {
@@ -71,8 +84,8 @@ model Payment_History {
 }
 
 model Posts {
-  id                String       @id @unique @default(uuid())
-  author            User @relation(fields: [authorId], references: [id])
+  id                Int       @id @default(autoincrement())
+  author            User      @relation(fields: [authorId], references: [id])
   authorId          String
   title             String    @db.VarChar(85)
   createAt          DateTime  @default(now())   
@@ -92,9 +105,24 @@ model Posts {
   @@map("posts")
 }
 
+model Comments {
+  id            Int       @id @default(autoincrement())
+  user          User      @relation(fields: [userId], references: [id])
+  userId        String
+  content       String    @db.Text
+
+  post          Posts?    @relation(fields: [postId], references: [id])
+  postId        Int?
+
+  createAt      DateTime  @default(now())   
+  updateAt      DateTime  @default(now())  
+
+  @@map("comments")
+}
+
 model Pages {
-  id                String       @id @unique @default(uuid())
-  author            User @relation(fields: [authorId], references: [id])
+  id                Int       @id @default(autoincrement())
+  author            User      @relation(fields: [authorId], references: [id])
   authorId          String
   title             String    @db.VarChar(85)
   createAt          DateTime  @default(now())   
@@ -106,20 +134,9 @@ model Pages {
   @@map("pages")
 }
 
-model Comments {
-  id            String  @id @unique @default(uuid())
-  user          User    @relation(fields: [userId], references: [id])
-  userId        String
-  content       String  @db.Text
-  post          Posts   @relation(fields: [postId], references: [id])
-  postId        String  @unique
-  createAt      DateTime  @default(now())   
-  updateAt      DateTime  @default(now())  
-}
-
 model Tags {
-  id       String   @id @unique @default(uuid())
-  name     String?  @db.VarChar(25)
+  id       Int        @id @unique @default(autoincrement())
+  name     String?    @db.VarChar(25)
   posts    Posts[]
 
   @@map("tags")

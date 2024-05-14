@@ -29,12 +29,16 @@ export async function login(state: FormState, formData: FormData) {
 
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
-  if (!isPasswordValid)
+  if (!isPasswordValid) {
     return {
       message: "Password invalid, please enter valid password.",
     };
+  }
 
-  await createSession(user.id, user.isSubscribed);
+  const now = new Date();
+  const isSubscribed = now > user.subscribeEndAt!;
+
+  await createSession(user.id, isSubscribed);
   console.log(user);
   redirect("/dashboard");
 }

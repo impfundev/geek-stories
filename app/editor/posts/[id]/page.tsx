@@ -14,7 +14,7 @@ export default async function EditorPostsPage({
   const { tags } = await getTag();
   const post = await prisma.posts.findUnique({
     where: {
-      id: params.id,
+      id: Number(params.id),
     },
     include: {
       tags: true,
@@ -30,6 +30,6 @@ export async function generateStaticParams() {
   const { posts } = await getPosts();
 
   return posts.map((post) => ({
-    id: post.id,
+    id: String(post.id),
   }));
 }

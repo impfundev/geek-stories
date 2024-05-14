@@ -12,7 +12,7 @@ export default async function EditorPagesPage({
 }) {
   const pages = await prisma.pages.findUnique({
     where: {
-      id: params.id,
+      id: Number(params.id),
     },
   });
 
@@ -25,6 +25,6 @@ export async function generateStaticParams() {
   const { pages } = await getPages();
 
   return pages.map((page) => ({
-    id: page.id,
+    id: String(page.id),
   }));
 }

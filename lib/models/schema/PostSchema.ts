@@ -3,7 +3,7 @@ import { UserSchema } from "@/lib/models/schema/UserSchema";
 import { TagsSchema } from "./TagsSchema";
 
 export const PostSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   author: UserSchema.nullable(),
   authorId: z.string(),
   title: z.string(),

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { UserSchema } from "@/lib/models/schema/UserSchema";
 
 export const PagesSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   author: UserSchema.nullable(),
   authorId: z.string(),
   title: z.string(),

@@ -4,8 +4,8 @@ import { prisma } from "../models/prisma";
 import { z } from "zod";
 
 export async function deletePost(state: any, formData: FormData) {
-  const postIdSchema = z.string();
-  const postId = formData.get("postId");
+  const postIdSchema = z.number();
+  const postId = Number(formData.get("postId"));
   const id = postIdSchema.parse(postId);
   const postData = await prisma.posts.delete({
     where: { id },

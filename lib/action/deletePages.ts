@@ -4,8 +4,8 @@ import { prisma } from "../models/prisma";
 import { z } from "zod";
 
 export async function deletePages(state: any, formData: FormData) {
-  const pagesIdSchema = z.string();
-  const pagesId = formData.get("pagesId");
+  const pagesIdSchema = z.number();
+  const pagesId = Number(formData.get("pagesId"));
   const id = pagesIdSchema.parse(pagesId);
   const postData = await prisma.pages.delete({
     where: { id },
