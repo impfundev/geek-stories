@@ -17,14 +17,17 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { SubmitButton } from "@/components/shared/auth/SubmitButton";
 import { InputEmail, InputPassword, InputUserName } from "./input";
-import { CheckboxPlan } from "@/components/shared/dashboard/subscription/CheckboxPlan";
 import type { Subscription } from "@prisma/client";
-import { RadioGroup } from "@/components/ui/radio-group";
-import { useState } from "react";
+
+// import { CheckboxPlan } from "@/components/shared/dashboard/subscription/CheckboxPlan";
+// import { RadioGroup } from "@/components/ui/radio-group";
+// import { useState } from "react";
 
 export function SignUpForm({ plans }: { plans: Subscription[] }) {
   const [state, action] = useFormState(signUp, undefined);
-  const [plan, setPlan] = useState(plans[0].type);
+
+  // for subscribe on sign up (Testing)
+  // const [plan, setPlan] = useState(plans[0].type);
 
   return (
     <form
@@ -39,7 +42,7 @@ export function SignUpForm({ plans }: { plans: Subscription[] }) {
           <InputUserName state={state} />
           <InputEmail state={state} />
           <InputPassword state={state} />
-          <input id="planType" name="planType" hidden value={plan} readOnly />
+          {/* <input id="planType" name="planType" hidden value={plan} readOnly />
           <RadioGroup
             defaultValue={plan}
             onValueChange={setPlan}
@@ -48,7 +51,7 @@ export function SignUpForm({ plans }: { plans: Subscription[] }) {
             {plans.map((plan) => (
               <CheckboxPlan key={plan.id} plan={plan} />
             ))}
-          </RadioGroup>
+          </RadioGroup> */}
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
           <SubmitButton className="w-full">Sign Up</SubmitButton>
