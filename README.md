@@ -1,17 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GEEK STORIES
+
+Fullstack headless CMS for publishing content build with Next.js. (suitable for Blogs and Personal Porfolio website)
+
+## Tech Stack
+
+- Node.js
+- Next.js latest version (App Router)
+- Typescript
+- MySQL database
+- Prisma ORM
+- Midtrans (Payment Gateaway)
+- shadcn/ui or Radix UI
+- Novel Rich Text Editor (Titap Editor)
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Setup `.env`
+
+```bash
+cp .env.example .env
+```
+
+inside `.env`:
+
+```bash
+# BASE URL
+NEXT_PUBLIC_BASE_URL="http://localhost:3000"
+
+# DATABASE
+DATABASE_URL="mysql://username:password@host:port/database"
+
+# AUTH
+SESSION_SECRET="" # STRONG RANDOM SECRET
+
+# MIDTRANS SERVER KEY
+NEXT_PUBLIC_SERVER_KEY="SB-Mid-server-example"
+NEXT_PUBLIC_CLIENT_KEY="SB-Mid-client-example"
+```
+
+### 3. Setup database with prisma
+
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+### 4. Seeding Required Data
+
+We need to seed subcription plan for testing subscription services.
+
+```bash
+node prisma/plan.seed.mjs
+```
+
+You can check seed data with prisma studio
+
+```bash
+npx prisma studio
+```
+
+### 5. Run the development server:
+
+\*this project still works proper on development mode, not staging or production.
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -20,7 +79,7 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Learn More About Next.js
 
 To learn more about Next.js, take a look at the following resources:
 
@@ -28,9 +87,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
