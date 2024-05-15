@@ -7,10 +7,10 @@ import {
   File,
   Tags,
   Settings,
-  ExternalLink,
   CalendarCheck2,
   MessageSquareMore,
   Image as ImageIcon,
+  KeyIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -109,7 +109,7 @@ export function SecondMenu() {
           path === "#" && "text-background bg-primary"
         )}
       >
-        <ExternalLink size={20} strokeWidth={1} absoluteStrokeWidth /> View site
+        <KeyIcon size={20} strokeWidth={1} absoluteStrokeWidth /> Access
       </Link>
     </nav>
   );

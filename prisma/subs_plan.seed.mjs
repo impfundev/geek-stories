@@ -6,15 +6,13 @@ async function main() {
   const subscription = await prisma.subscription.createMany({
     data: [
       {
-        type: "hobby",
+        type: "demo",
         price: "0",
         description: "The right choice to kickstart.",
         benefit: {
           data: [
-            { label: "Total 1000 Posts, Pages, Tags and Comments" },
-            { label: "10 GB Media Storage" },
-            { label: "Basic Theme" },
-            { label: "Community Supports" },
+            { label: "Unlimited Posts, Pages, Tags and Comments" },
+            { label: "For testing purposes only, no RESTful API service" },
           ],
         },
       },
@@ -24,24 +22,9 @@ async function main() {
         description: "The plan to help you keep growing.",
         benefit: {
           data: [
-            { label: "Total 10000 Posts, Pages, Tags and Comments" },
-            { label: "100 GB Media Storage" },
-            { label: "Basic Theme" },
-            { label: "Premium Theme, Community and Expert Supports" },
-          ],
-        },
-      },
-      {
-        type: "enterprise",
-        price: "Custom",
-        description: "The plan to help you keep growing.",
-        benefit: {
-          data: [
             { label: "Unlimited Posts, Pages, Tags and Comments" },
-            { label: "Start from 1 TB Media Storage" },
-            { label: "Premium Theme and Custom Theme (by request)" },
-            { label: "Custom Dashboard (by request)" },
-            { label: "Enterprise Supports" },
+            { label: "Expert Supports" },
+            { label: "RESTful API service" },
           ],
         },
       },

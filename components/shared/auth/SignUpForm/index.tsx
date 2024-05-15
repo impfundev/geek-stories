@@ -17,14 +17,19 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 import { SubmitButton } from "@/components/shared/auth/SubmitButton";
 import { InputEmail, InputPassword, InputUserName } from "./input";
+import { CheckboxPlan } from "@/components/shared/dashboard/subscription/CheckboxPlan";
+import type { Subscription } from "@prisma/client";
+import { RadioGroup } from "@/components/ui/radio-group";
+import { useState } from "react";
 
-export function SignUpForm() {
+export function SignUpForm({ plans }: { plans: Subscription[] }) {
   const [state, action] = useFormState(signUp, undefined);
+  const [plan, setPlan] = useState(plans[0].type);
 
   return (
     <form
       action={action}
-      className="relative w-full max-w-md mx-auto flex flex-col justify-center"
+      className="relative w-full max-w-xl mx-auto flex flex-col justify-center"
     >
       <Card className="rounded-2xl bg-background/75 backdrop-blur-md">
         <CardHeader>
@@ -34,6 +39,16 @@ export function SignUpForm() {
           <InputUserName state={state} />
           <InputEmail state={state} />
           <InputPassword state={state} />
+          <input id="planType" name="planType" hidden value={plan} readOnly />
+          <RadioGroup
+            defaultValue={plan}
+            onValueChange={setPlan}
+            className="flex gap-6 items-start"
+          >
+            {plans.map((plan) => (
+              <CheckboxPlan key={plan.id} plan={plan} />
+            ))}
+          </RadioGroup>
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
           <SubmitButton className="w-full">Sign Up</SubmitButton>
@@ -52,7 +67,6 @@ export function SignUpForm() {
           </p>
         </CardFooter>
       </Card>
-      <span className="absolute inset-0 blur w-full md:w-[400px] bg-gradient-to-r from-background to-foreground rounded-full opacity-30 -z-50 animate-pulse"></span>
     </form>
   );
 }

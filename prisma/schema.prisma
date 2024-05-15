@@ -26,7 +26,6 @@ model User {
   subscription     Subscription? @relation(fields: [subscription_id], references: [id])
   subscription_id  Int?
 
-  isSubscribed           Boolean   @default(false)
   subscribeStartAt       DateTime?
   subscribeEndAt         DateTime?
   payment_history        Payment_History[]
@@ -38,7 +37,7 @@ model User {
 
 model Api_Key {
   id        Int     @id @default(autoincrement())
-  value     String  @unique @default(uuid())
+  value     String  @unique
 
   user      User    @relation(fields: [user_id], references: [id])
   user_id   String  @unique

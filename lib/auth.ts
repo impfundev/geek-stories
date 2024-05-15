@@ -1,15 +1,25 @@
 import { prisma } from "./models/prisma";
-import { verifySession } from "./session";
 
-export async function isAuthorized(req: Request) {
-  const { userId } = await verifySession();
-  const apiKey = await prisma.api_Key.findUnique({
-    where: { user_id: userId as string },
+export async function isAuthorized(token: string | null) {
+  if (!token) return false;
+  const authorized = await prisma.api_Key.findUnique({
+    where: { value: token },
   });
 
-  const authorization = req.headers.get("authorization");
-  if (authorization !== apiKey?.value) {
-    return false;
-  }
+  if (!authorized) return false;
+
   return true;
+}
+
+export async function generateApiKey(length: number) {
+  let result = "";
+  let charset =
+    "!@#$^&*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    result += charset[randomIndex];
+  }
+
+  return result;
 }

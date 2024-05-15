@@ -4,7 +4,7 @@ import { prisma } from "../models/prisma";
 import { redirect } from "next/navigation";
 import { hash } from "bcrypt";
 import { createSession } from "../session";
-import { randomUUID } from "crypto";
+import { generateApiKey } from "../auth";
 
 export async function signUp(state: FormState, formData: FormData) {
   // Form validation
@@ -12,16 +12,12 @@ export async function signUp(state: FormState, formData: FormData) {
     userName: formData.get("userName"),
     email: formData.get("email"),
     password: formData.get("password"),
-    firstName: formData.get("firstName"),
-    lastName: formData.get("lastName"),
-    bio: formData.get("bio"),
   });
 
-  if (!validatedFields.success) {
+  if (!validatedFields.success)
     return {
       errors: validatedFields.error.flatten().fieldErrors,
     };
-  }
 
   const { userName, email, password } = validatedFields.data;
 
@@ -33,24 +29,23 @@ export async function signUp(state: FormState, formData: FormData) {
     where: { userName },
   });
 
-  if (isUserNameUsed) {
+  if (isUserNameUsed)
     return {
       message: "Username is already used. Please enter another username.",
     };
-  }
 
   // Check is email already used
   const isEmailUsed = await prisma.user.findUnique({
     where: { email },
   });
 
-  if (isEmailUsed) {
+  if (isEmailUsed)
     return {
       message: "Email is already used. Please go to the login page.",
     };
-  }
 
   // Create user
+  const api_key = await generateApiKey(64);
   const user = await prisma.user.create({
     data: {
       userName,
@@ -59,7 +54,7 @@ export async function signUp(state: FormState, formData: FormData) {
       role: "admin",
       api_key: {
         create: {
-          value: randomUUID(),
+          value: api_key,
         },
       },
       site_info: {
@@ -69,21 +64,18 @@ export async function signUp(state: FormState, formData: FormData) {
         },
       },
     },
+    include: {
+      api_key: true,
+    },
   });
 
-  if (!user) {
-    console.error(state?.message, state?.errors);
+  if (!user)
     return {
       message: "Something error on the server.",
     };
-  }
 
-  // Create session
-  const now = new Date();
-  const isSubscribed = now > user.subscribeEndAt!;
-
-  await createSession(user.id, isSubscribed);
+  await createSession(user.id);
 
   console.log(user);
-  redirect("/dashboard");
+  redirect("/checkout");
 }
