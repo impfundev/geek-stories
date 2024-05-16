@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { subscribePlan } from "@/lib/action/subscribePlan";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getClientSideCookie } from "@/lib/cookie";
+import { Button } from "@/components/ui/button";
 
 interface PlansProps {
   plans: Subscription[];
@@ -32,15 +33,18 @@ export function Plans({ plans, userId }: PlansProps) {
   const [mounted, isMounted] = useState(false);
 
   useEffect(() => {
-    if (paymentId && paymentStatus && planId)
-      subscribePlan({
-        paymentId,
-        userId,
-        paymentStatus,
-        planId: Number(planId),
-      }).then(() => isMounted(true));
+    async function subscribe() {
+      if (paymentId && paymentStatus && planId)
+        subscribePlan({
+          paymentId,
+          userId,
+          paymentStatus,
+          planId: Number(planId),
+        });
+      isMounted(true);
+    }
 
-    isMounted(true);
+    subscribe().catch((err) => console.error(err));
   }, []);
 
   return (
@@ -100,9 +104,11 @@ export function Plans({ plans, userId }: PlansProps) {
                   </CardContent>
                 </div>
                 <CardFooter>
-                  <SubmitButton type="submit" className="w-full">
-                    Start Plan
-                  </SubmitButton>
+                  {plan.type === "demo" ? (
+                    <Button disabled>Auto Actived</Button>
+                  ) : (
+                    <SubmitButton className="w-full">Start Plan</SubmitButton>
+                  )}
                 </CardFooter>
               </form>
             ) : (

@@ -4,6 +4,7 @@ import type { Subscription, User } from "@prisma/client";
 import { ActivePlan } from "./ActivePlan";
 import { PaymentHistory } from "./PaymentHistory";
 import moment from "moment";
+import Link from "next/link";
 
 interface SubscribeTabsProps {
   plans: Subscription[];
@@ -25,15 +26,32 @@ export function SubscribeTabs({ plans, user }: SubscribeTabsProps) {
         <TabsTrigger value="payment">Payment</TabsTrigger>
       </TabsList>
       <TabsContent value="subscription" className="flex flex-col gap-4">
-        {activePlan && (
+        <p>
+          This Subscription feature is only for testing needs. Payments are made
+          using{" "}
+          <Link
+            href={"https://docs.midtrans.com/docs/testing-payment-on-sandbox"}
+            className="underline"
+            target="_blank"
+          >
+            Midtrans testing payment on Sandbox
+          </Link>
+        </p>
+        {activePlan && !subscriptionExpired && (
           <>
             <p>Your subscription is active until {subscribeEndAt}</p>
             <ActivePlan plan={activePlan} />
           </>
         )}
-        {subscriptionExpired && (
+        {user.subscribeEndAt && subscriptionExpired && (
           <>
             <p>Your subscription has expired, extend or choose another plan:</p>
+            <Plans userId={user.id} plans={plans} />
+          </>
+        )}
+        {!activePlan && !user.subscribeEndAt && (
+          <>
+            <p>Your on demo plan, try choose another plan:</p>
             <Plans userId={user.id} plans={plans} />
           </>
         )}

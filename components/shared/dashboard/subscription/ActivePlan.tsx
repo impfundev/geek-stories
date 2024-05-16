@@ -2,11 +2,14 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import type { Subscription } from "@prisma/client";
 import type { Benefit } from "@/lib/type";
+import { retryPaymentTest } from "@/lib/action/retryPaymentTest";
+import { SubmitButton } from "../../auth/SubmitButton";
 
 interface PlansProps {
   plan: Subscription;
@@ -17,7 +20,7 @@ export function ActivePlan({ plan }: PlansProps) {
 
   return (
     <Card className="flex flex-col justify-between drop-shadow-lg max-w-md">
-      <div>
+      <form action={retryPaymentTest}>
         <CardHeader className="gap-1">
           <CardTitle className="capitalize">Active Plan: {plan.type}</CardTitle>
           <CardDescription>Your privileges:</CardDescription>
@@ -35,7 +38,10 @@ export function ActivePlan({ plan }: PlansProps) {
             ))}
           </ul>
         </CardContent>
-      </div>
+        <CardFooter>
+          <SubmitButton>Retry payment test</SubmitButton>
+        </CardFooter>
+      </form>
     </Card>
   );
 }

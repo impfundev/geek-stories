@@ -1,0 +1,18 @@
+pre {
+  @apply p-6 max-w-screen-md max-h-[400px] overflow-auto bg-muted rounded-xl;
+}
+.string {
+  @apply text-lime-400;
+}
+.number {
+  color: darkorange;
+}
+.boolean {
+  color: blue;
+}
+.null {
+  color: magenta;
+}
+.key {
+  @apply text-purple-500;
+}

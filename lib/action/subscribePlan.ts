@@ -27,7 +27,6 @@ export async function subscribePlan({
     },
     data: {
       subscription_id: planId,
-      isSubscribed: true,
       subscribeStartAt: new Date(),
       subscribeEndAt: inOneMonth,
       payment_history: {
@@ -45,7 +44,6 @@ export async function subscribePlan({
 
   cookies().delete("plan_id");
   revalidatePath("/dashboard", "layout");
-  return;
 }
 
 // Create checkSubsription to check is user subscription is expired or not
@@ -61,7 +59,7 @@ export async function checkSubscription(userId: string) {
     throw new Error("User not found");
   }
 
-  if (!user.isSubscribed) {
+  if (!user.subscribeStartAt) {
     return {
       isSubscribed: false,
       message: "You are not subscribed to any plan, choose your plan:",

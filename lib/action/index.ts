@@ -16,3 +16,4 @@ export { updateUsers } from "./updateUsers";
 export { getComments } from "./getComments";
 export { deleteComments } from "./deleteComments";
 export { getSubscriptionPlans } from "./getSubscriptionPlans";
+export { getApiKey } from "./getApiKey";

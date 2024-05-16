@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 
 export function MainMenu() {
   const path = usePathname();
@@ -75,16 +76,6 @@ export function MainMenu() {
         <MessageSquareMore size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
         Comments
       </Link>
-      <Link
-        href="/dashboard/subscriptions"
-        className={cn(
-          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
-          path === "/dashboard/subscriptions" && "text-background bg-primary"
-        )}
-      >
-        <CalendarCheck2 size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
-        Subscriptions
-      </Link>
     </nav>
   );
 }
@@ -93,6 +84,16 @@ export function SecondMenu() {
   const path = usePathname();
   return (
     <nav className="flex flex-col gap-2">
+      <Link
+        href="/dashboard/subscriptions"
+        className={cn(
+          "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
+          path === "/dashboard/subscriptions" && "text-background bg-primary"
+        )}
+      >
+        <CalendarCheck2 size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
+        Subscriptions <Badge>Beta</Badge>
+      </Link>
       <Link
         href="/dashboard/settings"
         className={cn(
@@ -103,13 +104,14 @@ export function SecondMenu() {
         <Settings size={20} strokeWidth={1} absoluteStrokeWidth /> Settings
       </Link>
       <Link
-        href="#"
+        href="/dashboard/access"
         className={cn(
           "py-2 px-4 flex gap-2 items-center rounded-full hover:text-background hover:bg-primary",
-          path === "#" && "text-background bg-primary"
+          path === "/dashboard/access" && "text-background bg-primary"
         )}
       >
-        <KeyIcon size={20} strokeWidth={1} absoluteStrokeWidth /> Access
+        <KeyIcon size={20} strokeWidth={1} absoluteStrokeWidth /> API Access{" "}
+        <Badge>Beta</Badge>
       </Link>
     </nav>
   );
