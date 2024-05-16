@@ -14,7 +14,7 @@ model User {
   id            String    @id @unique @default(uuid())
   userName      String    @unique @db.VarChar(50)
   email         String    @unique @db.VarChar(50)
-  password      String    @db.LongText
+  password      String    @db.Text
   firstName     String?   @db.VarChar(50)
   lastName      String?   @db.VarChar(50)
   bio           String?   @db.VarChar(150)
@@ -89,7 +89,7 @@ model Posts {
   title             String    @db.VarChar(85)
   createAt          DateTime  @default(now())   
   updateAt          DateTime  @default(now())   
-  content           String?   @db.LongText
+  content           String?   @db.Text
   jsonContent       Json?     @db.Json
   excerpt           String?   @db.VarChar(150)
   published         Published
@@ -126,7 +126,7 @@ model Pages {
   title             String    @db.VarChar(85)
   createAt          DateTime  @default(now())   
   updateAt          DateTime  @default(now())   
-  content           String?   @db.LongText
+  content           String?   @db.Text
   jsonContent       Json?     @db.Json
   published         Published
 
