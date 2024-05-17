@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { testAPi } from "@/lib/action/testApi";
+import { testAPi, testComment } from "@/lib/action/testApi";
 import { SubmitButton } from "../../auth/SubmitButton";
 import { syntaxHighlight } from "./syntaxHighlight";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +21,7 @@ type ApiTest = {
   description: string;
   endpoint: string;
   method: "POST" | "GET";
-  body?: string;
+  isComment?: boolean;
 };
 
 export function ApiTest({
@@ -29,9 +29,10 @@ export function ApiTest({
   description,
   endpoint,
   method,
-  body,
+  isComment = false,
 }: ApiTest) {
-  const [state, action] = useFormState(testAPi, undefined);
+  const handleAction = isComment ? testComment : testAPi;
+  const [state, action] = useFormState(handleAction, undefined);
 
   return (
     <Card>
@@ -62,7 +63,6 @@ export function ApiTest({
             readOnly
           />
           <input id="method" name="method" value={method} hidden readOnly />
-          {body && <input id="body" name="body" value={body} hidden readOnly />}
           <SubmitButton type="submit">Try</SubmitButton>
         </form>
         {state && (

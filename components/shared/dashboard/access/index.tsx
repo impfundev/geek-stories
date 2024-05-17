@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { ApiTest } from "./APITest";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ApiDoc } from "./APIDoc";
+import Link from "next/link";
 
-export function AccessPanel({ apiKey }: { apiKey: string }) {
+type AccessPanel = { apiKey: string };
+
+export function AccessPanel({ apiKey }: AccessPanel) {
   const [isCopied, setIsCopied] = useState(false);
   const [showApiKey, setShowApiKey] = useState(false);
 
@@ -41,7 +44,7 @@ export function AccessPanel({ apiKey }: { apiKey: string }) {
         <TabsTrigger value="API_KEY">API Key</TabsTrigger>
         <TabsTrigger value="API_DOC">API Documentaions</TabsTrigger>
       </TabsList>
-      <TabsContent value="API_KEY" className="grid gap-4 py-6">
+      <TabsContent value="API_KEY" className="grid gap-4 pb-6">
         <p className="text-muted-foreground">
           Get access to your RESTful API using this API KEY as the authorization
           header.
@@ -67,37 +70,19 @@ export function AccessPanel({ apiKey }: { apiKey: string }) {
           without consideration.
         </p>
       </TabsContent>
-      <TabsContent value="API_DOC" className="grid gap-6 pb-6">
-        <ApiTest
-          label="Get all posts"
-          endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`}
-          description="Test get all posts"
-          method="GET"
-        />
-        <ApiTest
-          label="Get all pages"
-          endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/pages`}
-          description="Test get all pages"
-          method="GET"
-        />
-        <ApiTest
-          label="Get all tags"
-          endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/tags`}
-          description="Test get all pages"
-          method="GET"
-        />
-        <ApiTest
-          label="Get site information"
-          endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/site`}
-          description="Test get site information"
-          method="GET"
-        />
-        <ApiTest
-          label="Get all comments"
-          endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/comments`}
-          description="Test get site information"
-          method="GET"
-        />
+      <TabsContent value="API_DOC" className="grid gap-4">
+        <p>
+          Recomended to use tools like{" "}
+          <Link
+            className="underline"
+            href={"https://www.postman.com/"}
+            target="_blank"
+          >
+            Postman
+          </Link>{" "}
+          for testing your RESTful API
+        </p>
+        <ApiDoc />
       </TabsContent>
     </Tabs>
   );

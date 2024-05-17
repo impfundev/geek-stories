@@ -35,7 +35,7 @@ export async function Account() {
     <div className="w-full grid gap-6">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="gap-2">
+          <Button variant="outline" className="justify-start gap-2">
             <Image
               alt={user.userName}
               src={pictureUrl}

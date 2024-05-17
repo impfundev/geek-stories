@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 
 export function MainMenu() {
   const path = usePathname();
@@ -110,8 +109,7 @@ export function SecondMenu() {
           path === "/dashboard/access" && "text-background bg-primary"
         )}
       >
-        <KeyIcon size={20} strokeWidth={1} absoluteStrokeWidth /> API Access{" "}
-        <Badge>Beta</Badge>
+        <KeyIcon size={20} strokeWidth={1} absoluteStrokeWidth /> API Access
       </Link>
     </nav>
   );

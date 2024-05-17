@@ -1,10 +1,15 @@
-export const dynamic = "force-dynamic";
 import { isAuthorized } from "@/lib/auth";
 import { prisma } from "@/lib/models/prisma";
+import { NextApiRequest } from "next";
+import { headers } from "next/headers";
 
-export async function POST(req: Request) {
-  const { userId } = await req.json();
-  const token = req.headers.get("authorization");
+export async function GET(
+  req: NextApiRequest,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id;
+
+  const token = headers().get("authorization");
   const authorized = await isAuthorized(token);
 
   if (!authorized)
@@ -17,17 +22,14 @@ export async function POST(req: Request) {
       }
     );
 
-  const siteInfo = await prisma.site_Info.findUnique({
-    where: { user_id: userId },
-    include: {
-      user: true,
-    },
+  const tags = await prisma.tags.findUnique({
+    where: { id: Number(id) },
   });
 
-  if (!siteInfo)
+  if (!tags)
     return Response.json(
       {
-        message: "Site information is not found",
+        message: `Tags with id: ${id} not found`,
       },
       {
         status: 404,
@@ -36,7 +38,7 @@ export async function POST(req: Request) {
 
   return Response.json(
     {
-      data: siteInfo,
+      data: tags,
     },
     {
       status: 200,

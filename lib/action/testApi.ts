@@ -2,10 +2,12 @@
 
 import { prisma } from "../models/prisma";
 import { verifySession } from "../session";
-import axios from "axios";
 
 export async function testAPi(state: any, formData: FormData) {
   const { userId } = await verifySession();
+  const endpoint = formData.get("endpoint") as string;
+  const method = formData.get("method") as string;
+
   const apiKey = await prisma.api_Key.findUnique({
     where: { user_id: userId as string },
   });
@@ -16,33 +18,74 @@ export async function testAPi(state: any, formData: FormData) {
       message: "API Key not found",
     };
 
-  const endpoint = formData.get("endpoint") as string;
-  const method = formData.get("method") as string;
-  const body = formData.get("body") as string | undefined;
-  let testApi;
-  const options = {
-    method,
-    url: endpoint,
-    headers: {
-      authorization: `${apiKey.value}`,
-    },
-  };
+  let testApi, options;
 
-  if (body) {
-    testApi = await axios.request(options);
-
-    return {
-      status: testApi.status,
-      message: testApi.statusText,
-      result: testApi.data,
+  if (method === "POST")
+    options = {
+      method,
+      headers: {
+        authorization: `${apiKey.value}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId: userId }),
     };
-  }
+  else
+    options = {
+      method,
+      headers: {
+        authorization: `${apiKey.value}`,
+      },
+    };
 
-  testApi = await axios.request(options);
+  testApi = await fetch(endpoint, options);
+  const result = await testApi.json();
+  const status = testApi.status;
+  const message = testApi.statusText;
 
   return {
-    status: testApi.status,
-    message: "Success",
-    result: testApi.data,
+    status,
+    message,
+    result,
+  };
+}
+
+export async function testComment(state: any, formData: FormData) {
+  const { userId } = await verifySession();
+  const endpoint = formData.get("endpoint") as string;
+
+  const apiKey = await prisma.api_Key.findUnique({
+    where: { user_id: userId as string },
+  });
+
+  let testApi;
+
+  if (!apiKey)
+    return {
+      status: 404,
+      message: "API Key not found",
+    };
+
+  const options = {
+    method: "POST",
+    headers: {
+      authorization: `${apiKey.value}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: userId,
+      content: "This is test comment",
+      postId: 1,
+    }),
+  };
+
+  testApi = await fetch(endpoint, options);
+  const result = await testApi.json();
+  const status = testApi.status;
+  const message = testApi.statusText;
+
+  return {
+    status,
+    message,
+    result,
   };
 }

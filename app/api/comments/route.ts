@@ -25,7 +25,7 @@ export async function GET(req: Request) {
   if (!comments) {
     return Response.json(
       {
-        message: "Failed to get posts",
+        message: "Failed to get comment",
       },
       {
         status: 500,
@@ -73,7 +73,7 @@ export async function POST(req: Request) {
   if (!comments)
     return Response.json(
       {
-        message: "Failed to get posts",
+        message: "Failed to get comment",
       },
       {
         status: 500,

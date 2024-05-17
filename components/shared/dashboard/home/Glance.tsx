@@ -1,20 +1,27 @@
 import { Card, CardTitle, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Page, PostType, Tags } from "@/lib/models/schema";
-import { PenSquare, File, Tags as TagsIcon } from "lucide-react";
+import { Comments, Page, PostType, Tags } from "@/lib/models/schema";
+import {
+  PenSquare,
+  File,
+  Tags as TagsIcon,
+  MessageSquareMore,
+} from "lucide-react";
 import Link from "next/link";
 
 type Glance = {
-  posts: PostType;
-  pages: Page[];
-  tags: Tags[];
+  totalPost: number;
+  totalPages: number;
+  totalTags: number;
+  totalComments: number;
 };
 
-export function Glance({ posts, pages, tags }: Glance) {
-  const totalPost = posts.length;
-  const totalPages = pages.length;
-  const totalTags = tags.length;
-
+export function Glance({
+  totalPost,
+  totalPages,
+  totalTags,
+  totalComments,
+}: Glance) {
   return (
     <Card className="drop-shadow-lg">
       <CardHeader>
@@ -42,6 +49,13 @@ export function Glance({ posts, pages, tags }: Glance) {
         >
           <TagsIcon size={20} strokeWidth={1} absoluteStrokeWidth /> {totalTags}{" "}
           Tags
+        </Link>
+        <Link
+          href="/dashboard/comments"
+          className="flex gap-2 items-center hover:underline"
+        >
+          <MessageSquareMore size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
+          {totalComments} Comments
         </Link>
       </CardContent>
     </Card>
