@@ -1,6 +1,8 @@
 "use client";
+
 import { useFormState } from "react-dom";
 import "./syntax.css";
+import { syntaxHighlight } from "./syntaxHighlight";
 
 import {
   Card,
@@ -11,17 +13,17 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { testAPi, testComment } from "@/lib/action/testApi";
+import { testAPi } from "@/lib/action/testApi";
 import { SubmitButton } from "../../auth/SubmitButton";
-import { syntaxHighlight } from "./syntaxHighlight";
 import { Badge } from "@/components/ui/badge";
+import { testApiContext } from "@/lib/context/apiTest.context";
 
 type ApiTest = {
   label: string;
   description: string;
   endpoint: string;
   method: "POST" | "GET";
-  isComment?: boolean;
+  type?: "pagination" | "search";
 };
 
 export function ApiTest({
@@ -29,16 +31,44 @@ export function ApiTest({
   description,
   endpoint,
   method,
-  isComment = false,
+  type,
 }: ApiTest) {
-  const handleAction = isComment ? testComment : testAPi;
-  const [state, action] = useFormState(handleAction, undefined);
+  const [state, action] = useFormState(testAPi, undefined);
+  const { setQuery, setLimit, setSkip } = testApiContext();
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="gap-4">
         <CardTitle>{label}</CardTitle>
         <CardDescription>{description}</CardDescription>
+        {type === "search" && (
+          <CardDescription>
+            <Input
+              placeholder="keyword"
+              type="text"
+              defaultValue={"New Post"}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </CardDescription>
+        )}
+        {type === "pagination" && (
+          <CardDescription className="flex gap-6">
+            <Input
+              type="number"
+              placeholder="limit"
+              className="max-w-xs"
+              defaultValue={2}
+              onChange={(e) => setLimit(Number(e.target.value))}
+            />
+            <Input
+              type="number"
+              placeholder="skip"
+              className="max-w-xs"
+              defaultValue={1}
+              onChange={(e) => setSkip(Number(e.target.value))}
+            />
+          </CardDescription>
+        )}
       </CardHeader>
       <CardContent>
         <Label htmlFor="API_ENDPOINT">Endpoint:</Label>
@@ -54,7 +84,6 @@ export function ApiTest({
             readOnly
             value={endpoint}
           />
-
           <input
             id="endpoint"
             name="endpoint"
