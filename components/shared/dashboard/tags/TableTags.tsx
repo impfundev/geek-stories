@@ -32,7 +32,7 @@ export function TableTags({ tags }: { tags: TableTags[] }) {
             <TableCell className="font-medium">{tag.name}</TableCell>
             <TableCell>{tag.posts.length}</TableCell>
             <TableCell>
-              <DeleteTag tagId={tag.id} />
+              <DeleteTag tagId={String(tag.id)} />
             </TableCell>
           </TableRow>
         ))}

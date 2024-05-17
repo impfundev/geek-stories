@@ -1,10 +1,9 @@
 import { isAuthorized } from "@/lib/auth";
 import { prisma } from "@/lib/models/prisma";
-import { NextApiRequest } from "next";
 import { headers } from "next/headers";
 
 export async function GET(
-  req: NextApiRequest,
+  req: Request,
   { params }: { params: { id: string } }
 ) {
   const id = params.id;
