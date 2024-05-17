@@ -16,7 +16,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { subscribePlan } from "@/lib/action/subscribePlan";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getClientSideCookie } from "@/lib/cookie";
+// import { getClientSideCookie } from "@/lib/cookie";
 import { Button } from "@/components/ui/button";
 
 interface PlansProps {
@@ -28,18 +28,15 @@ export function Plans({ plans, userId }: PlansProps) {
   const params = useSearchParams();
   const paymentId = params.get("order_id");
   const paymentStatus = params.get("transaction_status");
-  const planId = getClientSideCookie("plan_id");
 
   const [mounted, isMounted] = useState(false);
 
   useEffect(() => {
     async function subscribe() {
-      if (paymentId && paymentStatus && planId)
-        subscribePlan({
+      if (paymentId && paymentStatus)
+        await subscribePlan({
           paymentId,
-          userId,
           paymentStatus,
-          planId: Number(planId),
         });
       isMounted(true);
     }

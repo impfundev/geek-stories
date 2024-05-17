@@ -69,33 +69,33 @@ export function AccessPanel({ apiKey }: { apiKey: string }) {
       </TabsContent>
       <TabsContent value="API_DOC" className="grid gap-6 pb-6">
         <ApiTest
-          label="GET POSTS"
+          label="Get all posts"
           endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`}
-          description="Get post"
+          description="Test get all posts"
           method="GET"
         />
         <ApiTest
-          label="GET PAGES"
+          label="Get all pages"
           endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/pages`}
-          description="Get pages"
+          description="Test get all pages"
           method="GET"
         />
         <ApiTest
-          label="GET TAGS"
+          label="Get all tags"
           endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/tags`}
-          description="Get tags"
+          description="Test get all pages"
           method="GET"
         />
         <ApiTest
-          label="GET SITE INFORMATION"
+          label="Get site information"
           endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/site`}
-          description="Get site information"
+          description="Test get site information"
           method="GET"
         />
         <ApiTest
-          label="GET COMMENTS"
+          label="Get all comments"
           endpoint={`${process.env.NEXT_PUBLIC_BASE_URL}/api/comments`}
-          description="Get comments"
+          description="Test get site information"
           method="GET"
         />
       </TabsContent>

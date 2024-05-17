@@ -92,7 +92,7 @@ export function SecondMenu() {
         )}
       >
         <CalendarCheck2 size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
-        Subscriptions <Badge>Beta</Badge>
+        Subscriptions
       </Link>
       <Link
         href="/dashboard/settings"

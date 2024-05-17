@@ -4,29 +4,36 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "../models/prisma";
 import moment from "moment";
 import { cookies } from "next/headers";
+import { verifySession } from "../session";
 
 type SubscribePlan = {
-  userId: string;
-  planId: number;
   paymentId: string;
   paymentStatus: string;
 };
 
 export async function subscribePlan({
-  userId,
-  planId,
   paymentId,
   paymentStatus,
 }: SubscribePlan) {
+  const { userId } = await verifySession();
+  const getPlanId = cookies().get("plan_id")?.value;
+  const planId = Number(getPlanId);
+
+  if (!getPlanId) return revalidatePath("/dashboard", "layout");
+
   const inOneMonth = new Date();
   inOneMonth.setMonth(inOneMonth.getMonth() + 1);
 
   await prisma.user.update({
     where: {
-      id: userId,
+      id: userId as string,
     },
     data: {
-      subscription_id: planId,
+      subscription: {
+        connect: {
+          id: planId,
+        },
+      },
       subscribeStartAt: new Date(),
       subscribeEndAt: inOneMonth,
       payment_history: {
