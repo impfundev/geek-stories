@@ -1,13 +1,15 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plans } from "./Plans";
-import type { Subscription, User } from "@prisma/client";
-import { ActivePlan } from "./ActivePlan";
+import type { Benefit, Subscription, User } from "@prisma/client";
 import { PaymentHistory } from "./PaymentHistory";
 import moment from "moment";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+
+type plan = Subscription & { benefit: Benefit[] };
 
 interface SubscribeTabsProps {
-  plans: Subscription[];
+  plans: plan[];
   user: User;
 }
 
@@ -16,8 +18,9 @@ export function SubscribeTabs({ plans, user }: SubscribeTabsProps) {
   const subscribeEndAt = moment(user.subscribeEndAt?.getTime()).format(
     "MMMM Do YYYY, h:mm:ss a"
   );
-  const now = new Date();
-  const subscriptionExpired = now > user.subscribeEndAt!;
+  const subscribeStartAt = moment(user.subscribeStartAt?.getTime()).format(
+    "MMMM Do YYYY, h:mm:ss a"
+  );
 
   return (
     <Tabs defaultValue="subscription" className="w-full py-4">
@@ -37,24 +40,13 @@ export function SubscribeTabs({ plans, user }: SubscribeTabsProps) {
             Midtrans testing payment on Sandbox
           </Link>
         </p>
-        {activePlan && !subscriptionExpired && (
-          <>
-            <p>Your subscription is active until {subscribeEndAt}</p>
-            <ActivePlan plan={activePlan} />
-          </>
+        {activePlan && (
+          <div className="py-4 border-y">
+            Your test payment on <Badge>{subscribeStartAt}</Badge> success, the
+            plan is active until <Badge>{subscribeEndAt}</Badge>
+          </div>
         )}
-        {user.subscribeEndAt && subscriptionExpired && (
-          <>
-            <p>Your subscription has expired, extend or choose another plan:</p>
-            <Plans userId={user.id} plans={plans} />
-          </>
-        )}
-        {!activePlan && !user.subscribeEndAt && (
-          <>
-            <p>Your on demo plan, try choose another plan:</p>
-            <Plans userId={user.id} plans={plans} />
-          </>
-        )}
+        <Plans plans={plans} />
       </TabsContent>
       <TabsContent value="payment">
         <PaymentHistory />

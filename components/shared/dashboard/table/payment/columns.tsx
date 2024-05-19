@@ -2,19 +2,31 @@ import moment from "moment";
 import { ArrowUpDown } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
-import type { Payment_History, Subscription } from "@prisma/client";
+import type { Payment_History, Subscription, User } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 
 export type TablePayments = Payment_History;
 
 export const columns: ColumnDef<TablePayments>[] = [
   {
+    accessorKey: "user",
+    header: "User",
+    cell: async ({ row }) => {
+      const user: User = row.getValue("user");
+      const userFullName = user.firstName + " " + user.firstName;
+
+      return (
+        <p>{user.firstName && user.lastName ? userFullName : user.userName} </p>
+      );
+    },
+  },
+  {
     accessorKey: "subscription",
-    header: "Title",
+    header: "Payment",
     cell: ({ row }) => {
       const plan: Subscription = row.getValue("subscription");
       return (
-        <p className="text-xl font-semibold">
+        <p>
           Payment for plan <Badge>{plan.type}</Badge>
         </p>
       );
@@ -61,7 +73,6 @@ export const columns: ColumnDef<TablePayments>[] = [
     },
     cell: ({ row }) => {
       const date = new Date(row.getValue("date"));
-      const now = new Date();
       return (
         <time
           className="flex gap-4 items-center"

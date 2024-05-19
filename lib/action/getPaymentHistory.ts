@@ -5,6 +5,7 @@ import { prisma } from "../models/prisma";
 export async function getPaymentHistory() {
   const paymentHistory = await prisma.payment_History.findMany({
     include: {
+      user: true,
       subscription: true,
     },
   });

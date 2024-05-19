@@ -77,5 +77,5 @@ export async function signUp(state: FormState, formData: FormData) {
   await createSession(user.id);
 
   console.log(user);
-  redirect("/checkout");
+  redirect("/dashboard");
 }

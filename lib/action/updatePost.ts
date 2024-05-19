@@ -46,7 +46,9 @@ export async function updatePost(data: Posts & { tags: Tags[] }) {
     },
   });
 
-  revalidatePath("/dashboard", "layout");
+  revalidatePath(`/editor/posts/${postData.id}`);
+  revalidatePath(`/dashboard/posts`);
+
   console.log(postData);
   redirect("/dashboard/posts");
 }

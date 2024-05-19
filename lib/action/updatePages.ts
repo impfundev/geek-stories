@@ -24,7 +24,9 @@ export async function updatePages(data: Pages) {
     },
   });
 
+  revalidatePath(`/editor/posts/${pagesData.id}`);
   revalidatePath("/dashboard/pages");
+
   console.log(pagesData);
   redirect("/dashboard/pages");
 }
