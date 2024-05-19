@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "../models/prisma";
 import { verifySession } from "../session";
+import { redirect } from "next/navigation";
 
 export async function createPost() {
   const { userId } = await verifySession();
@@ -35,5 +36,5 @@ export async function createPost() {
 
   revalidatePath("/dashboard/posts");
   console.log(postData);
-  return;
+  redirect(`/editor/posts/${postData.id}`);
 }

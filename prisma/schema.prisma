@@ -1,143 +1,167 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String    @id @unique @default(uuid())
-  userName      String    @unique @db.VarChar(50)
-  email         String    @unique @db.VarChar(50)
-  password      String    @db.Text
-  firstName     String?   @db.VarChar(50)
-  lastName      String?   @db.VarChar(50)
-  bio           String?   @db.VarChar(150)
-  role          Roles
-  posts         Posts[]
-  pages         Pages[]
-  comments      Comments[]
-
-  subscription     Subscription? @relation(fields: [subscription_id], references: [id])
+  id               String            @id @unique @default(uuid())
+  userName         String            @unique @db.VarChar(50)
+  email            String            @unique @db.VarChar(50)
+  password         String
+  firstName        String?           @db.VarChar(50)
+  lastName         String?           @db.VarChar(50)
+  bio              String?           @db.VarChar(150)
+  role             Roles
   subscription_id  Int?
-
-  subscribeStartAt       DateTime?
-  subscribeEndAt         DateTime?
-  payment_history        Payment_History[]
-  site_info              Site_Info?
-  api_key                Api_Key?
+  subscribeStartAt DateTime?
+  subscribeEndAt   DateTime?
+  xata_version     Int               @default(0)
+  xata_createdat   DateTime          @default(now()) @db.Timestamptz(6)
+  xata_updatedat   DateTime          @default(now()) @db.Timestamptz(6)
+  xata_id          String            @unique(map: "user__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  api_key          Api_Key?
+  comments         Comments[]
+  pages            Pages[]
+  payment_history  Payment_History[]
+  posts            Posts[]
+  site_info        Site_Info?
+  subscription     Subscription?     @relation(fields: [subscription_id], references: [id])
 
   @@map("user")
 }
 
 model Api_Key {
-  id        Int     @id @default(autoincrement())
-  value     String  @unique
-
-  user      User    @relation(fields: [user_id], references: [id])
-  user_id   String  @unique
+  id             Int      @id @default(autoincrement())
+  value          String   @unique
+  user_id        String   @unique
+  xata_id        String   @unique(map: "Api_Key__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version   Int      @default(0)
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  user           User     @relation(fields: [user_id], references: [id])
 }
 
 model Site_Info {
-  id            Int       @id @unique @default(autoincrement())
-  name          String
-  description   String
-  logo          String    @default("https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png")
-
-  user          User?      @relation(fields: [user_id], references: [id])
-  user_id       String?    @unique
+  id             Int      @id @unique @default(autoincrement())
+  name           String
+  description    String
+  logo           String   @default("https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png")
+  user_id        String?  @unique
+  xata_version   Int      @default(0)
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  xata_id        String   @unique(map: "site_info__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  user           User?    @relation(fields: [user_id], references: [id])
 
   @@map("site_info")
 }
 
 model Subscription {
-  id            Int       @id @unique @default(autoincrement())
-  type          String
-  price         String
-  description   String
-  benefit       Json
-
-  user              User[]
-  payment_history   Payment_History[]
+  id              Int               @id @unique @default(autoincrement())
+  type            String
+  price           String
+  description     String
+  benefit         Json
+  xata_updatedat  DateTime          @default(now()) @db.Timestamptz(6)
+  xata_id         String            @unique(map: "subscription__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version    Int               @default(0)
+  xata_createdat  DateTime          @default(now()) @db.Timestamptz(6)
+  payment_history Payment_History[]
+  user            User[]
 
   @@map("subscription")
 }
 
 model Payment_History {
-  id                String    @id @unique
-  date              DateTime  @default(now())
-  status            String
-
-  subscription      Subscription @relation(fields: [subscription_id], references: [id])
-  subscription_id   Int
-
-  user              User @relation(fields: [user_id], references: [id])
-  user_id           String
+  id              String       @id @unique
+  date            DateTime     @default(now())
+  status          String
+  subscription_id Int
+  user_id         String
+  xata_id         String       @unique(map: "payment_history__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version    Int          @default(0)
+  xata_createdat  DateTime     @default(now()) @db.Timestamptz(6)
+  xata_updatedat  DateTime     @default(now()) @db.Timestamptz(6)
+  subscription    Subscription @relation(fields: [subscription_id], references: [id])
+  user            User         @relation(fields: [user_id], references: [id])
 
   @@map("payment_history")
 }
 
 model Posts {
-  id                Int       @id @default(autoincrement())
-  author            User      @relation(fields: [authorId], references: [id])
-  authorId          String
-  title             String    @db.VarChar(85)
-  createAt          DateTime  @default(now())   
-  updateAt          DateTime  @default(now())   
-  content           String?   @db.Text
-  jsonContent       Json?     @db.Json
-  excerpt           String?   @db.VarChar(150)
-  published         Published
-  tags              Tags[]
-  featured          Boolean   @default(false)
-  thumbnail_url     String?
-  thumbnail_alt     String?
-  thumbnail_width   String?
-  thumbnail_height  String?
-  comments          Comments[]
+  id               Int        @id @default(autoincrement())
+  authorId         String
+  title            String     @db.VarChar(85)
+  createAt         DateTime   @default(now())
+  updateAt         DateTime   @default(now())
+  content          String?
+  jsonContent      Json?      @db.Json
+  excerpt          String?    @db.VarChar(150)
+  published        Published
+  featured         Boolean    @default(false)
+  thumbnail_url    String?
+  thumbnail_alt    String?
+  thumbnail_width  String?
+  thumbnail_height String?
+  xata_version     Int        @default(0)
+  xata_createdat   DateTime   @default(now()) @db.Timestamptz(6)
+  xata_updatedat   DateTime   @default(now()) @db.Timestamptz(6)
+  xata_id          String     @unique(map: "posts__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  comments         Comments[]
+  author           User       @relation(fields: [authorId], references: [id])
+  tags             Tags[]     @relation("PostsToTags")
 
   @@map("posts")
 }
 
 model Comments {
-  id            Int       @id @default(autoincrement())
-  user          User      @relation(fields: [userId], references: [id])
-  userId        String
-  content       String    @db.Text
-
-  post          Posts?    @relation(fields: [postId], references: [id])
-  postId        Int?
-
-  createAt      DateTime  @default(now())   
-  updateAt      DateTime  @default(now())  
+  id             Int      @id @default(autoincrement())
+  userId         String
+  content        String
+  postId         Int?
+  createAt       DateTime @default(now())
+  updateAt       DateTime @default(now())
+  xata_id        String   @unique(map: "comments__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version   Int      @default(0)
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  post           Posts?   @relation(fields: [postId], references: [id])
+  user           User     @relation(fields: [userId], references: [id])
 
   @@map("comments")
 }
 
 model Pages {
-  id                Int       @id @default(autoincrement())
-  author            User      @relation(fields: [authorId], references: [id])
-  authorId          String
-  title             String    @db.VarChar(85)
-  createAt          DateTime  @default(now())   
-  updateAt          DateTime  @default(now())   
-  content           String?   @db.Text
-  jsonContent       Json?     @db.Json
-  published         Published
+  id             Int       @id @default(autoincrement())
+  authorId       String
+  title          String    @db.VarChar(85)
+  createAt       DateTime  @default(now())
+  updateAt       DateTime  @default(now())
+  content        String?
+  jsonContent    Json?     @db.Json
+  published      Published
+  xata_id        String    @unique(map: "pages__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version   Int       @default(0)
+  xata_createdat DateTime  @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime  @default(now()) @db.Timestamptz(6)
+  author         User      @relation(fields: [authorId], references: [id])
 
   @@map("pages")
 }
 
 model Tags {
-  id       Int        @id @unique @default(autoincrement())
-  name     String?    @db.VarChar(25)
-  posts    Posts[]
+  id             Int      @id @unique @default(autoincrement())
+  name           String?  @db.VarChar(25)
+  xata_id        String   @unique(map: "tags__pgroll_new_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  xata_version   Int      @default(0)
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  posts          Posts[]  @relation("PostsToTags")
 
   @@map("tags")
 }
