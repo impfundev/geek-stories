@@ -66,7 +66,5 @@ export type DialogMediaType = {
 };
 
 export type Benefit = {
-  data: {
-    label: string;
-  }[];
-};
+  value: string;
+} | null;

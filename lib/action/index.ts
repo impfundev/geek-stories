@@ -17,3 +17,7 @@ export { getComments } from "./getComments";
 export { deleteComments } from "./deleteComments";
 export { getSubscriptionPlans } from "./getSubscriptionPlans";
 export { getApiKey } from "./getApiKey";
+export { createPlan } from "./createPlan";
+export { updatePlan } from "./updatePlan";
+export { deletePlan } from "./deletePlan";
+export { updatePlanStatus } from "./updatePlanStatus";

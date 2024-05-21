@@ -16,7 +16,6 @@ model User {
   lastName         String?           @db.VarChar(50)
   bio              String?           @db.VarChar(150)
   role             Roles
-  subscription_id  Int?
   subscribeStartAt DateTime?
   subscribeEndAt   DateTime?
   api_key          Api_Key?
@@ -25,7 +24,8 @@ model User {
   payment_history  Payment_History[]
   posts            Posts[]
   site_info        Site_Info?
-  subscription     Subscription?     @relation(fields: [subscription_id], references: [id])
+  subscription     Subscription?     @relation(fields: [subscription_id], references: [id], onDelete: SetNull)
+  subscription_id  Int?
 
   @@map("user")
 }
@@ -49,31 +49,25 @@ model Site_Info {
 }
 
 model Subscription {
-  id              Int               @id @unique @default(autoincrement())
+  id              Int         @id @unique @default(autoincrement())
   type            String
   price           String
   description     String
-  benefit         Benefit[]
+  benefit         Json?
   payment_history Payment_History[]
   user            User[]
+  isActive        Boolean     @default(false)
 
   @@map("subscription")
-}
-
-model Benefit {
-  id                Int   @id @default(autoincrement())
-  value             String
-  subscription      Subscription @relation(fields: [subscription_id], references: [id])
-  subscription_id   Int
 }
 
 model Payment_History {
   id              String       @id @unique
   date            DateTime     @default(now())
   status          String
-  subscription_id Int
+  subscription_id Int?
   user_id         String
-  subscription    Subscription @relation(fields: [subscription_id], references: [id])
+  subscription    Subscription? @relation(fields: [subscription_id], references: [id], onDelete: SetNull)
   user            User         @relation(fields: [user_id], references: [id])
 
   @@map("payment_history")

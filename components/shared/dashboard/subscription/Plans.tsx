@@ -1,15 +1,13 @@
 "use client";
 
-import type { Benefit, Subscription } from "@prisma/client";
+import type { Subscription } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { subscribePlan } from "@/lib/action/subscribePlan";
 import { CardPlan } from "./CardPlan";
 
-type plan = Subscription & { benefit: Benefit[] };
-
 type PlansProps = {
-  plans: plan[];
+  plans: Subscription[];
 };
 
 export function Plans({ plans }: PlansProps) {
