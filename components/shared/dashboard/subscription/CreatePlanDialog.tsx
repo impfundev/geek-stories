@@ -32,7 +32,7 @@ export function CreatePlanDialog() {
           <DialogHeader>
             <DialogTitle>Create Plan</DialogTitle>
             <DialogDescription>
-              Create a profitable subscription plan for your website's premium
+              Create a profitable subscription plan for your website&lsquo;s premium
               content.
             </DialogDescription>
           </DialogHeader>

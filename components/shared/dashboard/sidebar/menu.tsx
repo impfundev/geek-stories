@@ -75,14 +75,6 @@ export function MainMenu() {
         <MessageSquareMore size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
         Comments
       </Link>
-    </nav>
-  );
-}
-
-export function SecondMenu() {
-  const path = usePathname();
-  return (
-    <nav className="flex flex-col gap-2">
       <Link
         href="/dashboard/subscriptions"
         className={cn(
@@ -93,6 +85,14 @@ export function SecondMenu() {
         <CalendarCheck2 size={20} strokeWidth={1} absoluteStrokeWidth />{" "}
         Subscriptions
       </Link>
+    </nav>
+  );
+}
+
+export function SecondMenu() {
+  const path = usePathname();
+  return (
+    <nav className="flex flex-col gap-2">
       <Link
         href="/dashboard/settings"
         className={cn(

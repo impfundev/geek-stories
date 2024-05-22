@@ -4,18 +4,22 @@ import type { Subscription, User } from "@prisma/client";
 import { PaymentHistory } from "./PaymentHistory";
 import Link from "next/link";
 import { CreatePlanDialog } from "./CreatePlanDialog";
+import { TableSubscribers } from "../table/subscribers";
 
+type Plan = Subscription & { user: User[] };
+type Subscribers = User & { subscription: Subscription | null }
 interface SubscribeTabsProps {
-  plans: Subscription[];
-  user: User;
+  subscribers: Subscribers[]
+  plans: Plan[]
 }
 
-export function SubscribeTabs({ plans, user }: SubscribeTabsProps) {
+export function SubscribeTabs({ plans, subscribers }: SubscribeTabsProps) {
   return (
     <Tabs defaultValue="plans" className="w-full py-4">
       <TabsList>
         <TabsTrigger value="plans">Plans</TabsTrigger>
-        <TabsTrigger value="payment">Payment</TabsTrigger>
+        <TabsTrigger value="subscribers">Subscribers</TabsTrigger>
+        <TabsTrigger value="payments">Payments</TabsTrigger>
       </TabsList>
       <TabsContent value="plans" className="flex flex-col gap-4">
         <p>
@@ -34,7 +38,10 @@ export function SubscribeTabs({ plans, user }: SubscribeTabsProps) {
         <CreatePlanDialog />
         <Plans plans={plans} />
       </TabsContent>
-      <TabsContent value="payment">
+      <TabsContent value="subscribers">
+        <TableSubscribers data={subscribers} />
+      </TabsContent>
+      <TabsContent value="payments">
         <PaymentHistory />
       </TabsContent>
     </Tabs>

@@ -11,12 +11,12 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { TableSubscribers, columns } from "./columns";
+import { TableSubscribers as TableType, columns } from "./columns";
 import { TablePagination } from "./pagination";
 import { TableNavigation } from "./navigation";
 import { TableView } from "./view";
 
-export function TablePaymentHistory({ data }: { data: TableSubscribers[] }) {
+export function TableSubscribers({ data }: { data: TableType[] }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});

@@ -1,13 +1,10 @@
 import { SubscribeTabs } from "@/components/shared/dashboard/subscription/SubscribeTabs";
-import { getSubscriptionPlans, getUser } from "@/lib/action";
+import { getSubscriptionPlans, getUsers } from "@/lib/action";
 
 export default async function Subscription() {
   const { plans } = await getSubscriptionPlans();
-  const { user } = await getUser();
+  const { users } = await getUsers();
+  const subscribers = users.filter((user) => user.subscription !== null)
 
-  if (!user) {
-    return null;
-  }
-
-  return <SubscribeTabs plans={plans} user={user} />;
+  return <SubscribeTabs plans={plans} subscribers={subscribers} />;
 }

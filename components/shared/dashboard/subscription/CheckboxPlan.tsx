@@ -1,12 +1,14 @@
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
-import type { Benefit, Subscription } from "@prisma/client";
+import type { Subscription } from "@prisma/client";
 import { RadioGroupItem } from "@/components/ui/radio-group";
+import { Benefit } from "@/lib/type";
 
 export function CheckboxPlan({
   plan,
 }: {
-  plan: Subscription & { benefit: Benefit[] };
+  plan: Subscription
 }) {
+  const benefit = plan.benefit as Benefit[]
   return (
     <Card>
       <CardContent className="flex gap-4 pt-4">
@@ -22,13 +24,13 @@ export function CheckboxPlan({
             <CardDescription>{plan.description}</CardDescription>
             <div className="grid gap-2 text-sm">
               <ul className="list-inside">
-                {plan.benefit.map((benefit, i) => (
+                {benefit && benefit.map((benefit, i) => (
                   <li
                     key={i}
                     className="mb-2 grid grid-cols-[25px_1fr] items-center"
                   >
                     <span className="flex h-2 w-2 rounded-full bg-sky-500" />
-                    <span>{benefit.value}</span>
+                    <span>{benefit?.value}</span>
                   </li>
                 ))}
               </ul>

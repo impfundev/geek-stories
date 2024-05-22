@@ -7,6 +7,7 @@ export { getPosts } from "./getPosts";
 export { getPages } from "./getPages";
 export { getTag } from "./getTag";
 export { getUser } from "./getUser";
+export { getUsers } from "./getUsers";
 export { login } from "./login";
 export { logout } from "./logout";
 export { signUp } from "./signUp";
