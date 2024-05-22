@@ -6,7 +6,7 @@ import { updatePages } from "@/lib/action";
 import { redirect, useRouter } from "next/navigation";
 import { NovelEditor } from "./novel-editor";
 import type { Pages } from "@prisma/client";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { ChevronLeftCircle } from "lucide-react";
 
 type EditorType = {

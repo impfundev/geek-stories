@@ -2,7 +2,7 @@ import moment from "moment";
 import { ArrowUpDown, Trash, Loader2 } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef, Row } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { useFormStatus } from "react-dom";
 import type { User, Posts, Comments } from "@prisma/client";
 import Link from "next/link";

@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/Button";
 import type { Table } from "@tanstack/react-table";
-import { TablePayments } from "./columns";
+import { TableSubscribers } from "./columns";
 
-export function TablePagination({ table }: { table: Table<TablePayments> }) {
+export function TablePagination({ table }: { table: Table<TableSubscribers> }) {
   return (
     <div className="flex items-center justify-end space-x-2 py-4">
       <div className="flex-1 text-sm text-muted-foreground">

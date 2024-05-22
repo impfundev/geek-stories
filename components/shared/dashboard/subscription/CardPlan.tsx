@@ -12,7 +12,7 @@ import { payWithSnap } from "@/lib/action/snapPayments";
 
 import type { Subscription } from "@prisma/client";
 import { SubmitButton } from "../../auth/SubmitButton";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { deletePlan, updatePlanStatus } from "@/lib/action";
 import { EditPlanDialog } from "./EditPlanDialog";
 import { Benefit } from "@/lib/type";

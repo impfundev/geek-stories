@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { useState } from "react";
 import { TrashIcon } from "lucide-react";
 import { MediaData, Thumbnail } from "@/lib/type";

@@ -18,7 +18,7 @@ import {
   CommandInput,
   CommandItem,
 } from "@/components/ui/command";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import type { SelectTag } from "@/lib/type";
 import type { Tags } from "@prisma/client";
 

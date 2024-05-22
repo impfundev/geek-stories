@@ -3,7 +3,7 @@ import { ArrowUpDown, Trash, Loader2 } from "lucide-react";
 import { TableData } from "@/lib/models/schema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef, Row } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { deletePost } from "@/lib/action/deletePost";
 import { useFormState, useFormStatus } from "react-dom";
 import type { Tags } from "@prisma/client";

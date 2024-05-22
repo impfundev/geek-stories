@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import type { Table } from "@tanstack/react-table";
 import { TableComments } from "./columns";
 

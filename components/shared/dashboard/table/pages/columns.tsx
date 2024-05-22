@@ -2,7 +2,7 @@ import { ArrowUpDown, Trash, Loader2 } from "lucide-react";
 import { TableData } from "@/lib/models/schema";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef, Row } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { deletePages } from "@/lib/action/deletePages";
 import { useFormState, useFormStatus } from "react-dom";
 import Link from "next/link";

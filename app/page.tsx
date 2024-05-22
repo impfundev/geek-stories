@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/shared/homepage/navbar";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { verifySession } from "@/lib/session";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";

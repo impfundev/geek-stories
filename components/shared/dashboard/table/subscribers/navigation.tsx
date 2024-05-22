@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Table } from "@tanstack/react-table";
 import { ChevronDown } from "lucide-react";
-import { TablePayments } from "./columns";
+import { TableSubscribers } from "./columns";
 
-export function TableNavigation({ table }: { table: Table<TablePayments> }) {
+export function TableNavigation({ table }: { table: Table<TableSubscribers> }) {
   return (
     <div className="flex gap-4 items-center py-4">
       <DropdownMenu>

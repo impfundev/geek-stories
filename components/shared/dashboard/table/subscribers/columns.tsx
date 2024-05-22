@@ -2,12 +2,12 @@ import moment from "moment";
 import { ArrowUpDown } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/Button";
-import type { Payment_History, Subscription, User } from "@prisma/client";
+import type { Subscription, User } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 
-export type TablePayments = Payment_History;
+export type TableSubscribers = Subscription;
 
-export const columns: ColumnDef<TablePayments>[] = [
+export const columns: ColumnDef<TableSubscribers>[] = [
   {
     accessorKey: "user",
     header: "User",
