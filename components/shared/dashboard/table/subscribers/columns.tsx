@@ -9,14 +9,13 @@ export type TableSubscribers = User & { subscription: Subscription | null };
 
 export const columns: ColumnDef<TableSubscribers>[] = [
   {
-    accessorKey: "user",
+    accessorKey: "userName",
     header: "User",
-    cell: async ({ row }) => {
-      const user: User = row.getValue("user");
-      const userFullName = user.firstName + " " + user.lastName;
+    cell: ({ row }) => {
+      const userName = row.getValue("userName") as string;
 
       return (
-        <p>{user.firstName && user.lastName ? userFullName : user.userName} </p>
+        <p>{userName}</p>
       );
     },
   },
@@ -31,11 +30,11 @@ export const columns: ColumnDef<TableSubscribers>[] = [
     },
   },
   {
-    accessorKey: "user",
+    accessorKey: "subscribeEndAt",
     header: "Status",
     cell: ({ row }) => {
-      const user: User = row.getValue("user");
-      const endDate = new Date(user.subscribeEndAt!)
+      const subscribeEndAt = row.getValue("subscribeEndAt") as Date;
+      const endDate = new Date(subscribeEndAt)
       const dateNow = new Date()
 
       if (dateNow > endDate) return <Badge>Expired</Badge>
@@ -44,7 +43,7 @@ export const columns: ColumnDef<TableSubscribers>[] = [
     },
   },
   {
-    accessorKey: "user",
+    accessorKey: "subscribeStartAt",
     header: ({ column }) => {
       return (
         <Button
@@ -57,8 +56,8 @@ export const columns: ColumnDef<TableSubscribers>[] = [
       );
     },
     cell: ({ row }) => {
-      const user: User = row.getValue("user");
-      const startDate = new Date(user.subscribeStartAt!)
+      const subscribeStartAt = row.getValue("subscribeStartAt") as Date;
+      const startDate = new Date(subscribeStartAt)
       return (
         <time
           className="flex gap-4 items-center"
@@ -71,7 +70,7 @@ export const columns: ColumnDef<TableSubscribers>[] = [
     },
   },
   {
-    accessorKey: "user",
+    accessorKey: "subscribeEndAt",
     header: ({ column }) => {
       return (
         <Button
@@ -84,8 +83,8 @@ export const columns: ColumnDef<TableSubscribers>[] = [
       );
     },
     cell: ({ row }) => {
-      const user: User = row.getValue("user");
-      const expiredAt = new Date(user.subscribeEndAt!)
+      const subscribeEndAt = row.getValue("subscribeEndAt") as Date;
+      const expiredAt = new Date(subscribeEndAt)
       return (
         <time
           className="flex gap-4 items-center"
