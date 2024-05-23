@@ -7,7 +7,7 @@ import {
   Popover,
   PopoverContent,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 export interface BubbleColorMenuItem {
   name: string;
   color: string;

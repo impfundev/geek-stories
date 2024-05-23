@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -32,8 +32,8 @@ export function CreatePlanDialog() {
           <DialogHeader>
             <DialogTitle>Create Plan</DialogTitle>
             <DialogDescription>
-              Create a profitable subscription plan for your website&lsquo;s premium
-              content.
+              Create a profitable subscription plan for your website&lsquo;s
+              premium content.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">

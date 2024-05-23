@@ -1,7 +1,7 @@
 import moment from "moment";
 import { ArrowUpDown } from "lucide-react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import type { Payment_History, Subscription, User } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
 

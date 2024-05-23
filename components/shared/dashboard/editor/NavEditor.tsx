@@ -3,7 +3,7 @@
 import type { NavEditor, UpdateButton } from "@/lib/type";
 
 import { ChevronLeftCircle, Loader2, PanelRight } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 
 export function NavEditor({
   handleForm,

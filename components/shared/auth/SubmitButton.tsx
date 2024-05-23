@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, ButtonProps } from "@/components/ui/Button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
