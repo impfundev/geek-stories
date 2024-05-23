@@ -6,16 +6,16 @@ import { prisma } from "../models/prisma";
 export async function getIncomes() {
   const payments = await prisma.payment_History.findMany({
     include: {
-      subscription: true
+      subscription: true,
     },
   });
 
   const incomes = payments.map((payment) => {
     return {
-      date: moment(payment.date.getTime()).format("MMMM Do YYYY"),
+      date: moment(payment.date.getTime()).format("MMMM D"),
       incomes: Number(payment.subscription?.price),
-    }
-  })
+    };
+  });
 
   return { incomes };
 }

@@ -37,8 +37,8 @@ export default async function Home() {
           </Button>
         ) : (
           <Button asChild>
-            <Link href="/signUp" className="flex gap-2">
-              <span>Sign up for free</span>
+            <Link href="/login" className="flex gap-2">
+              <span>Try Demo for free</span>
               <ArrowRight size={20} />
             </Link>
           </Button>

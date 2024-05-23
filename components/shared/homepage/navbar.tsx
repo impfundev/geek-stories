@@ -37,14 +37,6 @@ export function Navbar({ isLogin }: { isLogin: boolean }) {
                   </Link>
                 </Button>
               </li>
-              <li>
-                <Button asChild>
-                  <Link href="/signUp" className="flex gap-2">
-                    <span>Sign up</span>
-                    <ArrowRight size={20} />
-                  </Link>
-                </Button>
-              </li>
             </ul>
           )}
         </div>
@@ -60,20 +52,13 @@ export function Navbar({ isLogin }: { isLogin: boolean }) {
                 </Button>
               </li>
             ) : (
-              <>
-                <li>
-                  <Button variant="ghost" asChild>
-                    <Link href="/login">Log in</Link>
-                  </Button>
-                </li>
-                <li>
-                  <Button className="gap-2" asChild>
-                    <Link href="/signup">
-                      Sign up for free <ArrowRight size={20} />
-                    </Link>
-                  </Button>
-                </li>
-              </>
+              <li>
+                <Button className="gap-2" asChild>
+                  <Link href="/login">
+                    Try Demo for free <ArrowRight size={20} />
+                  </Link>
+                </Button>
+              </li>
             )}
           </ul>
         </nav>

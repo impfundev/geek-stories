@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useFormState } from "react-dom";
 import { login } from "@/lib/action";
 
@@ -16,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { SubmitButton } from "./SubmitButton";
+import { Badge } from "@/components/ui/badge";
 
 export function LoginForm() {
   const [state, action] = useFormState(login, undefined);
@@ -28,6 +28,17 @@ export function LoginForm() {
       <Card className="rounded-2xl bg-background/75 backdrop-blur-md">
         <CardHeader>
           <CardTitle>Log In</CardTitle>
+          <div className="p-6 grid gap-4">
+            <span>Use this demo account:</span>
+            <ul className="grid gap-2">
+              <li>
+                Email: <Badge>demo@demo.com</Badge>
+              </li>
+              <li>
+                Password: <Badge>Demoaccount123?</Badge>
+              </li>
+            </ul>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="grid w-full items-center gap-4">
@@ -39,6 +50,7 @@ export function LoginForm() {
                 name="email"
                 maxLength={50}
                 placeholder="Enter your email"
+                defaultValue={"demo@demo.com"}
               />
             </div>
             <div className="flex flex-col space-y-1.5">
@@ -48,6 +60,7 @@ export function LoginForm() {
                 type="password"
                 name="password"
                 placeholder="Enter your strong password"
+                defaultValue={"Demoaccount123?"}
               />
             </div>
           </div>
@@ -61,12 +74,6 @@ export function LoginForm() {
               <AlertDescription>{state?.message}</AlertDescription>
             </Alert>
           )}
-          <p className="text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="/signUp" className="underline">
-              Sign Up
-            </Link>
-          </p>
         </CardFooter>
       </Card>
       <span className="absolute inset-0 blur w-full md:w-[400px] bg-gradient-to-r from-background to-foreground rounded-full opacity-30 -z-50 animate-pulse"></span>
