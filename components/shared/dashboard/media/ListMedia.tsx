@@ -4,7 +4,7 @@ import { MediaView } from "./MediaView";
 
 export function ListMedia({ media }: { media: Media[] }) {
   return (
-    <ul className="gap-6 columns-3">
+    <ul className="gap-6 flex flex-wrap">
       <UploadMedia />
       {media.map((media, i) => (
         <MediaView key={i} media={media} />

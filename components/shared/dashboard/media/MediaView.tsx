@@ -11,7 +11,7 @@ export function MediaView({ media }: { media: Media }) {
 
   return (
     <li
-      className="relative w-full my-4 rounded-xl border drop-shadow-lg overflow-hidden"
+      className="relative w-full max-w-sm my-4 rounded-xl border drop-shadow-lg overflow-hidden"
       onMouseEnter={() => {
         setShowAction(true);
       }}
@@ -20,7 +20,7 @@ export function MediaView({ media }: { media: Media }) {
       }}
     >
       <img
-        className="w-full"
+        className="w-full max-w-sm h-full"
         src={media.url}
         width={media.metadata.width}
         height={media.metadata.height}
