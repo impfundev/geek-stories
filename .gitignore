@@ -39,8 +39,5 @@ next-env.d.ts
 # tinyMCE Rich Editor
 /public/tinymce/
 
-#media directory
-/public/media/*
-
 # vscode
 /.vscode/
