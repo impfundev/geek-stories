@@ -7,7 +7,8 @@ import { redirect, useRouter } from "next/navigation";
 import { NovelEditor } from "./novel-editor";
 import type { Pages } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { ChevronLeftCircle } from "lucide-react";
+import { ChevronLeftCircle, Loader2 } from "lucide-react";
+import { useState } from "react";
 
 type EditorType = {
   pages: Pages;
@@ -15,6 +16,7 @@ type EditorType = {
 
 export function EditorPages({ pages }: EditorType) {
   const router = useRouter();
+  const [pending, setPending] = useState(false);
 
   if (!pages) redirect("/dashboard/posts");
 
@@ -23,7 +25,8 @@ export function EditorPages({ pages }: EditorType) {
   });
 
   const onSubmit: SubmitHandler<Pages> = (data) => {
-    updatePages(data).then((res) => console.log(res));
+    setPending(true);
+    updatePages(data).then(() => setPending(false));
   };
 
   return (
@@ -40,7 +43,11 @@ export function EditorPages({ pages }: EditorType) {
               type="submit"
               onClick={() => setValue("published", "draft")}
             >
-              Save draft
+              {pending ? (
+                <Loader2 className="w-6 h-6 animate-spin" />
+              ) : (
+                "Save draft"
+              )}
             </Button>
             <Button
               value="draft"
@@ -48,7 +55,11 @@ export function EditorPages({ pages }: EditorType) {
               type="submit"
               onClick={() => setValue("published", "draft")}
             >
-              Upload
+              {pending ? (
+                <Loader2 className="w-6 h-6 animate-spin" />
+              ) : (
+                "Upload"
+              )}
             </Button>
           </div>
         </div>

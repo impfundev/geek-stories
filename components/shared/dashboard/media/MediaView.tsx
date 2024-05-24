@@ -10,7 +10,7 @@ export function MediaView({ media }: { media: Media }) {
   const [showAction, setShowAction] = useState(false);
 
   return (
-    <li
+    <div
       className="relative w-full max-w-sm my-4 rounded-xl border drop-shadow-lg overflow-hidden"
       onMouseEnter={() => {
         setShowAction(true);
@@ -37,6 +37,6 @@ export function MediaView({ media }: { media: Media }) {
           <Trash className="w-4 h-4" />
         </SubmitButton>
       </form>
-    </li>
+    </div>
   );
 }

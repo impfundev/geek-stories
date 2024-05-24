@@ -23,6 +23,7 @@ type EditorType = {
 
 export function EditorPosts({ post, allTag, media }: EditorType) {
   const [isFormVisible, setFormVisible] = useState(true);
+  const [pending, setPending] = useState(false);
   const router = useRouter();
 
   if (!post) redirect("/dashboard/posts");
@@ -33,18 +34,15 @@ export function EditorPosts({ post, allTag, media }: EditorType) {
     height: post.thumbnail_height,
   };
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    getValues,
-    formState: { isLoading },
-  } = useForm<Posts & { tags: Tags[] }>({
+  const { register, handleSubmit, setValue, getValues } = useForm<
+    Posts & { tags: Tags[] }
+  >({
     defaultValues: post,
   });
 
   const onSubmit: SubmitHandler<Posts & { tags: Tags[] }> = (data) => {
-    updatePost(data).then((res) => console.log(res));
+    setPending(true);
+    updatePost(data).then(() => setPending(false));
   };
 
   return (
@@ -54,7 +52,7 @@ export function EditorPosts({ post, allTag, media }: EditorType) {
           handleForm={() => setFormVisible(!isFormVisible)}
           handleBack={() => router.back()}
           onStatusChange={setValue}
-          isLoading={isLoading}
+          isLoading={pending}
         />
         <div
           className={`pt-20 ${

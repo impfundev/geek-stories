@@ -42,11 +42,7 @@ const SaveButton = ({ action, pending }: UpdateButton) => {
       disabled={pending}
       onClick={() => action("published", "draft")}
     >
-      {pending ? (
-        <Loader2 size={20} strokeWidth={1.5} absoluteStrokeWidth />
-      ) : (
-        "Save draft"
-      )}
+      {pending ? <Loader2 className="w-6 h-6 animate-spin" /> : "Save draft"}
     </Button>
   );
 };
@@ -61,11 +57,7 @@ const UploadButton = ({ action, pending }: UpdateButton) => {
       onClick={() => action("published", "upload")}
     >
       <input name="published" id="published" hidden value="upload" readOnly />
-      {pending ? (
-        <Loader2 size={20} strokeWidth={1.5} absoluteStrokeWidth />
-      ) : (
-        "Publish"
-      )}
+      {pending ? <Loader2 className="w-6 h-6 animate-spin" /> : "Publish"}
     </Button>
   );
 };

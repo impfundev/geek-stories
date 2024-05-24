@@ -25,9 +25,6 @@ export function AddFeatured({ media, thumbnail, onValueChange }: MediaData) {
           <img
             className="w-full h-auto rounded-lg"
             src={thumbnailState?.url!}
-            width={thumbnailState?.width!}
-            height={thumbnailState?.height!}
-            loading="lazy"
           />
           <Button
             type="button"
