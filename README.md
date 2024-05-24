@@ -1,6 +1,8 @@
 # GEEK STORIES
 
-Fullstack headless CMS for publishing content build with Next.js. (suitable for Blogs and Personal Porfolio website)
+<figure style="display: flex;align-items:center;"><img src="https://raw.githubusercontent.com/impfundev/geek-stories/main/public/screenshoot.png" width="400" style="border-radius:1rem;"></figure>
+
+Empower your content creation with GEEK STORIES, a fullstack headless CMS built with Next.js. Perfect for bloggers and portfolio creators.
 
 ## Get in touch with me:
 
@@ -8,9 +10,17 @@ Fullstack headless CMS for publishing content build with Next.js. (suitable for 
 - [LinkedIn](https://linkedin.com/in/ilhammp)
 - [Email](mailto:ilhammaulana.dev@gmail.com)
 
+## Features:
+
+- Easy content management
+- Flexible headless architecture
+- Notion style rich text editor
+- Monetize your audience with subscription plan management, secure payments with Midtrans payment gateaway integration
+- and more
+
 ## Tech Stack
 
-![Next.js](/public/next.svg)
+<img src="https://raw.githubusercontent.com/impfundev/geek-stories/main/public/next.svg" width="200" style="margin: 1rem;padding:1rem;background-color:#fff;border-radius:1rem;">
 
 - Node.js
 - Next.js 14 (App Router)
@@ -22,12 +32,16 @@ Fullstack headless CMS for publishing content build with Next.js. (suitable for 
 - Novel Rich Text Editor (Titap Editor)
 - and more (see package.json)
 
-## Cloud (used on live demo)
+## Deployment
 
-![Vercel](/public/vercel.svg)
+<img src="https://raw.githubusercontent.com/impfundev/geek-stories/main/public/vercel.svg" width="200" style="margin: 1rem;padding:1rem;background-color:#fff;border-radius:1rem;">
 
-- Vercel PostgreSQL
-- Vercel Blob
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/impfundev/geek-stories&project-name=cms-geek-stories&repository-name=geek-stories&env=NEXT_PUBLIC_BASE_URL,DATABASE_URL,BLOB_READ_WRITE_TOKEN,NEXT_PUBLIC_SERVER_KEY,NEXT_PUBLIC_CLIENT_KEY)
+
+How to integrate with Vercel PostgreSQL & Vercel Blob:
+
+- [Vercel PostgreSQL](https://vercel.com/docs/storage/vercel-postgres)
+- [Vercel Blob](https://vercel.com/docs/storage/vercel-blob/using-blob-sdk)
 
 ## Getting Started
 
@@ -38,11 +52,6 @@ npm install
 ```
 
 ### 2. Setup `.env`
-
-How to integrated with Vercel PostgreSQL & Vercel Blob:
-
-- [Vercel PostgreSQL](https://vercel.com/docs/storage/vercel-postgres)
-- [Vercel Blob](https://vercel.com/docs/storage/vercel-blob/using-blob-sdk)
 
 ```bash
 cp .env.example .env
@@ -77,7 +86,7 @@ npx prisma db push
 
 ### 4. Seeding Required Data
 
-We need to seed dummy data for testing subscription services.
+This step populates your database with sample content for testing subscription functionalities. You can utilize Prisma Studio to explore the seeded data
 
 ```bash
 node prisma/seed.mjs
