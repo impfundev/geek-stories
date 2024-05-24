@@ -43,8 +43,6 @@ export type SelectTag = {
 
 export type Media = {
   url: string;
-  width: string | number | null;
-  height: string | number | null;
 };
 
 export type Thumbnail = {

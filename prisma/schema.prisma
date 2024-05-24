@@ -130,15 +130,6 @@ model Tags {
   @@map("tags")
 }
 
-model Media {
-  id             Int      @id @default(autoincrement())
-  url            String
-  width          Int?
-  height         Int?
-
-  @@map("media")
-}
-
 enum Published {
   draft
   upload

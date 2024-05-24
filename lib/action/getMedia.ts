@@ -1,18 +1,15 @@
 "use server";
 
-import { prisma } from "../models/prisma";
+import { list } from "@vercel/blob";
 import { Media } from "../type";
 
 export async function getMedia() {
-  const getMedia = await prisma.media.findMany();
+  const { blobs } = await list();
 
-  const media: Media[] = getMedia.map((m) => {
+  const media: Media[] = blobs.map((m) => {
     return {
       url: m.url,
-      width: m.width,
-      height: m.height,
     };
   });
-
   return { media };
 }

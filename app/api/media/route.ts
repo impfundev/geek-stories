@@ -1,5 +1,5 @@
+import { getMedia } from "@/lib/action";
 import { isAuthorized } from "@/lib/auth";
-import { prisma } from "@/lib/models/prisma";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
       }
     );
 
-  const media = await prisma.media.findMany();
+  const { media } = await getMedia();
 
   if (!media) {
     return Response.json(

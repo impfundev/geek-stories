@@ -40,10 +40,9 @@ export async function POST(request: Request): Promise<NextResponse> {
         // Get notified of client upload completion
         // ⚠️ This will not work on `localhost` websites,
         // Use ngrok or similar to get the full upload flow
-
-        console.log("blob upload completed", blob, tokenPayload);
       },
     });
+
     return NextResponse.json(jsonResponse);
   } catch (error) {
     return NextResponse.json(

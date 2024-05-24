@@ -11,7 +11,6 @@ export { getUsers } from "./getUsers";
 export { login } from "./login";
 export { logout } from "./logout";
 export { signUp } from "./signUp";
-export { uploadMedia } from "./uploadMedia";
 export { getMedia } from "./getMedia";
 export { updateUsers } from "./updateUsers";
 export { getComments } from "./getComments";

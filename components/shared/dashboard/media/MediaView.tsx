@@ -19,13 +19,7 @@ export function MediaView({ media }: { media: Media }) {
         setShowAction(false);
       }}
     >
-      <img
-        className="w-full max-w-sm h-full"
-        src={media.url}
-        width={media.width!}
-        height={media.height!}
-        loading="lazy"
-      />
+      <img className="w-full max-w-sm h-full" src={media.url} loading="lazy" />
       <form
         action={deleteMedia}
         className={`${

@@ -7,7 +7,7 @@ import { Image as ImageIcon, Loader2 } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { uploadMedia } from "@/lib/action";
+import { useRouter } from "next/navigation";
 
 type Preview = {
   url: string;
@@ -35,8 +35,10 @@ function validFileType(file: File) {
 export function UploadMedia() {
   const [preview, setPreview] = useState<Preview | null>();
   const [isFileValid, setIsFileValid] = useState(false);
+  const [message, setMessage] = useState<string | undefined>();
   const [loading, setLoading] = useState(false);
   const inputFileRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   const handleMediaPreview = (e: FormEvent<HTMLInputElement>) => {
     const curFiles = e.currentTarget.files;
@@ -47,7 +49,12 @@ export function UploadMedia() {
         const alt = file.name;
         const size = file.size;
 
-        if (size >= 500000) setIsFileValid(false);
+        if (size >= 500000) {
+          setIsFileValid(false);
+          setMessage(
+            "Cannot process the file because the size is larger than 500KB"
+          );
+        }
 
         setIsFileValid(true);
         setPreview({
@@ -73,10 +80,10 @@ export function UploadMedia() {
       access: "public",
       handleUploadUrl: "/api/media/upload",
     });
-    await uploadMedia(newBlob);
 
     setPreview(null);
     setLoading(false);
+    router.refresh();
   };
 
   return (
@@ -91,7 +98,13 @@ export function UploadMedia() {
           className="max-h-[300px] object-contain"
         />
       ) : (
-        <ImageIcon size={100} absoluteStrokeWidth />
+        <>
+          {message ? (
+            <p>{message}</p>
+          ) : (
+            <ImageIcon size={100} absoluteStrokeWidth />
+          )}
+        </>
       )}
 
       <Label className="text-center" htmlFor="file">

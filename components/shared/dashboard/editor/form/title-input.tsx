@@ -8,7 +8,7 @@ export function TitleInput({ title, register }: TitleInput) {
         placeholder="Add Title"
         defaultValue={title}
         {...register("title")}
-        className="bg-background text-foreground focus:outline-none text-3xl md:text-4xl lg:text-5xl font-semibold"
+        className="bg-background text-foreground border-none focus:border-none focus:outline-none text-3xl md:text-4xl lg:text-5xl font-semibold"
         maxLength={85}
       />
     </div>
