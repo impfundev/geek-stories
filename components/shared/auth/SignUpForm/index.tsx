@@ -30,10 +30,7 @@ export function SignUpForm({ plans }: { plans: Subscription[] }) {
   // const [plan, setPlan] = useState(plans[0].type);
 
   return (
-    <form
-      action={action}
-      className="relative w-full max-w-xl mx-auto flex flex-col justify-center"
-    >
+    <form className="relative w-full max-w-xl mx-auto flex flex-col justify-center">
       <Card className="rounded-2xl bg-background/75 backdrop-blur-md">
         <CardHeader>
           <CardTitle>Sign Up</CardTitle>
@@ -54,7 +51,16 @@ export function SignUpForm({ plans }: { plans: Subscription[] }) {
           </RadioGroup> */}
         </CardContent>
         <CardFooter className="flex flex-col gap-3">
-          <SubmitButton className="w-full">Sign Up</SubmitButton>
+          <p className="text-sm">
+            To avoid filling the database in the live demo version, sign up is
+            disabled.
+            <Link href="/login" className="underline">
+              Log In with Demo Account
+            </Link>
+          </p>
+          <SubmitButton disabled className="w-full">
+            Sign Up
+          </SubmitButton>
           {state?.message && (
             <Alert>
               <AlertCircle className="h-4 w-4" />
@@ -62,12 +68,6 @@ export function SignUpForm({ plans }: { plans: Subscription[] }) {
               <AlertDescription>{state?.message}</AlertDescription>
             </Alert>
           )}
-          <p className="text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="underline">
-              Log In
-            </Link>
-          </p>
         </CardFooter>
       </Card>
     </form>

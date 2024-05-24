@@ -3,3 +3,4 @@ export { TestPagesApi } from "./pages";
 export { TestTagsApi } from "./tags";
 export { TestCommentsApi } from "./comments";
 export { TestSiteInfoApi } from "./site";
+export { TestMediaApi } from "./media";

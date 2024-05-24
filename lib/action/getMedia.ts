@@ -1,18 +1,16 @@
 "use server";
 
-import { promises as fs } from "fs";
-import sizeOf from "image-size";
+import { prisma } from "../models/prisma";
+import { Media } from "../type";
 
 export async function getMedia() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
-  const dir = process.cwd() + "/public/media/";
-  const readDir = await fs.readdir(dir);
+  const getMedia = await prisma.media.findMany();
 
-  const media = readDir.map((m) => {
+  const media: Media[] = getMedia.map((m) => {
     return {
-      url: baseUrl + "/media/" + m,
-      path: dir + m,
-      metadata: sizeOf(dir + m),
+      url: m.url,
+      width: m.width,
+      height: m.height,
     };
   });
 

@@ -32,7 +32,7 @@ export function Navbar({ isLogin }: { isLogin: boolean }) {
               <li>
                 <Button variant="ghost" asChild>
                   <Link href="/login" className="flex gap-2">
-                    <span>Log in</span>
+                    <span>Log in with Demo Account</span>
                     <ArrowRight size={20} />
                   </Link>
                 </Button>

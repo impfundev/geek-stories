@@ -5,12 +5,6 @@ import { NextRequest } from "next/server";
 export async function GET(req: NextRequest) {
   const token = req.headers.get("authorization");
   const authorized = await isAuthorized(token);
-  const searchParams = req.nextUrl.searchParams;
-
-  const limitQuery = searchParams.get("limit");
-  const limit = limitQuery ? Number(limitQuery) : undefined;
-  const skipQuery = searchParams.get("skip");
-  const skip = skipQuery ? Number(skipQuery) : undefined;
 
   if (!authorized)
     return Response.json(
@@ -22,18 +16,12 @@ export async function GET(req: NextRequest) {
       }
     );
 
-  const pages = await prisma.pages.findMany({
-    skip,
-    take: limit,
-    include: {
-      author: true,
-    },
-  });
+  const media = await prisma.media.findMany();
 
-  if (!pages) {
+  if (!media) {
     return Response.json(
       {
-        message: "Failed to get pages",
+        message: "Failed to get media",
       },
       {
         status: 500,
@@ -43,7 +31,7 @@ export async function GET(req: NextRequest) {
 
   return Response.json(
     {
-      data: pages,
+      data: media,
     },
     {
       status: 200,

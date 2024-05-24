@@ -1,26 +1,28 @@
 "use server";
+
+import type { PutBlobResult } from "@vercel/blob";
+import { imageDimensionsFromStream } from "image-dimensions";
+import { prisma } from "../models/prisma";
 import { revalidatePath } from "next/cache";
-import fs from "fs";
 
-export async function uploadMedia(formData: FormData) {
-  const file: File = formData.get("file") as File;
+export async function uploadMedia(blob: PutBlobResult) {
+  try {
+    const { body } = await fetch(blob.url);
+    const size = await imageDimensionsFromStream(body!);
 
-  if (!file) {
-    throw new Error("No file uploaded");
+    const storeToDatabase = await prisma.media.create({
+      data: {
+        url: blob.url,
+        height: size?.height,
+        width: size?.width,
+      },
+    });
+    console.log(storeToDatabase);
+
+    revalidatePath("/editor", "layout");
+    revalidatePath("/dashboard/media");
+    return;
+  } catch (error) {
+    throw new Error("Failed to store media to database");
   }
-
-  const uploadDir = process.cwd() + "/public/media/";
-  const buffer = Buffer.from(await file.arrayBuffer());
-
-  const featured = fs.writeFile(
-    `${uploadDir}/${file.name}`,
-    buffer,
-    (error) => {
-      console.error(error?.message);
-    }
-  );
-
-  revalidatePath("/dashboard", "layout");
-  console.log(featured);
-  return;
 }

@@ -5,6 +5,7 @@ import {
   TestTagsApi,
   TestCommentsApi,
   TestSiteInfoApi,
+  TestMediaApi,
 } from "./doc";
 
 export function ApiDoc() {
@@ -21,6 +22,7 @@ export function ApiDoc() {
       <TestPagesApi />
       <TestTagsApi />
       <TestSiteInfoApi />
+      <TestMediaApi />
       <TestCommentsApi />
     </Tabs>
   );

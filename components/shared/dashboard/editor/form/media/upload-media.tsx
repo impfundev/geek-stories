@@ -1,11 +1,13 @@
 "use client";
 
+import { FormEvent, useRef, useState } from "react";
+import { upload } from "@vercel/blob/client";
+import { Image as ImageIcon, Loader2 } from "lucide-react";
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { uploadMedia } from "@/lib/action/uploadMedia";
-import { Image as ImageIcon } from "lucide-react";
-import { FormEvent, useState } from "react";
-import { SubmitButton } from "@/components/shared/auth/SubmitButton";
+import { Button } from "@/components/ui/button";
+import { uploadMedia } from "@/lib/action";
 
 type Preview = {
   url: string;
@@ -33,6 +35,8 @@ function validFileType(file: File) {
 export function UploadMedia() {
   const [preview, setPreview] = useState<Preview | null>();
   const [isFileValid, setIsFileValid] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const handleMediaPreview = (e: FormEvent<HTMLInputElement>) => {
     const curFiles = e.currentTarget.files;
@@ -42,6 +46,8 @@ export function UploadMedia() {
         const url = URL.createObjectURL(file);
         const alt = file.name;
         const size = file.size;
+
+        if (size >= 500000) setIsFileValid(false);
 
         setIsFileValid(true);
         setPreview({
@@ -53,9 +59,29 @@ export function UploadMedia() {
     }
   };
 
+  const hadleUpload = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+
+    if (!inputFileRef.current?.files) {
+      throw new Error("No file selected");
+    }
+
+    const file = inputFileRef.current.files[0];
+
+    const newBlob = await upload(file.name, file, {
+      access: "public",
+      handleUploadUrl: "/api/media/upload",
+    });
+    await uploadMedia(newBlob);
+
+    setPreview(null);
+    setLoading(false);
+  };
+
   return (
     <form
-      action={uploadMedia}
+      onSubmit={hadleUpload}
       className="p-6 w-full max-w-sm flex flex-col gap-4 items-center justify-center my-2 rounded-lg border border-dashed border-foreground shadow-lg"
     >
       {preview && isFileValid ? (
@@ -69,18 +95,21 @@ export function UploadMedia() {
       )}
 
       <Label className="text-center" htmlFor="file">
-        Upload Media
+        Upload Media (Max 500KB)
       </Label>
       <Input
         className="hover:border-foreground hover:border-2 transition-all"
         id="file"
         name="file"
         type="file"
+        ref={inputFileRef}
         accept="image/*"
         required
         onChange={handleMediaPreview}
       />
-      <SubmitButton onClick={() => setPreview(null)}>Upload</SubmitButton>
+      <Button disabled={loading} type="submit">
+        {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : "Upload"}
+      </Button>
     </form>
   );
 }

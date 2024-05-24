@@ -22,8 +22,8 @@ export function MediaView({ media }: { media: Media }) {
       <img
         className="w-full max-w-sm h-full"
         src={media.url}
-        width={media.metadata.width}
-        height={media.metadata.height}
+        width={media.width!}
+        height={media.height!}
         loading="lazy"
       />
       <form
@@ -33,11 +33,11 @@ export function MediaView({ media }: { media: Media }) {
         } absolute top-4 right-4 transition-all`}
       >
         <input
-          id="mediaPath"
-          name="mediaPath"
+          id="mediaUrl"
+          name="mediaUrl"
           hidden
           readOnly
-          value={media.path}
+          value={media.url}
         />
         <SubmitButton className="h-8 w-8 p-0">
           <Trash className="w-4 h-4" />

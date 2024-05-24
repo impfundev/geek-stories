@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
   if (!tags)
     return Response.json(
       {
-        message: "Failed to get posts",
+        message: "Failed to get tags",
       },
       {
         status: 500,

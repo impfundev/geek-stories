@@ -39,12 +39,12 @@ export function DialogMedia({
                   <Button
                     onClick={() => {
                       action("thumbnail_url", media.url);
-                      action("thumbnail_width", String(media.metadata.width));
-                      action("thumbnail_height", String(media.metadata.height));
+                      action("thumbnail_width", String(media.width));
+                      action("thumbnail_height", String(media.height));
                       onThumbnailChange({
                         url: media.url,
-                        width: String(media.metadata.width),
-                        height: String(media.metadata.height),
+                        width: String(media.width),
+                        height: String(media.height),
                       });
                     }}
                   >

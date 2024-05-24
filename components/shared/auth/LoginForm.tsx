@@ -16,6 +16,7 @@ import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { SubmitButton } from "./SubmitButton";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export function LoginForm() {
   const [state, action] = useFormState(login, undefined);
@@ -60,7 +61,6 @@ export function LoginForm() {
                 type="password"
                 name="password"
                 placeholder="Enter your strong password"
-                defaultValue={"Demoaccount123?"}
               />
             </div>
           </div>

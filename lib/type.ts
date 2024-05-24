@@ -43,14 +43,14 @@ export type SelectTag = {
 
 export type Media = {
   url: string;
-  path: string;
-  metadata: ISizeCalculationResult;
+  width: string | number | null;
+  height: string | number | null;
 };
 
 export type Thumbnail = {
   url?: string | null;
-  width?: string | null;
-  height?: string | null;
+  width?: string | number | null;
+  height?: string | number | null;
 };
 
 export type MediaData = {
