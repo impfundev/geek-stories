@@ -5,6 +5,7 @@ import { Trash } from "lucide-react";
 import { deleteMedia } from "@/lib/action/deleteMedia";
 import { SubmitButton } from "../../auth/SubmitButton";
 import { Media } from "@/lib/type";
+import Image from "next/image";
 
 export function MediaView({ media }: { media: Media }) {
   const [showAction, setShowAction] = useState(false);
@@ -19,7 +20,14 @@ export function MediaView({ media }: { media: Media }) {
         setShowAction(false);
       }}
     >
-      <img className="w-full max-w-sm h-full" src={media.url} loading="lazy" />
+      <Image
+        alt="Media"
+        className="w-full max-w-sm h-full object-cover"
+        src={media.url}
+        width={480}
+        height={360}
+        loading="lazy"
+      />
       <form
         action={deleteMedia}
         className={`${

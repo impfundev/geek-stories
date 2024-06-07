@@ -1,6 +1,5 @@
 import moment from "moment";
 import { ArrowUpDown, Trash, Loader2 } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { useFormStatus } from "react-dom";
@@ -11,28 +10,6 @@ import { deleteComments } from "@/lib/action";
 export type TableComments = Comments;
 
 export const columns: ColumnDef<TableComments>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "user",
     header: "User",

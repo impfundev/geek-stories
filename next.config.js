@@ -5,14 +5,17 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "www.gravatar.com",
-        port: "",
         pathname: "/avatar/**",
       },
       {
         protocol: "https",
-        hostname: "res.cloudinary.com",
-        port: "",
-        pathname: "/dlf8ittab/**",
+        hostname: "**.public.blob.vercel-storage.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "seeklogo.com",
+        pathname: "/images/**",
       },
     ],
   },

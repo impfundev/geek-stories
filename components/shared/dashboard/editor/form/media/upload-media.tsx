@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 type Preview = {
   url: string;
@@ -92,7 +93,9 @@ export function UploadMedia() {
       className="p-6 w-full max-w-sm flex flex-col gap-4 items-center justify-center my-2 rounded-lg border border-dashed border-foreground shadow-lg"
     >
       {preview && isFileValid ? (
-        <img
+        <Image
+          width={480}
+          height={360}
           src={preview.url}
           alt={preview.alt}
           className="max-h-[300px] object-contain"

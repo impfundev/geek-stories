@@ -24,7 +24,7 @@ model User {
   payment_history  Payment_History[]
   posts            Posts[]
   site_info        Site_Info?
-  subscription     Subscription?     @relation(fields: [subscription_id], references: [id], onDelete: SetNull)
+  subscription     Subscription?     @relation(fields: [subscription_id], references: [id])
   subscription_id  Int?
 
   @@map("user")
@@ -41,7 +41,7 @@ model Site_Info {
   id             Int      @id @unique @default(autoincrement())
   name           String
   description    String
-  logo           String   @default("https://seeklogo.com/images/N/next-js-logo-8FCFF51DD2-seeklogo.com.png")
+  logo           String   @default("/next-logo.png")
   user_id        String?  @unique
   user           User?    @relation(fields: [user_id], references: [id])
 
@@ -102,7 +102,7 @@ model Comments {
   postId         Int?
   createAt       DateTime @default(now())
   updateAt       DateTime @default(now())
-  post           Posts?   @relation(fields: [postId], references: [id])
+  post           Posts?   @relation(fields: [postId], references: [id],onDelete: Cascade)
   user           User     @relation(fields: [userId], references: [id])
 
   @@map("comments")

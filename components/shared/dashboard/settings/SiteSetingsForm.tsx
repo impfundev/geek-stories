@@ -9,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { SubmitButton } from "../../auth/SubmitButton";
 import type { Site_Info } from "@prisma/client";
+import Image from "next/image";
 
 export function SiteSettingsForm({
   userId,
@@ -90,7 +91,10 @@ export function SiteSettingsForm({
           The logo for your site. This can be used as favicon on Google as well.
         </span>
         {siteInfo?.logo && (
-          <img
+          <Image
+            width={480}
+            height={360}
+            alt="Site Logo"
             src={siteInfo.logo}
             className="my-4 w-[250px] h-[250px] rounded-full object-cover"
             loading="lazy"

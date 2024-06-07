@@ -34,31 +34,6 @@ export function TableNavigation({ table }: { table: Table<TableComments> }) {
         }
         className="w-full min-w-sm rounded-full"
       />
-      <Button onClick={table.getToggleAllRowsSelectedHandler()}>
-        {isAllRowsSelected ? "Deselect All" : "Select All"}
-      </Button>
-      {isAllRowsSelected && (
-        <AlertDialog>
-          <Button asChild>
-            <AlertDialogTrigger>Delete All</AlertDialogTrigger>
-          </Button>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Are you absolutely sure to delete all data in this section?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete all
-                data in this table and remove from servers.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction>Continue</AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="ml-auto">

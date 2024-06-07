@@ -5,6 +5,7 @@ import { useState } from "react";
 import { TrashIcon } from "lucide-react";
 import { MediaData, Thumbnail } from "@/lib/type";
 import { DialogMedia } from "./dialog-media";
+import Image from "next/image";
 
 export function AddFeatured({ media, thumbnail, onValueChange }: MediaData) {
   const [thumbnailState, setThumbnailState] = useState<Thumbnail | null>({
@@ -22,8 +23,11 @@ export function AddFeatured({ media, thumbnail, onValueChange }: MediaData) {
     <>
       {thumbnailState?.url ? (
         <>
-          <img
+          <Image
+            alt="Thumbnail Preview"
             className="w-full h-auto rounded-lg"
+            width={480}
+            height={360}
             src={thumbnailState?.url!}
           />
           <Button
