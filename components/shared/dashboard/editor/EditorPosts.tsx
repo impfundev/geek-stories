@@ -13,7 +13,6 @@ import { TitleInput } from "./form/title-input";
 import { NovelEditor } from "./novel-editor";
 import type { Posts, Tags } from "@prisma/client";
 import { Media } from "@/lib/type";
-import { Card } from "@/components/ui/card";
 
 type EditorType = {
   allTag: Tags[];
@@ -46,8 +45,8 @@ export function EditorPosts({ post, allTag, media }: EditorType) {
   };
 
   return (
-    <div className="w-full justify-between pb-10 flex gap-6">
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="w-full pb-10 flex gap-6 items-start">
+      <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
         <NavEditor
           handleForm={() => setFormVisible(!isFormVisible)}
           handleBack={() => router.back()}
@@ -55,8 +54,8 @@ export function EditorPosts({ post, allTag, media }: EditorType) {
           isLoading={pending}
         />
         <div
-          className={`pt-20 ${
-            isFormVisible ? "max-w-[75vw]" : ""
+          className={`${
+            isFormVisible ? "max-w-[75vw]" : "w-full"
           } flex flex-col gap-4`}
         >
           <TitleInput register={register} title={post.title} />
@@ -66,22 +65,24 @@ export function EditorPosts({ post, allTag, media }: EditorType) {
           />
         </div>
       </form>
-      {isFormVisible && (
-        <Card className="fixed top-20 right-16 max-w-[20vw] h-[80vh] overflow-y-auto flex flex-col gap-4 p-2">
-          <AddFeatured
-            onValueChange={setValue}
-            media={media}
-            thumbnail={thumbnail}
-          />
-          <FormEditor
-            excerpt={post.excerpt!}
-            allTag={allTag}
-            postTag={getValues("tags")}
-            register={register}
-            onValueChange={setValue}
-          />
-        </Card>
-      )}
+      <div
+        className={`${
+          isFormVisible ? "flex" : "hidden"
+        } w-full fixed top-0 right-0 md:static md:max-w-[30vw] lg:max-w-[20vw] px-10 py-16 md:px-0 md:pt-0 bg-background md:bg-transparent h-full overflow-y-auto flex-col gap-4 my-4`}
+      >
+        <AddFeatured
+          onValueChange={setValue}
+          media={media}
+          thumbnail={thumbnail}
+        />
+        <FormEditor
+          excerpt={post.excerpt!}
+          allTag={allTag}
+          postTag={getValues("tags")}
+          register={register}
+          onValueChange={setValue}
+        />
+      </div>
     </div>
   );
 }

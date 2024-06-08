@@ -30,56 +30,50 @@ export function EditorPages({ pages }: EditorType) {
   };
 
   return (
-    <div className="w-full justify-between pb-10 flex gap-6">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="fixed inset-x-0 w-full px-16 flex justify-between items-center py-4 z-50">
-          <Button type="button" onClick={() => router.back()} className="gap-2">
-            <ChevronLeftCircle size={20} absoluteStrokeWidth /> Back
+    <form className="w-full pb-10" onSubmit={handleSubmit(onSubmit)}>
+      <div className="fixed inset-x-0 w-full px-6 md:px-16 flex justify-between items-center py-4 z-50">
+        <Button type="button" onClick={() => router.back()} className="gap-2">
+          <ChevronLeftCircle size={20} absoluteStrokeWidth /> Back
+        </Button>
+        <div className="flex gap-1 items-center rounded-full bg-background border">
+          <Button
+            value="draft"
+            variant="ghost"
+            type="submit"
+            onClick={() => setValue("published", "draft")}
+          >
+            {pending ? (
+              <Loader2 className="w-6 h-6 animate-spin" />
+            ) : (
+              "Save draft"
+            )}
           </Button>
-          <div className="flex gap-1 items-center rounded-full bg-background border">
-            <Button
-              value="draft"
-              variant="ghost"
-              type="submit"
-              onClick={() => setValue("published", "draft")}
-            >
-              {pending ? (
-                <Loader2 className="w-6 h-6 animate-spin" />
-              ) : (
-                "Save draft"
-              )}
-            </Button>
-            <Button
-              value="draft"
-              variant="ghost"
-              type="submit"
-              onClick={() => setValue("published", "draft")}
-            >
-              {pending ? (
-                <Loader2 className="w-6 h-6 animate-spin" />
-              ) : (
-                "Upload"
-              )}
-            </Button>
-          </div>
+          <Button
+            value="draft"
+            variant="ghost"
+            type="submit"
+            onClick={() => setValue("published", "draft")}
+          >
+            {pending ? <Loader2 className="w-6 h-6 animate-spin" /> : "Upload"}
+          </Button>
         </div>
-        <div className={`pt-20 flex flex-col gap-4`}>
-          <div className="w-full flex flex-col gap-2 px-10 pt-6 mx-auto">
-            <label htmlFor="title">Title: Maximum 85 character</label>
-            <input
-              placeholder="Add Title"
-              defaultValue={pages.title}
-              {...register("title")}
-              className="bg-background text-foreground focus:outline-none text-3xl md:text-4xl lg:text-5xl font-semibold"
-              maxLength={85}
-            />
-          </div>
-          <NovelEditor
-            onPagesUpdate={setValue}
-            initialContent={pages.jsonContent as JSONContent}
+      </div>
+      <div className={`pt-20 flex flex-col gap-4`}>
+        <div className="w-full flex flex-col gap-2 px-4 md:px-10 pt-6 mx-auto">
+          <label htmlFor="title">Title: Maximum 85 character</label>
+          <input
+            placeholder="Add Title"
+            defaultValue={pages.title}
+            {...register("title")}
+            className="bg-background text-foreground focus:outline-none border-none text-3xl md:text-4xl lg:text-5xl font-semibold"
+            maxLength={85}
           />
         </div>
-      </form>
-    </div>
+        <NovelEditor
+          onPagesUpdate={setValue}
+          initialContent={pages.jsonContent as JSONContent}
+        />
+      </div>
+    </form>
   );
 }

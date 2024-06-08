@@ -12,20 +12,30 @@ export function NavEditor({
   isLoading,
 }: NavEditor) {
   return (
-    <div className="fixed inset-x-0 w-full px-16 flex justify-between items-center py-4 z-50">
-      <Button type="button" onClick={handleBack} className="gap-2">
+    <div className="sticky inset-x-0 w-full md:px-16 flex justify-between items-center py-4 z-50">
+      <Button type="button" onClick={handleBack} className="gap-2" size={"sm"}>
         <ChevronLeftCircle size={20} absoluteStrokeWidth /> Back
       </Button>
       <div className="flex gap-1 items-center rounded-full bg-background border">
-        <SaveButton action={onStatusChange} pending={isLoading} />
-        <UploadButton action={onStatusChange} pending={isLoading} />
+        {isLoading ? (
+          <Loader2
+            className="animate-spin ml-2"
+            size={20}
+            absoluteStrokeWidth
+          />
+        ) : (
+          <>
+            <SaveButton action={onStatusChange} />
+            <UploadButton action={onStatusChange} />
+          </>
+        )}
         <Button
+          className="rounded-full gap-2"
           value="setting"
-          variant="ghost"
           type="button"
-          size="icon"
           onClick={handleForm}
         >
+          <span className="hidden md:block">Settings*</span>
           <PanelRight size={20} strokeWidth={1.5} absoluteStrokeWidth />
         </Button>
       </div>
@@ -33,31 +43,30 @@ export function NavEditor({
   );
 }
 
-const SaveButton = ({ action, pending }: UpdateButton) => {
+const SaveButton = ({ action }: UpdateButton) => {
   return (
     <Button
+      size={"sm"}
       value="draft"
       variant="ghost"
       type="submit"
-      disabled={pending}
       onClick={() => action("published", "draft")}
     >
-      {pending ? <Loader2 className="w-6 h-6 animate-spin" /> : "Save draft"}
+      Save draft
     </Button>
   );
 };
 
-const UploadButton = ({ action, pending }: UpdateButton) => {
+const UploadButton = ({ action }: UpdateButton) => {
   return (
     <Button
+      size={"sm"}
       value="upload"
       variant="ghost"
       type="submit"
-      disabled={pending}
       onClick={() => action("published", "upload")}
     >
-      <input name="published" id="published" hidden value="upload" readOnly />
-      {pending ? <Loader2 className="w-6 h-6 animate-spin" /> : "Publish"}
+      Publish
     </Button>
   );
 };

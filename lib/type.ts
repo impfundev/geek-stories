@@ -13,7 +13,6 @@ export type NavEditor = {
 
 export type UpdateButton = {
   action: UseFormSetValue<Posts & { tags: Tags[] }>;
-  pending?: boolean;
 };
 
 export type TitleInput = {
