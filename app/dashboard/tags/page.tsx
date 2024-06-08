@@ -9,7 +9,7 @@ export default async function Tags() {
   return (
     <>
       <h1>Tags</h1>
-      <div className="py-6 flex gap-10">
+      <div className="py-6 flex flex-col md:flex-row gap-10">
         <Card>
           <CreateTagForm />
         </Card>

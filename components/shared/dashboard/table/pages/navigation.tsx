@@ -35,12 +35,7 @@ const CreatePages = () => {
 const ButtonCreatePages = () => {
   const { pending } = useFormStatus();
   return (
-    <Button
-      disabled={pending}
-      type="submit"
-      variant="outline"
-      className="ml-auto"
-    >
+    <Button disabled={pending} type="submit" variant="outline">
       {pending ? (
         <Loader2 className="h-4 w-4 animate-spin" />
       ) : (
@@ -54,7 +49,7 @@ const ButtonCreatePages = () => {
 
 export function TableNavigation({ table }: { table: Table<TableData> }) {
   return (
-    <div className="flex gap-4 items-center py-4">
+    <div className="flex flex-col md:flex-row gap-4 items-center py-4">
       <Input
         placeholder="Search by title..."
         value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -63,31 +58,35 @@ export function TableNavigation({ table }: { table: Table<TableData> }) {
         }
         className="w-full min-w-sm rounded-full"
       />
-      <CreatePages />
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="ml-auto">
-            Fields <ChevronDown className="ml-2 h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          {table
-            .getAllColumns()
-            .filter((column) => column.getCanHide())
-            .map((column) => {
-              return (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  className="capitalize"
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
-              );
-            })}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex gap-4 items-center">
+        <CreatePages />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              Fields <ChevronDown className="ml-2 h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                );
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   );
 }

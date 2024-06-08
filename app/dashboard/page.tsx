@@ -15,7 +15,7 @@ export default async function Dashboard() {
       <h1>Home</h1>
       <div className="w-full py-6 flex flex-col gap-6">
         <Analytics />
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <div className="grid grid-cols-1 gap-4">
             <Glance
               totalPost={posts.length}

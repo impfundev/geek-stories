@@ -70,7 +70,7 @@ export function AccessPanel({ apiKey }: AccessPanel) {
           without consideration.
         </p>
       </TabsContent>
-      <TabsContent value="API_DOC" className="grid gap-4">
+      <TabsContent value="API_DOC" className="w-full grid gap-4">
         <p>
           Recomended to use tools like{" "}
           <Link

@@ -34,7 +34,7 @@ export function RecentActivity({ posts }: { posts: PostType }) {
                 return (
                   <div
                     key={i}
-                    className="w-full flex items-center justify-between gap-10"
+                    className="w-full flex flex-col md:flex-row items-center md:justify-between gap-4 md:gap-10"
                   >
                     <div className="flex items-center gap-4">
                       <Avatar className="w-10 h-10">

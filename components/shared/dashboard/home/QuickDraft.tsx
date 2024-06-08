@@ -68,7 +68,10 @@ export function QuickDraft({ posts }: { posts: PostType }) {
         <ul>
           {draftedPosts.length > 0 ? (
             draftedPosts.map((post) => (
-              <li key={post.id} className="flex gap-4">
+              <li
+                key={post.id}
+                className="flex flex-col md:flex-row gap-2 md:gap-4"
+              >
                 <Link
                   className="text-blue-500"
                   href={`/editor/posts/${post.id}`}

@@ -22,7 +22,7 @@ export function SiteSettingsForm({
 
   return (
     <form action={action} className="py-6 flex flex-col gap-6">
-      <div className="flex justify-between items-start">
+      <div className="flex flex-col gap-6 md:flex-row md:justify-between items-start">
         <div className="flex flex-col gap-3">
           <h1 className="text-2xl">Site Information</h1>
           <p className="text-muted-foreground max-w-md">
