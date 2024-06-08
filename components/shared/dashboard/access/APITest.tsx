@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { testAPi } from "@/lib/action/testApi";
 import { SubmitButton } from "../../auth/SubmitButton";
 import { Badge } from "@/components/ui/badge";
-import { testApiContext } from "@/hooks/useApiTest";
+import { useApiTest } from "@/hooks/useApiTest";
 
 type ApiTest = {
   label: string;
@@ -34,7 +34,7 @@ export function ApiTest({
   type,
 }: ApiTest) {
   const [state, action] = useFormState(testAPi, undefined);
-  const { setQuery, setLimit, setSkip } = testApiContext();
+  const { setQuery, setLimit, setSkip } = useApiTest();
 
   return (
     <Card>
