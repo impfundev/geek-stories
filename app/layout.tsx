@@ -1,3 +1,5 @@
+export const maxDuration = 60;
+
 import type { Metadata } from "next";
 import "./globals.css";
 
