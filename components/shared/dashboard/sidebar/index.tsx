@@ -4,16 +4,16 @@ import { Separator } from "@/components/ui/separator";
 
 export function Sidebar() {
   return (
-    <aside className="w-full max-w-[20vw] flex flex-col border-r p-6">
-      <div className="flex flex-col p-2 w-full">
+    <aside className="w-full h-screen md:min-w-[260px] max-w-[16vw] md:max-w-[20vw] overflow-y-auto bg-background flex flex-col border-r p-2 md:p-6">
+      <div className="p-2 w-full">
         <Account />
       </div>
       <Separator />
-      <div className="flex flex-col p-2 w-full">
+      <div className="p-2 w-full">
         <MainMenu />
       </div>
       <Separator />
-      <div className="flex flex-col p-2 w-full">
+      <div className="p-2 w-full">
         <SecondMenu />
       </div>
     </aside>

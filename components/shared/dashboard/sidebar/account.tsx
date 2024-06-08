@@ -32,20 +32,20 @@ export async function Account() {
   const pictureUrl = getGravatarUrl(user.email, pictureOptions);
 
   return (
-    <div className="w-full grid gap-6">
+    <div className="w-full flex flex-col gap-6">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="justify-start gap-2">
+          <div className="flex items-center justify-center md:justify-start gap-2">
             <Image
               alt={user.userName}
               src={pictureUrl}
               width={24}
               height={24}
-              className="w-6 h-6 rounded-full object-cover"
+              className="md:w-6 md:h-6 rounded-full object-cover"
               loading="lazy"
             />
-            <span className="truncate">{user.userName}</span>
-          </Button>
+            <span className="hidden md:flex truncate">{user.userName}</span>
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56">
           <DropdownMenuLabel>{user.userName}</DropdownMenuLabel>
