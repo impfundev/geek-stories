@@ -1,11 +1,11 @@
 "use client";
 
-import { testApiContext } from "@/lib/context/apiTest.context";
+import { useApiTest } from "@/hooks/useApiTest";
 import { ApiTest } from "../APITest";
 import { TabsContent } from "@/components/ui/tabs";
 
 export function TestPostsApi() {
-  const { query, limit, skip } = testApiContext();
+  const { query, limit, skip } = useApiTest();
 
   return (
     <TabsContent value="posts" className="flex flex-col gap-6">

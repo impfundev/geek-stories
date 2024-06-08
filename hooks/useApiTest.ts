@@ -9,7 +9,7 @@ type Store = {
   setSkip: (skip: number) => void;
 };
 
-export const testApiContext = create<Store>()((set) => ({
+export const useApiTest = create<Store>()((set) => ({
   query: "New Post",
   limit: 2,
   skip: 1,

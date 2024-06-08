@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label";
 import { testAPi } from "@/lib/action/testApi";
 import { SubmitButton } from "../../auth/SubmitButton";
 import { Badge } from "@/components/ui/badge";
-import { testApiContext } from "@/lib/context/apiTest.context";
+import { testApiContext } from "@/hooks/useApiTest";
 
 type ApiTest = {
   label: string;

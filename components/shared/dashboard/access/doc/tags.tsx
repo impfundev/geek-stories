@@ -1,9 +1,9 @@
-import { testApiContext } from "@/lib/context/apiTest.context";
+import { useApiTest } from "@/hooks/useApiTest";
 import { ApiTest } from "../APITest";
 import { TabsContent } from "@/components/ui/tabs";
 
 export function TestTagsApi() {
-  const { limit, skip } = testApiContext();
+  const { limit, skip } = useApiTest();
 
   return (
     <TabsContent value="tags" className="flex flex-col gap-6">
