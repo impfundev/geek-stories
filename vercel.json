@@ -1,0 +1,7 @@
+{
+  "function": {
+    "lib/action/*.ts": {
+      "maxDuration": 50
+    }
+  }
+}
