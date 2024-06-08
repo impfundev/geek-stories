@@ -36,7 +36,7 @@ export default async function Home() {
             </Link>
           </Button>
         ) : (
-          <Button asChild>
+          <Button asChild data-testid="login_with_demo_account">
             <Link href="/login" className="flex gap-2">
               <span>Try Demo for free</span>
               <ArrowRight size={20} />

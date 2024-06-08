@@ -51,6 +51,7 @@ export function LoginForm() {
                 maxLength={50}
                 placeholder="Enter your email"
                 defaultValue={"demo@demo.com"}
+                data-testid="input_email"
               />
             </div>
             <div className="flex flex-col space-y-1.5">
@@ -60,6 +61,8 @@ export function LoginForm() {
                 type="password"
                 name="password"
                 placeholder="Enter your strong password"
+                defaultValue={"Demoaccount123?"}
+                data-testid="input_password"
               />
             </div>
           </div>

@@ -7,7 +7,10 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma": "prisma generate && prisma db push"
+    "prisma": "prisma generate && prisma db push",
+    "test": "playwright test",
+    "testgen:dev": "playwright codegen http://localhost:3000",
+    "testgen:prod": "playwright codegen http://your-domain.com"
   },
   "dependencies": {
     "@headlessui/react": "^2.0.3",
@@ -79,6 +82,7 @@
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
+    "jest-mock-extended": "^3.0.7",
     "postcss": "^8",
     "postcss-import": "^16.0.1",
     "postcss-nesting": "^12.1.0",

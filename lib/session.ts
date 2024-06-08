@@ -24,11 +24,9 @@ export async function decrypt(session: string | undefined = "") {
       });
       return payload;
     } catch (error) {
-      console.error("Failed to verify session", error);
       return null;
     }
   } else {
-    console.log("User not login");
     return null;
   }
 }

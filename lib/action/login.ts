@@ -1,21 +1,13 @@
 "use server";
 import { FormState } from "../models/schema";
-import { LoginFormSchema } from "../models/schema/LoginFormSchema";
 import { prisma } from "../models/prisma";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { createSession } from "../session";
 
 export async function login(state: FormState, formData: FormData) {
-  const validatedFields = LoginFormSchema.safeParse({
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
-
-  if (!validatedFields.success)
-    return { message: "Error: Something error on the server." };
-
-  const { email, password } = validatedFields.data;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
 
   const user = await prisma.user.findUnique({
     where: {
@@ -33,6 +25,5 @@ export async function login(state: FormState, formData: FormData) {
     };
 
   await createSession(user.id);
-  console.log(user);
   redirect("/dashboard");
 }
